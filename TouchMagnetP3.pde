@@ -1,6 +1,11 @@
 /////////////////////////////
 /* UPDATED FOR PROCESSING 3 11/16/2016 
-***************************************/
+///////////////////////////////////////*/
+
+
+/********************************************
+//// P2 to P3 conversion by TenTon Raygun
+*********************************************/
 
 import com.heroicrobot.dropbit.devices.*;
 import com.heroicrobot.dropbit.common.*;
