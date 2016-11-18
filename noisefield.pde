@@ -18,8 +18,10 @@ class NoiseFieldRenderer extends AudioRenderer {
 
   ParticleSystem p;
   
-  void setup()
-  {
+  void setup() {
+    println("dont't need this");
+  }
+  public void setupSketch() {
     smooth();
     //size(canvasW, canvasH);
     colorMode(HSB, 255);

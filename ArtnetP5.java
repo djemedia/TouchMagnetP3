@@ -35,6 +35,7 @@ public class ArtnetP5 implements ArtNetDiscoveryListener{
 	}
 	
 	public void setup(){
+  System.out.println("INITIALIZING ARTNET");
 		if(ARTNET == null){
 			ARTNET = new ArtNet();
 			try{

@@ -25,8 +25,10 @@ A touch heatmap with integration with led pixels.
     //rotations =  (int) source.sampleRate() / source.bufferSize();
   }
 
-  void setup()
-  {
+  void setup() {
+    println("dont't need this");
+  }
+  public void setupSketch() {
     //size(ssize, ssize, P3D);
     colorMode(RGB, 255);
     g = new Gradient();

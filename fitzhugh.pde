@@ -59,6 +59,9 @@ class FitzhughRenderer extends AudioRenderer {
     //colorMode(HSB);
   
   void setup() {
+    println("dont't need this");
+  }
+  public void setupSketch() {
    
   //  if(movieOn) mm = new MovieMaker(this,width,height,"reaction"+day()+hour()+minute()+second()+".mov",30, MovieMaker.H263, MovieMaker.HIGH);
     //int w=canvasW;

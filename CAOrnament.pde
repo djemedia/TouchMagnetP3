@@ -53,9 +53,10 @@ class stainedglassRenderer extends AudioRenderer {
 
   int vFader5 = 128;
 
-
-
   void setup() {
+    println("dont't need this");
+  }
+  public void setupSketch() {
     //size(canvasW, canvasH);
     //colorMode(RGB,255);
 

@@ -58,6 +58,9 @@ class TuringRenderer extends AudioRenderer {
 
 
   void setup() {
+    println("dont't need this");
+  }
+  public void setupSketch() {
     //size(canvasW, canvasH);
     colorMode(HSB, 255);
 

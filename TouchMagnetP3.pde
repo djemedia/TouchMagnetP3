@@ -64,10 +64,9 @@ PGraphics canvas;
 
 PImage transition;
 
-boolean artnetEnable = false;
+boolean artnetEnable = true;
 boolean dmxEnable =false;
 boolean pixEnable = true;
-boolean syphonEnable = false;
 
 boolean showFramerate = false;
 
@@ -184,12 +183,16 @@ void setup() {
   visuals = new AudioRenderer[] {
     fluidje, noiseParticles, perlincolor, heatmap,  noisefield, fitzhugh, stainedglass, turing
   };
+  
+  for(int i=0; i<visuals.length; i++){
+    visuals[i].setupSketch();
+  }
 
   // activate first renderer in list
   select = 0;
   preset = 0;
   //in.addListener(visuals[select]);
-  visuals[select].setup();
+  /// visuals[select].setupSketch();
 
   if (pixEnable == true){
     setupPixelPusher();
@@ -349,7 +352,7 @@ void oscSketch2(float iA) {
     select = 1;
     preset = 0;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    // visuals[select].setup();
     //add code to prevent double tap
   }
 }
@@ -360,7 +363,7 @@ void oscSketch3(float iA) {
     select = 2;
     preset = 0;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    //visuals[select].setup();
     colorMode(HSB, 255);
   }
 }
@@ -371,7 +374,7 @@ void oscSketch4(float iA) {
     select = 3;
     preset = 0;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    //visuals[select].setup();
   }
 }
 void oscSketch5(float iA) {
@@ -381,7 +384,7 @@ void oscSketch5(float iA) {
     select = 4;
     preset = 0;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    //visuals[select].setup();
   }
 }
 void oscSketch6(float iA) {
@@ -394,7 +397,7 @@ void oscSketch6(float iA) {
     //  int vFader3 = 255;
     //  int vFader4 = 0;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    //visuals[select].setup();
   }
 }
 void oscSketch7(float iA) { 
@@ -404,7 +407,7 @@ void oscSketch7(float iA) {
     select = 6;
     preset = 0;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    ///visuals[select].setup();
   }
 }
 
@@ -415,7 +418,7 @@ void oscSketch8(float iA) {
     select = 6;
     preset = 1;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    ///visuals[select].setup();
 
     //colorMode(RGB);
   }
@@ -427,7 +430,7 @@ void oscSketch9(float iA) {
     select = 6;
     preset = 3;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    ///visuals[select].setup();
   }
 }
 
@@ -438,7 +441,7 @@ void oscSketch10(float iA) {
     select = 6;
     preset = 2;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    ///visuals[select].setup();
   }
 }
 void oscSketch11(float iA) {
@@ -448,7 +451,7 @@ void oscSketch11(float iA) {
     select = 7;
     preset = 2;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    ///visuals[select].setup();
   }
 }
 void oscSketch12(float iA) {
@@ -458,7 +461,7 @@ void oscSketch12(float iA) {
     select = 7;
     preset = 0;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    ////visuals[select].setup();
   }
 }
 void oscSketch13(float iA) {
@@ -468,7 +471,7 @@ void oscSketch13(float iA) {
     select = 3;
     preset = 1;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    ////visuals[select].setup();
     colorMode(HSB, 255);
   }
 }
@@ -479,7 +482,7 @@ void oscSketch14(float iA) {
     select = 3;
     preset = 2;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    /// visuals[select].setup();
   }
 }
 void oscSketch15(float iA) {
@@ -489,7 +492,7 @@ void oscSketch15(float iA) {
     select = 4;
     preset = 1;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    ///visuals[select].setup();
   }
 }
 void oscSketch16(float iA) {
@@ -502,7 +505,7 @@ void oscSketch16(float iA) {
     //  int vFader3 = 255;
     //  int vFader4 = 0;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    ///visuals[select].setup();
   }
 }
 void oscSketch17(float iA) { 
@@ -512,7 +515,7 @@ void oscSketch17(float iA) {
     select = 4;
     preset = 2;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    ///visuals[select].setup();
   }
 }
 
@@ -523,7 +526,7 @@ void oscSketch18(float iA) {
     select = 1;
     preset = 2;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    ///visuals[select].setup();
 
     //colorMode(RGB);
   }
@@ -535,7 +538,7 @@ void oscSketch19(float iA) {
     select = 1;
     preset = 1;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    //visuals[select].setup();
   }
 }
 
@@ -546,7 +549,7 @@ void oscSketch20(float iA) {
     select = 2;
     preset = 1;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    ///visuals[select].setup();
     colorMode(HSB, 255);
   }
 }
@@ -1061,7 +1064,7 @@ void keyPressed() {
     select++;
     select %= visuals.length;
     //in.addListener(visuals[select]);
-    visuals[select].setup();
+    /// visuals[select].setup();
   } else {
     if (select == 7)
     {

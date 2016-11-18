@@ -34,7 +34,10 @@ class FluidRenderer extends AudioRenderer {
     //rotations =  (int) source.sampleRate() / source.bufferSize();
   }
 
-  void setup () {
+  void setup() {
+    println("dont't need this");
+  }
+  public void setupSketch() {
     //size(canvasW, canvasH, P3D);
     colorMode(HSB, 255);
     noStroke();

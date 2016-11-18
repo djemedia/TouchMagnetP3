@@ -32,7 +32,7 @@ int artnetyPixels(int pxN, int yScale) {
   return(pxN / yScale);
 }
 */
-void setupArtnet() {
+public void setupArtnet() {
   
   artnet = new ArtnetP5();
   artnetimg = new PImage(170, 1, PApplet.RGB);

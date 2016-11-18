@@ -24,6 +24,9 @@ class NoiseParticlesRenderer extends AudioRenderer {
   }
 
   void setup() {
+    println("dont't need this");
+  }
+  public void setupSketch() {
     colorMode(HSB, 255);
     currFrame = new int[width*height];
     prevFrame = new int[width*height];

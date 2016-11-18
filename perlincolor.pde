@@ -19,8 +19,10 @@ class PerlinColorRenderer extends AudioRenderer {
     //rotations =  (int) source.sampleRate() / source.bufferSize();
   } 
 
-  void setup()
-  {
+  void setup() {
+    println("dont't need this");
+  }
+  public void setupSketch() {
     //size(256,256);
     r = width/PI;
 

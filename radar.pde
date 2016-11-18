@@ -12,6 +12,9 @@ class RadarRenderer extends AudioRenderer {
   }
 
   void setup() {
+    println("dont't need this");
+  }
+  public void setupSketch() {
     colorMode(HSB, TWO_PI * rotations, 1, 1);
     background(0);
   }
