@@ -11,8 +11,15 @@ public String skchName = "Radar Renderer";
   RadarRenderer(AudioSource source) {
     rotations =  (int) source.sampleRate() / source.bufferSize();
   }
-
-
+ public void loadPresets() {
+    println("Loading presets for" + skchName );
+  }
+  
+  public void switchColorMode() {
+    println("switching color mode for" + skchName );
+    colorMode(HSB, TWO_PI * rotations, 1, 1);
+  }
+  
   public void setupSketch() {
     colorMode(HSB, TWO_PI * rotations, 1, 1);
     background(0);

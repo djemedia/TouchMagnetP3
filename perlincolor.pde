@@ -20,7 +20,15 @@ public String skchName = "Perlin color";
     //rotations =  (int) source.sampleRate() / source.bufferSize();
   } 
 
-
+  public void loadPresets() {
+    println("Loading presets for" + skchName );
+    getSketchPresets("perlincolor", true);
+  }
+  
+  public void switchColorMode() {
+    println("switching color mode for" + skchName );
+    colorMode(HSB, 1); //setupPixelPusher();
+  }
   public void setupSketch() {
     //size(256,256);
     r = width/PI;

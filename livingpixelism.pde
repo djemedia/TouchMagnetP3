@@ -59,15 +59,18 @@ class TuringRenderer extends AudioRenderer {
 
 
   public void loadPresets() {
-    println("HELLO PRESETS" );
+    println("Loading presets for" + skchName );
+    doPresets();
   }
-
+  
+  public void switchColorMode() {
+    println("switching color mode for" + skchName );
+      colorMode(HSB, 255);
+  }
+  
   public void setupSketch() {
-    //size(canvasW, canvasH);
+
     colorMode(HSB, 255);
-
-
-
     /*
     int setcolorMode = 0;
      int setContrastModeF = 60;
@@ -108,6 +111,14 @@ class TuringRenderer extends AudioRenderer {
     }
 
     reset();
+  }
+  
+  void doPresets(){
+    if (getSketchPresets("livingPixelism", false)) {
+      pattern = presets[preset].getChild("pattern").getIntContent();
+      println("LivingPixelism Preset #" + preset + " Pattern: " + pattern + " Faders: " + setcolorMode + " " + vFader2 + " " + vFader3 + " " + vFader4 + " " + vFader5 + " " + vFader6 + " " + vFader7 + " " + vFader8);
+    }
+
   }
 
   void reset() {

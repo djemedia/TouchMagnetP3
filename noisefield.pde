@@ -20,9 +20,16 @@ class NoiseFieldRenderer extends AudioRenderer {
   ParticleSystem p;
   
 
-    public void loadPresets(){
-      println("HELLO PRESETS" );
-    }
+  public void loadPresets() {
+    println("Loading presets for" + skchName );
+    getSketchPresets("noisefield", true);    
+  }
+  
+  public void switchColorMode() {
+    println("switching color mode for" + skchName );
+    colorMode(HSB, 255);
+  }
+  
   public void setupSketch() {
     smooth();
     //size(canvasW, canvasH);

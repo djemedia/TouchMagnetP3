@@ -191,6 +191,8 @@ void setup() {
     fluidje, noiseParticles, perlincolor, heatmap,  noisefield, fitzhugh, stainedglass, turing
   };
   
+  
+  
   for(int i=0; i<visuals.length; i++){
     /// println("Loading sketch: " + i);
     visuals[i].setupSketch();
@@ -366,10 +368,11 @@ void oscSketch1(float iA) {
     // getSketchPresets("noiseParticles", true);
     //in.addListener(visuals[select]);
     //// visuals[select].setupSketch();
-    // visuals[select].loadPresets();
+    visuals[select].loadPresets();
+    visuals[select].switchColorMode();
     setCurSketchParams(select);
 
-    colorMode(HSB, 255);
+    
   }
 }
 void oscSketch2(float iA) {
@@ -381,7 +384,8 @@ void oscSketch2(float iA) {
     //in.addListener(visuals[select]);
     /// visuals[select].setup();
     //add code to prevent double tap
-    colorMode(HSB, 255);
+    visuals[select].loadPresets();
+    visuals[select].switchColorMode();
   }
 }
 void oscSketch3(float iA) {
@@ -392,7 +396,9 @@ void oscSketch3(float iA) {
     preset = 0;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
-    colorMode(HSB, 1); //setupPixelPusher();
+    
+    visuals[select].loadPresets();
+    visuals[select].switchColorMode();
   }
 }
 void oscSketch4(float iA) {
@@ -403,7 +409,8 @@ void oscSketch4(float iA) {
     preset = 0;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
-    colorMode(RGB, 255);
+visuals[select].loadPresets();
+    visuals[select].switchColorMode();
   }
 }
 void oscSketch5(float iA) {
@@ -414,7 +421,8 @@ void oscSketch5(float iA) {
     preset = 0;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
-    colorMode(HSB, 255);
+    visuals[select].loadPresets();
+    visuals[select].switchColorMode();
   }
 }
 void oscSketch6(float iA) {
@@ -428,7 +436,8 @@ void oscSketch6(float iA) {
     //  int vFader4 = 0;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
-    colorMode(HSB, 255);
+    visuals[select].loadPresets();
+    visuals[select].switchColorMode();
   }
 }
 void oscSketch7(float iA) { 
@@ -439,7 +448,8 @@ void oscSketch7(float iA) {
     preset = 0;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
-    colorMode(RGB,255);
+    visuals[select].loadPresets();
+    visuals[select].switchColorMode();
   }
 }
 
@@ -451,10 +461,8 @@ void oscSketch8(float iA) {
     preset = 1;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
-
-    //colorMode(RGB);
-    
-    colorMode(HSB, 255);
+    visuals[select].loadPresets();
+    visuals[select].switchColorMode();
   }
 }
 void oscSketch9(float iA) {
@@ -464,7 +472,8 @@ void oscSketch9(float iA) {
     select = 6;
     preset = 3;
     //in.addListener(visuals[select]);
-    ///visuals[select].setup();
+    visuals[select].loadPresets();
+    visuals[select].switchColorMode();
   }
 }
 

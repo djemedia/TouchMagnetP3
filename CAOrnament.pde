@@ -37,7 +37,7 @@
 
 class stainedglassRenderer extends AudioRenderer {
 
-  
+
   public String skchName = "Stained Glass CA Ornament";
   int rotations;
   int w=canvasW;
@@ -45,8 +45,10 @@ class stainedglassRenderer extends AudioRenderer {
 
 
 
-CAMatrix ca;
-ToneMap toneMap;
+  CAMatrix ca;
+  ToneMap toneMap;
+  
+  ColorGradient grad;
 
   stainedglassRenderer(AudioSource source) {
     //rotations =  (int) source.sampleRate() / source.bufferSize();
@@ -57,11 +59,16 @@ ToneMap toneMap;
 
   int vFader5 = 128;
 
-  public void loadPresets(){
-    println("HELLO PRESETS" );
+  public void loadPresets() {
+    println("Loading presets for" + skchName );
+    doPresets();
   }
-  
-  
+
+  public void switchColorMode() {
+    println("switching color mode for" + skchName );
+    colorMode(RGB, 255);
+  }
+
   public void setupSketch() {
     //size(canvasW, canvasH);
     //colorMode(RGB,255);
@@ -71,13 +78,13 @@ ToneMap toneMap;
     // their order is irrelevant
     byte[] birthRules=new byte[] { 
       1, 5, 7
-        //1,5
+      //1,5
     };
     // survival rules specify the possible numbers of allowed or required
     // ACTIVE neighbour cells in order for a cell to stay alive
     byte[] survivalRules=new byte[] { 
       0, 3, 5, 6, 7, 8
-        //0,3,7,8
+      //0,3,7,8
     };
     // setup cellular automata matrix
     ca=new CAMatrix(width, height);
@@ -97,7 +104,10 @@ ToneMap toneMap;
     ca.drawBoxAt(0, height/2, 5, 1);
 
     // create a gradient for rendering/shading the CA
-    ColorGradient grad=new ColorGradient();
+    grad=new ColorGradient();
+    
+    
+    
     // NamedColors are preset colors, but any TColor can be added
     // see javadocs for list of names:
     // http://toxiclibs.org/docs/colorutils/toxi/color/NamedColor.html
@@ -160,7 +170,7 @@ ToneMap toneMap;
      //grad.addColorAt(192, NamedColor.MOCCASIN);
      grad.addColorAt(212, NamedColor.BLACK);
      grad.addColorAt(255, NamedColor.SADDLEBROWN);
-            /*grad.addColorAt(0, NamedColor.DARKRED);
+                /*grad.addColorAt(0, NamedColor.DARKRED);
      //grad.addColorAt(64, NamedColor.BLACK);
      grad.addColorAt(120, NamedColor.DARKORANGE);
      grad.addColorAt(136, NamedColor.ORANGE);
@@ -185,13 +195,20 @@ ToneMap toneMap;
         grad.addColorAt(xmlGradient[xg].getInt("at"), NamedColor.getForName(xmlGradient[xg].getContent()) );
       }
     }
-
-
-
-
-
     // the tone map will map cell states/ages to a gradient color
     toneMap=new ToneMap(0, rule.getStateCount()-1, grad);
+  }
+
+  void doPresets() {
+    if (getSketchPresets("stainedGlass", false)) {
+      XML[] xmlGradient = presets[preset].getChildren("gradient");
+      println("StainedGlass Preset #" + preset + " Gradient elements: " + xmlGradient.length + " faders: " + setcolorMode + " " + vFader2 + " " + vFader3 + " " + vFader4 + " " + vFader5 + " " + vFader6 + " " + vFader7 + " " + vFader8);
+
+      for (int xg = 0; xg < xmlGradient.length; xg++) {
+        println("grad.addColorAt(" + xmlGradient[xg].getInt("at") + ",NamedColor." + xmlGradient[xg].getContent() + ");");
+        grad.addColorAt(xmlGradient[xg].getInt("at"), NamedColor.getForName(xmlGradient[xg].getContent()) );
+      }
+    }
   }
 
   public void renderSketch() {

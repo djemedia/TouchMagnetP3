@@ -25,11 +25,17 @@ A touch heatmap with integration with led pixels.
     //rotations =  (int) source.sampleRate() / source.bufferSize();
   }
 
-    public void loadPresets(){
-      println("HELLO PRESETS" );
-    }
+  public void loadPresets() {
+    println("Loading presets for" + skchName );
+    doPresets();
+  }
+  
+  public void switchColorMode() {
+    println("switching color mode for" + skchName );
+    colorMode(RGB, 255);
+  }
+  
   public void setupSketch() {
-    //size(ssize, ssize, P3D);
     colorMode(RGB, 255);
     g = new Gradient();
     /*
@@ -86,16 +92,27 @@ A touch heatmap with integration with led pixels.
         g.addColor(color(xmlGradient[xg].getInt("r"),xmlGradient[xg].getInt("g"),xmlGradient[xg].getInt("b")));
       }
     }
-
-
-    
-
-
     /* // Initalize the heat map (make sure everything is 0.0)
      for (int i = 0; i < canvasW; ++i)
      for (int j = 0; j < canvasH; ++j)
      heatmap[index][i][j] = 0.0;
      */
+  }
+  
+  void doPresets(){
+    
+    if (getSketchPresets("heatmap", false)) {
+      XML[] xmlGradient = presets[preset].getChildren("gradient");
+      println("Heatmap Preset #" + preset + " Gradient elements: " + xmlGradient.length + " faders: " + setcolorMode + " " + vFader2 + " " + vFader3 + " " + vFader4 + " " + vFader5 + " " + vFader6 + " " + vFader7 + " " + vFader8);
+
+      for (int xg = 0; xg < xmlGradient.length; xg++) {
+        //println("grad.addColorAt(" + xmlGradient[xg].getInt("at") + ",NamedColor." + xmlGradient[xg].getContent() + ");");
+        //grad.addColorAt(xmlGradient[xg].getInt("at"), NamedColor.getForName(xmlGradient[xg].getContent()) );
+        println("g.addColor " + xmlGradient[xg].getInt("r") + " " + xmlGradient[xg].getInt("g") + " " + xmlGradient[xg].getInt("b"));
+        g.addColor(color(xmlGradient[xg].getInt("r"),xmlGradient[xg].getInt("g"),xmlGradient[xg].getInt("b")));
+      }
+    }
+
   }
 
   public void renderSketch()

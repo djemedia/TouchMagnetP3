@@ -26,9 +26,17 @@ class NoiseParticlesRenderer extends AudioRenderer {
     
   }
 
-
+  public void loadPresets() {
+    println("Loading presets for" + skchName );
+    getSketchPresets("noiseParticles", true);
+  }
+  
+  public void switchColorMode() {
+    println("switching color mode for" + skchName );
+    colorMode(HSB, 255);
+  }
   public void setupSketch() {
-    println("HELLO SETUP" );
+    
     colorMode(HSB, 255);
     currFrame = new int[width*height];
     prevFrame = new int[width*height];
@@ -70,12 +78,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
     }
   }
 
-  public void loadPresets(){
-    println("HELLO PRESETS" );
-  }
-  public void setColorMode(){
-    
-  }
+
   public void renderSketch() {
     if (okToDraw) {
       okToDraw = false;

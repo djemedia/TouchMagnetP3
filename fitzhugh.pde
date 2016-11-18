@@ -58,9 +58,15 @@ class FitzhughRenderer extends AudioRenderer {
     //size(canvasW,canvasH);
     //colorMode(HSB);
   
-    public void loadPresets(){
-      println("HELLO PRESETS" );
-    }
+  public void loadPresets() {
+    println("Loading presets for" + skchName );
+    getSketchPresets("fitzhugh", true);   
+  }
+  
+  public void switchColorMode() {
+    println("switching color mode for" + skchName );
+    colorMode(HSB, 255);
+  }
   public void setupSketch() {
    
   //  if(movieOn) mm = new MovieMaker(this,width,height,"reaction"+day()+hour()+minute()+second()+".mov",30, MovieMaker.H263, MovieMaker.HIGH);

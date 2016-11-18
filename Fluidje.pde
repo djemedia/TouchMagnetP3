@@ -35,7 +35,18 @@ class FluidRenderer extends AudioRenderer {
     //rotations =  (int) source.sampleRate() / source.bufferSize();
   }
 
-
+  public void loadPresets() {
+    println("Loading presets for" + skchName );
+    getSketchPresets("fluidje", true);
+    
+  }
+  
+  public void switchColorMode() {
+    println("switching color mode for" + skchName );
+    colorMode(HSB, 255);
+    noStroke();
+  }
+  
   public void setupSketch() {
     //size(canvasW, canvasH, P3D);
     colorMode(HSB, 255);
@@ -86,14 +97,7 @@ class FluidRenderer extends AudioRenderer {
   }
 
   /* Interation stuff below this line */
-  public void setColorMode(){
-    colorMode(HSB, 255);
-    
-  }
-  public void loadPresets(){
-    getSketchPresets("fluidje", true);
-    
-  }
+
   public void mouseDragged () {
     // The ripple size will be determined by mouse speed
     float force = dist(mouseX, mouseY, pmouseX, pmouseY) * 255;
