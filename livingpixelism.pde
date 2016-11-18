@@ -116,7 +116,7 @@ class TuringRenderer extends AudioRenderer {
       pat[i] = floor(random(480));
   }
 
-  synchronized void draw() {
+  public void renderSketch() {
 
 
     // constrain the mouse position

@@ -40,7 +40,7 @@ class PerlinColorRenderer extends AudioRenderer {
   }
 
 
-  synchronized void draw()
+  public void renderSketch()
   {
     colorMode(HSB, 1);
     //ox += max(-speed,min(speed,(mouseX-width/2)*speed/r));

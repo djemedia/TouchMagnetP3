@@ -12,6 +12,19 @@ import com.heroicrobot.dropbit.common.*;
 import com.heroicrobot.dropbit.discovery.*;
 import com.heroicrobot.dropbit.registry.*;
 import com.heroicrobot.dropbit.devices.pixelpusher.*;
+
+
+///*
+import toxi.sim.automata.*;
+import toxi.math.*;
+import toxi.color.*;
+///*/
+
+import artnetP5.*;
+//
+import dmxP512.*;
+import processing.serial.*;
+
 /*
  import com.heroicrobot.dropbit.devices.pixelpusher.Pixel;
  import com.heroicrobot.dropbit.devices.pixelpusher.Strip;
@@ -55,6 +68,8 @@ boolean artnetEnable = false;
 boolean dmxEnable =false;
 boolean pixEnable = true;
 boolean syphonEnable = false;
+
+boolean showFramerate = false;
 
 boolean ready_to_go = true;
 int lastPosition;
@@ -165,7 +180,7 @@ void setup() {
   turing = new TuringRenderer(in);
   stainedglass = new stainedglassRenderer(in);
 
-
+//////////////////// set renderer array //////////////////////
   visuals = new AudioRenderer[] {
     fluidje, noiseParticles, perlincolor, heatmap,  noisefield, fitzhugh, stainedglass, turing
   };
@@ -176,14 +191,19 @@ void setup() {
   //in.addListener(visuals[select]);
   visuals[select].setup();
 
-  if (pixEnable == true)
+  if (pixEnable == true){
     setupPixelPusher();
-  if (artnetEnable == true)
+  }
+  if (artnetEnable == true){
     setupArtnet();
-  if (dmxEnable == true)
+  }
+  if (dmxEnable == true){
     setupDMX();
+  }
+    /*
   if (syphonEnable == true)
     setupSyphon();
+    */
     
     
 
@@ -992,17 +1012,23 @@ void oscFaderSet() {
 
 void draw() {    
   oscFaderSet();
-  visuals[select].draw();
+  
+  /// println("cur sketch : " + select);
+  visuals[select].renderSketch();
   transitionDraw();
-  if (pixEnable == true)
+  if (pixEnable == true){
     drawPixelPusher();
-  if (artnetEnable == true)
+  }
+  if (artnetEnable == true){
     drawArtnet();
-  if (dmxEnable == true)
+  }
+  if (dmxEnable == true){
     drawDMX();
-  if (syphonEnable == true)
-    drawSyphon();
-  println(frameRate);
+  }
+
+  if(showFramerate){
+    println(frameRate);
+  }
 }
 
 void transitionDraw() {
@@ -1021,6 +1047,14 @@ void transitionReset() {
 }
 
 void keyPressed() {
+  if(key == 'f'){
+    if(showFramerate){
+      showFramerate = false;
+    } else {
+      showFramerate = true;
+    }
+    
+  }
   if (key == ' ') {
     transitionReset();
     //in.removeListener(visuals[select]);

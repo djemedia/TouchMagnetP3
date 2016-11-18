@@ -33,11 +33,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-///*
-import toxi.sim.automata.*;
-import toxi.math.*;
-import toxi.color.*;
-///*/
 
 CAMatrix ca;
 ToneMap toneMap;
@@ -192,7 +187,7 @@ class stainedglassRenderer extends AudioRenderer {
     toneMap=new ToneMap(0, rule.getStateCount()-1, grad);
   }
 
-  void draw() {
+  public void renderSketch() {
     loadPixels();
     if (mousePressed) {
       ca.drawBoxAt(mouseX, mouseY, 18, 4);

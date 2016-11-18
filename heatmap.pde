@@ -96,7 +96,7 @@ A touch heatmap with integration with led pixels.
      */
   }
 
-  synchronized void draw()
+  public void renderSketch()
   {
     colorMode(RGB, 255);
     // See if heat (or cold) needs applied

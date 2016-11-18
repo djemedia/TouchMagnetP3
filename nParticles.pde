@@ -68,7 +68,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
 
 
 
-  synchronized void draw() {
+  public void renderSketch() {
     if (okToDraw) {
       okToDraw = false;
       noiseZ += 2*noiseScale;
@@ -79,7 +79,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
       for (int i=0; i<particles.length; i++) {
         if (particles.length > i - 10) {
           particles[i].update();
-          particles[i].draw();
+          particles[i].drawParticles();
         }
         /*try {
          particles[i].update();
@@ -180,7 +180,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
         y -= height + 2*particleMargin;
       }
     }
-    void draw() {
+    public void drawParticles() {
       if ((x >= 0) && (x < width-1) && (y >= 0) && (y < height-1)) {
         int currC = currFrame[(int)x + ((int)y)*width];
         currFrame[(int)x + ((int)y)*width] = blendColor(c, currC, LIGHTEST);

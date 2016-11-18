@@ -47,7 +47,7 @@ class FluidRenderer extends AudioRenderer {
     getSketchPresets("fluidje", true);
   }
 
-  synchronized void draw () {
+  public void renderSketch () {
 
     colorMode(HSB, 255);
     /******** Physics ********/
@@ -79,7 +79,7 @@ class FluidRenderer extends AudioRenderer {
       }
     }
 
-    grid.draw();
+    grid.drawGrid();
     //println(frameRate);
   }
 
@@ -184,7 +184,7 @@ class GridSolver {
   }
   
   /* Drawing */
-  void draw () {
+  void drawGrid () {
     for (int x = 0; x < velocity.length; x++) {
       for (int y = 0; y < velocity[x].length; y++) {
         /* Sine probably isn't needed, but oh well. It's pretty and looks more organic. */

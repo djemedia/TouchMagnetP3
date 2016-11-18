@@ -16,7 +16,7 @@ class RadarRenderer extends AudioRenderer {
     background(0);
   }
 
-  synchronized void draw()
+  synchronized void renderSketch()
   {
     colorMode(HSB, 40 * rotations, 1, 1);
     if (left != null) {

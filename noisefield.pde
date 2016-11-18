@@ -32,7 +32,7 @@ class NoiseFieldRenderer extends AudioRenderer {
     p = new ParticleSystem();
   }
 
-  synchronized void draw()
+  public void renderSketch()
   {
     colorMode(HSB, 255);
     noStroke();

@@ -1,5 +1,3 @@
-import dmxP512.*;
-import processing.serial.*;
 
 DmxP512 dmxOutput;
 int universeSize=128;

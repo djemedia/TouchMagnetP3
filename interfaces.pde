@@ -12,7 +12,7 @@ abstract class AudioRenderer implements AudioListener {
     right = sampR;
   }
   abstract void setup();
-  abstract void draw();
+  abstract void renderSketch();
 }
 
 

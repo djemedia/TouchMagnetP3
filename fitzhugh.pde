@@ -86,8 +86,8 @@ class FitzhughRenderer extends AudioRenderer {
     setupK();
     setupDiffRates();
   }
-  
-  void draw() {
+
+  void renderSketch() {
     colorMode(HSB, 255);
 
     diffusionU();
