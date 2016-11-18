@@ -5,7 +5,7 @@ void setupSyphon() {
   
   //background(0);
   
-  client = new SyphonClient(this, "Arena", "Composition");
+  /// client = new SyphonClient(this, "Arena", "Composition");
   
 }
 

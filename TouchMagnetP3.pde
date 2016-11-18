@@ -21,7 +21,7 @@ import ddf.minim.*;
 
 import artnetP5.*;
 
-import codeanticode.syphon.*;
+// import codeanticode.syphon.*;
 
 import dmxP512.*;
 import processing.serial.*;
@@ -29,7 +29,7 @@ import processing.serial.*;
 import javax.swing.JColorChooser;
 import java.awt.Color; 
 
-import hypermedia.net.*;
+// import hypermedia.net.*;
 
 //import processing.core.*;
 import java.util.*;
@@ -46,12 +46,12 @@ DeviceRegistry registry;
 
 TestObserver testObserver;
 
-SyphonClient client;
+/// SyphonClient client;
 PGraphics canvas;
 
 PImage transition;
 
-boolean artnetEnable = true;
+boolean artnetEnable = false;
 boolean dmxEnable =false;
 boolean pixEnable = true;
 boolean syphonEnable = false;

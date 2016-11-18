@@ -8,11 +8,14 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+///*
 import artnet4j.ArtNet;
 import artnet4j.ArtNetException;
 import artnet4j.ArtNetNode;
 import artnet4j.events.ArtNetDiscoveryListener;
 import artnet4j.packets.ArtDmxPacket;
+//*/
 
 /**
  * @class ArtnetP5
@@ -66,11 +69,17 @@ public class ArtnetP5 implements ArtNetDiscoveryListener{
                     String nodeSubNet = "236.255.";
                     String nodeDmxOuts = "3";
                     
-                    ArtDmxPacket dmx = new ArtDmxPacket();
-                    dmx.setUniverse(nodeSubNet, nodeDmxOuts); 
-                    dmx.setSequenceID(sequenceID % 255);
-                    dmx.setDMX(buffer, buffer.length);
-                    sequenceID++;
+                    try{
+                      /*
+                      ArtDmxPacket dmx = new ArtDmxPacket();
+                      dmx.setUniverse(nodeSubNet, nodeDmxOuts); 
+                      dmx.setSequenceID(sequenceID % 255);
+                      dmx.setDMX(buffer, buffer.length);
+                      sequenceID++;
+                      */
+                    } catch(Exception e){
+                      /// println("error sending DMX data: " + e);
+                    }
         }	
 
 

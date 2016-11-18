@@ -33,10 +33,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-
+///*
 import toxi.sim.automata.*;
 import toxi.math.*;
 import toxi.color.*;
+///*/
 
 CAMatrix ca;
 ToneMap toneMap;
