@@ -4,6 +4,7 @@ class PerlinColorRenderer extends AudioRenderer {
   // Perlin Noise Demo - Jim Bumgardner
   //dje mod
 
+public String skchName = "Perlin color";
   float perlinColor;
   float kNoiseDetail = 0.001;
   float r;
@@ -19,9 +20,7 @@ class PerlinColorRenderer extends AudioRenderer {
     //rotations =  (int) source.sampleRate() / source.bufferSize();
   } 
 
-  void setup() {
-    println("dont't need this");
-  }
+
   public void setupSketch() {
     //size(256,256);
     r = width/PI;

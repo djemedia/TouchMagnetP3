@@ -18,6 +18,7 @@ class FluidRenderer extends AudioRenderer {
 
 
   // Variables for the timeStep
+  public String skchName = "Fluidje";
   long previousTime;
   long currentTime;
   float timeScale = .5; // Play with this to slow down or speed up the fluid (the higher, the faster)
@@ -34,9 +35,7 @@ class FluidRenderer extends AudioRenderer {
     //rotations =  (int) source.sampleRate() / source.bufferSize();
   }
 
-  void setup() {
-    println("dont't need this");
-  }
+
   public void setupSketch() {
     //size(canvasW, canvasH, P3D);
     colorMode(HSB, 255);
@@ -87,7 +86,14 @@ class FluidRenderer extends AudioRenderer {
   }
 
   /* Interation stuff below this line */
-
+  public void setColorMode(){
+    colorMode(HSB, 255);
+    
+  }
+  public void loadPresets(){
+    getSketchPresets("fluidje", true);
+    
+  }
   public void mouseDragged () {
     // The ripple size will be determined by mouse speed
     float force = dist(mouseX, mouseY, pmouseX, pmouseY) * 255;

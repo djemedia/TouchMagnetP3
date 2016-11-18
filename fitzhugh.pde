@@ -5,7 +5,7 @@ int fitzhughContrast = 40;
 */
 
 class FitzhughRenderer extends AudioRenderer {
-  
+      public String skchName = "FITZHUGH";
     int rotations;
     
      FitzhughRenderer(AudioSource source) {
@@ -58,9 +58,9 @@ class FitzhughRenderer extends AudioRenderer {
     //size(canvasW,canvasH);
     //colorMode(HSB);
   
-  void setup() {
-    println("dont't need this");
-  }
+    public void loadPresets(){
+      println("HELLO PRESETS" );
+    }
   public void setupSketch() {
    
   //  if(movieOn) mm = new MovieMaker(this,width,height,"reaction"+day()+hour()+minute()+second()+".mov",30, MovieMaker.H263, MovieMaker.HIGH);

@@ -35,7 +35,9 @@ public class ArtnetP5 implements ArtNetDiscoveryListener{
 	}
 	
 	public void setup(){
+  System.out.println("//////////////////////////////////////////////////////////////////////");
   System.out.println("INITIALIZING ARTNET");
+  System.out.println("//////////////////////////////////////////////////////////////////////");
 		if(ARTNET == null){
 			ARTNET = new ArtNet();
 			try{
@@ -70,16 +72,26 @@ public class ArtnetP5 implements ArtNetDiscoveryListener{
                     String nodeSubNet = "236.255.";
                     String nodeDmxOuts = "3";
                     
+                    float nodeSubNetF = 236.255f;
+                    float nodeDmxOutsF = 3f;
+        
+                    
+        
                     try{
-                      /*
-                      ArtDmxPacket dmx = new ArtDmxPacket();
-                      dmx.setUniverse(nodeSubNet, nodeDmxOuts); 
-                      dmx.setSequenceID(sequenceID % 255);
-                      dmx.setDMX(buffer, buffer.length);
-                      sequenceID++;
-                      */
+                       // /*
+                        int nSn = Integer.parseInt(nodeSubNet);
+                        int nDo = Integer.parseInt(nodeDmxOuts);
+                        ArtDmxPacket dmx = new ArtDmxPacket();
+                        /// dmx.setUniverse(nodeSubNet, nodeDmxOuts); /// try as string
+                        dmx.setUniverse(nSn, nDo); /// try as int
+                        // dmx.setUniverse(nodeSubNetF, nodeDmxOutsF); /// try as float
+                        /// dmx.setUniverse(nodeSubNet, nodeDmxOuts); 
+                        dmx.setSequenceID(sequenceID % 255);
+                        dmx.setDMX(buffer, buffer.length);
+                        sequenceID++;
+                    ///  */
                     } catch(Exception e){
-                      /// println("error sending DMX data: " + e);
+                      //// System.out.println("error sending DMX data: " + e);
                     }
         }	
 

@@ -1,6 +1,7 @@
 
 class RadarRenderer extends AudioRenderer {
 
+public String skchName = "Radar Renderer";
   float aura = 2;
   float orbit = .4;
   int delay = 3;
@@ -11,9 +12,7 @@ class RadarRenderer extends AudioRenderer {
     rotations =  (int) source.sampleRate() / source.bufferSize();
   }
 
-  void setup() {
-    println("dont't need this");
-  }
+
   public void setupSketch() {
     colorMode(HSB, TWO_PI * rotations, 1, 1);
     background(0);

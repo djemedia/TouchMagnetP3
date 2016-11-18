@@ -145,9 +145,9 @@ stainedglassRenderer stainedglass;
 AudioRenderer[] visuals; 
 
 
-int select;
+int select =0;
 
-int preset;
+int preset=0;
 //int turingpreset = 0;
 
 XML xml;
@@ -160,6 +160,10 @@ void setup() {
   frameRate(60);
   colorMode(HSB, 255);
   transition = get();
+  
+ 
+  
+  //////////// LOAD ALL PRESETS /////////////////////
   xml = loadXML("data/presets.xml");
   loadMasterPresets();
   // setup player
@@ -168,7 +172,10 @@ void setup() {
   // get a line in from Minim, default bit depth is 16
   //in = minim.getLineIn(Minim.STEREO, 512);
 
-  // setup renderers
+
+  //in.addListener(visuals[select]);
+  /// visuals[select].setupSketch();
+   // setup renderers
   noiseParticles = new NoiseParticlesRenderer(in);
   perlincolor = new PerlinColorRenderer(in);
   //radar = new RadarRenderer(in);
@@ -185,15 +192,19 @@ void setup() {
   };
   
   for(int i=0; i<visuals.length; i++){
+    /// println("Loading sketch: " + i);
     visuals[i].setupSketch();
+    if(i == 1){
+      println("SKETCH ID: " + i );
+      // println("SKETCH DATA: " + i + visuals[i].skchName);
+      //// visuals[i].initClassPresets();
+    }
+    //// visuals[i].loadPresets();
   }
 
   // activate first renderer in list
   select = 0;
   preset = 0;
-  //in.addListener(visuals[select]);
-  /// visuals[select].setupSketch();
-
   if (pixEnable == true){
     setupPixelPusher();
   }
@@ -329,8 +340,21 @@ void setup() {
 
   oscP5.plug(this, "oscSave", "/luminous/save");
 }
+void setCurSketchParams(int tId){
+  println("I AM THE ID: " + tId);
+    /// visuals[tId].loadPresets();
+    /// visuals[tId].setColorMode();
+}
+void loadPresets(){
+  for(int i=0; i<visuals.length; i++){
+    //// visuals[i].loadPresets();
+    println("INDEX OF ALL VISUALS" + i);
+  }
+}
 
-
+void setColorMode(){
+  
+}
 void oscSketch1(float iA) {
   if (iA == 1) {
     transitionReset();
@@ -339,9 +363,12 @@ void oscSketch1(float iA) {
     preset = 0;
     //  vFader5 = 30;
     //  vFader6 = 50;
-    getSketchPresets("noiseParticles", true);
+    // getSketchPresets("noiseParticles", true);
     //in.addListener(visuals[select]);
-    //visuals[select].setup();
+    //// visuals[select].setupSketch();
+    // visuals[select].loadPresets();
+    setCurSketchParams(select);
+
     colorMode(HSB, 255);
   }
 }
@@ -352,8 +379,9 @@ void oscSketch2(float iA) {
     select = 1;
     preset = 0;
     //in.addListener(visuals[select]);
-    // visuals[select].setup();
+    /// visuals[select].setup();
     //add code to prevent double tap
+    colorMode(HSB, 255);
   }
 }
 void oscSketch3(float iA) {
@@ -364,7 +392,7 @@ void oscSketch3(float iA) {
     preset = 0;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
-    colorMode(HSB, 255);
+    colorMode(HSB, 1); //setupPixelPusher();
   }
 }
 void oscSketch4(float iA) {
@@ -375,6 +403,7 @@ void oscSketch4(float iA) {
     preset = 0;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
+    colorMode(RGB, 255);
   }
 }
 void oscSketch5(float iA) {
@@ -385,6 +414,7 @@ void oscSketch5(float iA) {
     preset = 0;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
+    colorMode(HSB, 255);
   }
 }
 void oscSketch6(float iA) {
@@ -398,6 +428,7 @@ void oscSketch6(float iA) {
     //  int vFader4 = 0;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
+    colorMode(HSB, 255);
   }
 }
 void oscSketch7(float iA) { 
@@ -408,6 +439,7 @@ void oscSketch7(float iA) {
     preset = 0;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
+    colorMode(RGB,255);
   }
 }
 
@@ -421,6 +453,8 @@ void oscSketch8(float iA) {
     ///visuals[select].setup();
 
     //colorMode(RGB);
+    
+    colorMode(HSB, 255);
   }
 }
 void oscSketch9(float iA) {
@@ -1058,6 +1092,11 @@ void keyPressed() {
     }
     
   }
+  
+   if(key == 'p'){
+    loadPresets();
+    
+  }
   if (key == ' ') {
     transitionReset();
     //in.removeListener(visuals[select]);
@@ -1072,6 +1111,7 @@ void keyPressed() {
     }
   }
 }
+
 
 
 void stop()

@@ -1,11 +1,12 @@
 /* OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/3897*@* */
 /* !do not delete the line above, required for linking your tweak if you re-upload */
-  int NUM_PARTICLES = 800; 
-   int i = 0;
+int tId = 0;
+int NUM_PARTICLES = 800; 
 class NoiseFieldRenderer extends AudioRenderer {
 
+  
   int rotations;
-
+  public String skchName = "Noise Field";
 
   NoiseFieldRenderer(AudioSource source) {
     //rotations =  (int) source.sampleRate() / source.bufferSize();
@@ -18,9 +19,10 @@ class NoiseFieldRenderer extends AudioRenderer {
 
   ParticleSystem p;
   
-  void setup() {
-    println("dont't need this");
-  }
+
+    public void loadPresets(){
+      println("HELLO PRESETS" );
+    }
   public void setupSketch() {
     smooth();
     //size(canvasW, canvasH);
@@ -67,9 +69,9 @@ public void onClick(int mX, int mY) {
       for (int x=mX - brush; x < brush + mX; x+=4) {
         //    for(int y=-particleMargin; y<height+particleMargin; y+=particlesDensity) {
         //    for(int x=-particleMargin; x<width+particleMargin; x+=particlesDensity) {
-        if (i == 8) {
-          println(i);
-          i=0;
+        if (tId == 8) {
+          println(tId);
+          tId=0;
         }
         //       int c = color(50+50*sin(PI*x/width), 127, 255*sin(PI*y/width));
         //int c = color(200*sin(PI*x/width), 227, 255*sin(PI*y/width));

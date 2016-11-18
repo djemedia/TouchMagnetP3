@@ -4,6 +4,8 @@ class NoiseParticlesRenderer extends AudioRenderer {
   int cP = color(255, 255, 255);
   Color javaColor; 
 
+
+  public String skchName = "Noise Particles";
   float noiseScale = 0.005;
   float noiseZ = .8;
   int particlesDensity = 4;
@@ -21,12 +23,12 @@ class NoiseParticlesRenderer extends AudioRenderer {
 
   NoiseParticlesRenderer(AudioSource source) {
     //speed =  (int) source.sampleRate() / source.bufferSize();
+    
   }
 
-  void setup() {
-    println("dont't need this");
-  }
+
   public void setupSketch() {
+    println("HELLO SETUP" );
     colorMode(HSB, 255);
     currFrame = new int[width*height];
     prevFrame = new int[width*height];
@@ -68,9 +70,12 @@ class NoiseParticlesRenderer extends AudioRenderer {
     }
   }
 
-
-
-
+  public void loadPresets(){
+    println("HELLO PRESETS" );
+  }
+  public void setColorMode(){
+    
+  }
   public void renderSketch() {
     if (okToDraw) {
       okToDraw = false;

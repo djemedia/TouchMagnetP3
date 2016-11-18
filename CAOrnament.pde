@@ -34,15 +34,19 @@
  */
 
 
-CAMatrix ca;
-ToneMap toneMap;
-
 
 class stainedglassRenderer extends AudioRenderer {
 
+  
+  public String skchName = "Stained Glass CA Ornament";
   int rotations;
   int w=canvasW;
   int h=canvasH;
+
+
+
+CAMatrix ca;
+ToneMap toneMap;
 
   stainedglassRenderer(AudioSource source) {
     //rotations =  (int) source.sampleRate() / source.bufferSize();
@@ -53,9 +57,11 @@ class stainedglassRenderer extends AudioRenderer {
 
   int vFader5 = 128;
 
-  void setup() {
-    println("dont't need this");
+  public void loadPresets(){
+    println("HELLO PRESETS" );
   }
+  
+  
   public void setupSketch() {
     //size(canvasW, canvasH);
     //colorMode(RGB,255);

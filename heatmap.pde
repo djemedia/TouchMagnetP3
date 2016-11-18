@@ -1,5 +1,5 @@
 class HeatmapRenderer extends AudioRenderer {
-
+  public String skchName = "Heatmap";
   /*
 A touch heatmap with integration with led pixels.
    Dan Cote, Dustin Edwards - GPLv2
@@ -25,9 +25,9 @@ A touch heatmap with integration with led pixels.
     //rotations =  (int) source.sampleRate() / source.bufferSize();
   }
 
-  void setup() {
-    println("dont't need this");
-  }
+    public void loadPresets(){
+      println("HELLO PRESETS" );
+    }
   public void setupSketch() {
     //size(ssize, ssize, P3D);
     colorMode(RGB, 255);

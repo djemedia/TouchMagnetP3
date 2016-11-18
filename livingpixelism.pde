@@ -7,17 +7,7 @@ int res = 8;
 //int scl = 2; 
 //int res = 7;
 //int scl = 1; 
-//int res = 6;
-//int scl = 3;
-//int res = 5;
-int dirs = 7, rdrop = 8, lim = 128;
-int palette = 0, pattern = 2, soft =1;
-int dx, dy, w, h, s;
-boolean border, invert;
-PImage img;
 
-
-float[] pat;
 /////////////////////////////////////////////////
 //                                             //
 class TuringRenderer extends AudioRenderer {
@@ -30,9 +20,19 @@ class TuringRenderer extends AudioRenderer {
   // (c) Martin Schneider 2010
 
   //int vFader3 = 0;
+  //int res = 6;
+  //int scl = 3;
+  //int res = 5;
+  int dirs = 7, rdrop = 8, lim = 128;
+  int palette = 0, pattern = 2, soft =1;
+  int dx, dy, w, h, s;
+  boolean border, invert;
+  PImage img;
 
+
+  float[] pat;
   int rotations;
-
+  public String skchName = "Turing Living Pixels";
   TuringRenderer(AudioSource source) {
     //rotations =  (int) source.sampleRate() / source.bufferSize();
   }
@@ -57,24 +57,26 @@ class TuringRenderer extends AudioRenderer {
   //for(int i=0; i<s; i++) pnew[i] = pat[i];
 
 
-  void setup() {
-    println("dont't need this");
+
+  public void loadPresets() {
+    println("HELLO PRESETS" );
   }
+
   public void setupSketch() {
     //size(canvasW, canvasH);
     colorMode(HSB, 255);
 
 
 
-/*
+    /*
     int setcolorMode = 0;
-    int setContrastModeF = 60;
-    int vFader2 = 255;
-    int vFader3 = 0;
-*/
+     int setContrastModeF = 60;
+     int vFader2 = 255;
+     int vFader3 = 0;
+     */
     //int vFader5 = 50;
     //int vFader6 = 126;
-    
+
     int setScaleDetailF = 4;
     int setResF = 3;
     //int setScaleDetailF = (int)map(vFader5, 0, 255, 1, 10);
@@ -100,10 +102,10 @@ class TuringRenderer extends AudioRenderer {
     scl  = setScaleDetailF;  
 
 
-  if (getSketchPresets("livingPixelism", false)) {
-    pattern = presets[preset].getChild("pattern").getIntContent();
-    println("LivingPixelism Preset #" + preset + " Pattern: " + pattern + " Faders: " + setcolorMode + " " + vFader2 + " " + vFader3 + " " + vFader4 + " " + vFader5 + " " + vFader6 + " " + vFader7 + " " + vFader8);
-  }
+    if (getSketchPresets("livingPixelism", false)) {
+      pattern = presets[preset].getChild("pattern").getIntContent();
+      println("LivingPixelism Preset #" + preset + " Pattern: " + pattern + " Faders: " + setcolorMode + " " + vFader2 + " " + vFader3 + " " + vFader4 + " " + vFader5 + " " + vFader6 + " " + vFader7 + " " + vFader8);
+    }
 
     reset();
   }
@@ -198,7 +200,7 @@ class TuringRenderer extends AudioRenderer {
 
     // display the canvas
 
-      if (soft>0) smooth(); 
+    if (soft>0) smooth(); 
     else noSmooth();
 
     image(img, 0, 0, res*w, res*h);
