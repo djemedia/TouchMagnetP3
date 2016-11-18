@@ -188,7 +188,7 @@ void setup() {
 
 //////////////////// set renderer array //////////////////////
   visuals = new AudioRenderer[] {
-    fluidje, noiseParticles, perlincolor, heatmap,  noisefield, fitzhugh, stainedglass, turing
+    fluidje, perlincolor, heatmap, noiseParticles, noisefield, fitzhugh, stainedglass, turing
   };
   
   
@@ -723,14 +723,16 @@ void oscEffectB2B(float iA) {
 
 
 void oscOnClick(float iA, float iB) {
+  /// visuals[select].onClick();
+  
   if (select == 0)
-    noiseParticles.onClick(iA, iB);
+    fluidje.onClick(iA, iB);
   if (select == 1)
     perlincolor.onClick(iA, iB);
   if (select == 2)
     heatmap.onClick(iA, iB);
   if (select == 3)
-    fluidje.onClick(iA, iB);
+  noiseParticles.onClick(iA, iB);
   if (select == 4)
     noisefield.onClick(iA, iB);
   if (select == 5)
@@ -739,6 +741,7 @@ void oscOnClick(float iA, float iB) {
     stainedglass.onClick(iA, iB);
   if (select == 7)
     turing.onClick(iA, iB);
+
 }
 
 void oscOnClick2(float iA, float iB) {
