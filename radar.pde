@@ -31,7 +31,7 @@ public String skchName = "Radar Renderer";
 
 
   /// set the onClick function using the global X and Y values
-  public void setClick(){
+  public void onClick(){
     //// do soemthing with (theX, theY);
   }
   

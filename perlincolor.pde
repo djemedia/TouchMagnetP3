@@ -91,13 +91,10 @@ public String skchName = "Perlin color";
     //drawPixelPusher();
   }
   /// set the onClick function using the global X and Y values
-  public void setClick(){
-    onClick(theX, theY);
-  }
-  
-  public void onClick(float mX, float mY) {
-    cX = mX * canvasW;
-    cY = mY * canvasH;
+
+  public void onClick() {
+    cX = theX * canvasW;
+    cY = theY * canvasH;
     //int oX = (int)cX;
     //int oY = (int)cY;
     //ox += max(-speed,min(speed,(cX-width/2)*speed/r));

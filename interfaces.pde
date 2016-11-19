@@ -20,7 +20,7 @@ abstract class AudioRenderer implements AudioListener {
   abstract void setInitVals();
   abstract void loadPresets();
   abstract void switchColorMode();
-  abstract void setClick();
+  abstract void onClick();
 }
 
 

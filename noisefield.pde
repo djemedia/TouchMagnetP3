@@ -62,23 +62,23 @@ class NoiseFieldRenderer extends AudioRenderer {
     catch (NullPointerException e) {
     }
   }
-  /// set the onClick function using the global X and Y values
-  public void setClick(){
-    onClick(theX, theY);
-  }
-  public void onClick(float mX, float mY) {
-    float cX = mX * canvasW;
-    float cY = mY * canvasH;
+
+  /////////////////////////////////////////////////////////
+  ////// WHY ARE THERE TWO onCLICK FUNCTIONS ////////////////
+  //////////////////////////////////////////////////////////
+  public void onClick() {
+    float cX = theX * canvasW;
+    float cY = theY * canvasH;
     oX = (int)cX;
     oY = (int)cY;
   }
 }
-public void onClick(int mX, int mY) {
+public void onClick() {
     int brush = 4;
     int setContrastModeF = (int)map(vFader4, 0, 255, 0, 60);
 
-    for (int y=mY - brush; y < brush + mY; y+=4) {
-      for (int x=mX - brush; x < brush + mX; x+=4) {
+    for (int y=(int)theY - brush; y < brush + (int)theY; y+=4) {
+      for (int x=(int)theX - brush; x < brush + (int)theX; x+=4) {
         //    for(int y=-particleMargin; y<height+particleMargin; y+=particlesDensity) {
         //    for(int x=-particleMargin; x<width+particleMargin; x+=particlesDensity) {
         if (tId == 8) {

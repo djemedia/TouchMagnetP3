@@ -132,15 +132,13 @@ class NoiseParticlesRenderer extends AudioRenderer {
     onClick(oX, oY);
   }
   /// set the onClick funciton using the global X and Y values
-  public void setClick(){
-    onClick(theX, theY);
-  }
-  public void onClick(int mX, int mY) {
+
+  public void onClick() {
     int brush = 4;
     int setContrastModeF = (int)map(vFader4, 0, 255, 0, 60);
 
-    for (int y=mY - brush; y < brush + mY; y+=particlesDensity) {
-      for (int x=mX - brush; x < brush + mX; x+=particlesDensity) {
+    for (int y=(int)theY - brush; y < brush + (int)theY; y+=particlesDensity) {
+      for (int x=(int)theX - brush; x < brush + (int)theX; x+=particlesDensity) {
         //    for(int y=-particleMargin; y<height+particleMargin; y+=particlesDensity) {
         //    for(int x=-particleMargin; x<width+particleMargin; x+=particlesDensity) {
         if (i == particles.length) {

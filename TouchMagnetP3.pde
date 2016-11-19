@@ -718,24 +718,12 @@ void oscOnClick(float iA, float iB) {
   /// set the global X and Y to whichever interface is passing it
   theX = iA;
   theY = iB;
-  visuals[select].setClick();
+  visuals[select].onClick();
   /*
-  if (select == 0)
+  if (select == 0){
     fluidje.onClick(iA, iB);
-  if (select == 1)
-    perlincolor.onClick(iA, iB);
-  if (select == 2)
-    heatmap.onClick(iA, iB);
-  if (select == 3)
-  noiseParticles.onClick(iA, iB);
-  if (select == 4)
-    noisefield.onClick(iA, iB);
-  if (select == 5)
-    fitzhugh.onClick(iA, iB);
-  if (select == 6)
-    stainedglass.onClick(iA, iB);
-  if (select == 7)
-    turing.onClick(iA, iB);
+  }
+  
  */
 }
 

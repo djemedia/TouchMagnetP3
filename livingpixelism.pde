@@ -284,13 +284,10 @@ class TuringRenderer extends AudioRenderer {
 
 
   /// set the onClick funciton using the global X and Y values
-  public void setClick(){
-    onClick(theX, theY);
-  }
-  void onClick(float mX, float mY) {
+  void onClick() {
     // add a circular drop of chemical
-    float cX = mX * canvasW;
-    float cY = mY * canvasH;
+    float cX = theX * canvasW;
+    float cY = theY * canvasH;
     int oX = (int)cX;
     int oY = (int)cY;
     int x0 = mod((oX-dx)/res, w);
