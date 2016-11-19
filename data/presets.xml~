@@ -286,4 +286,16 @@
     <gradient at="212">BLACK</gradient>
     <gradient at="255">SADDLEBROWN</gradient>
   </stainedGlass>
+    <!-- CODE STUB  -->
+  <lastCall>
+    <vFader1>255</vFader1>
+    <vFader2>125</vFader2>
+    <vFader3>255</vFader3>
+    <vFader4>120</vFader4>
+    <vFader5>125</vFader5>
+    <vFader6>255</vFader6>
+    <vFader7>125</vFader7>
+    <vFader8>255</vFader8>
+    <vFader9>125</vFader9>
+  </lastCall>
 </presets>

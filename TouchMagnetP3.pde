@@ -194,7 +194,7 @@ void setup() {
 
 //////////////////// set renderer array //////////////////////
   visuals = new AudioRenderer[] {
-    lastcall, fluidje, perlincolor, heatmap, noiseParticles, noisefield, fitzhugh, stainedglass, turing
+    fluidje, perlincolor, heatmap, noiseParticles, noisefield, fitzhugh, stainedglass, turing, lastcall 
   };
   
   
@@ -1099,8 +1099,13 @@ void keyPressed() {
   if (key == ' ') {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select++;
-    select %= visuals.length;
+    if(select >= visuals.length-1){
+      select = 0;
+    } else {
+      select++;
+    }
+    
+    /// select %= visuals.length;
     //in.addListener(visuals[select]);
     /// visuals[select].setup();
   } else {
