@@ -73,6 +73,9 @@ boolean showFramerate = false;
 boolean ready_to_go = true;
 int lastPosition;
 
+//// global X and Y positions for touch/mouse/gui
+float theX = 0;
+float theY = 0;
 
 int ledsW = 48 * 5;
 int ledsH = 72;
@@ -712,8 +715,11 @@ void oscEffectB2B(float iA) {
 
 
 void oscOnClick(float iA, float iB) {
-  /// visuals[select].onClick();
-  
+  /// set the global X and Y to whichever interface is passing it
+  theX = iA;
+  theY = iB;
+  visuals[select].setClick();
+  /*
   if (select == 0)
     fluidje.onClick(iA, iB);
   if (select == 1)
@@ -730,7 +736,7 @@ void oscOnClick(float iA, float iB) {
     stainedglass.onClick(iA, iB);
   if (select == 7)
     turing.onClick(iA, iB);
-
+ */
 }
 
 void oscOnClick2(float iA, float iB) {

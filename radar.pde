@@ -29,6 +29,12 @@ public String skchName = "Radar Renderer";
     background(0);
   }
 
+
+  /// set the onClick function using the global X and Y values
+  public void setClick(){
+    //// do soemthing with (theX, theY);
+  }
+  
   synchronized void renderSketch()
   {
     colorMode(HSB, 40 * rotations, 1, 1);
