@@ -124,7 +124,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
   /////////////////////////////////////////////////////////
   ////// WHY ARE THERE TWO onCLICK FUNCTIONS ////////////////
   //////////////////////////////////////////////////////////
-/* 
+  /* 
   public void onClick() {
     float cX = mX * canvasW;
     float cY = mY * canvasH;
@@ -140,8 +140,14 @@ class NoiseParticlesRenderer extends AudioRenderer {
     int brush = 4;
     int setContrastModeF = (int)map(vFader4, 0, 255, 0, 60);
 
-    for (int y=(int)theY - brush; y < brush + (int)theY; y+=particlesDensity) {
-      for (int x=(int)theX - brush; x < brush + (int)theX; x+=particlesDensity) {
+     float cX = theX * canvasW;
+    float cY = theY * canvasH;
+    int oX = (int)cX;
+    int oY = (int)cY;
+
+
+    for (int y= oY - brush; y < brush + oY; y+=particlesDensity) {
+      for (int x= oX - brush; x < brush + oX; x+=particlesDensity) {
         //    for(int y=-particleMargin; y<height+particleMargin; y+=particlesDensity) {
         //    for(int x=-particleMargin; x<width+particleMargin; x+=particlesDensity) {
         if (i == particles.length) {
