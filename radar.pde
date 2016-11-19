@@ -11,6 +11,10 @@ public String skchName = "Radar Renderer";
   RadarRenderer(AudioSource source) {
     rotations =  (int) source.sampleRate() / source.bufferSize();
   }
+  
+    public void setInitVals(){
+    
+  }
  public void loadPresets() {
     println("Loading presets for" + skchName );
   }

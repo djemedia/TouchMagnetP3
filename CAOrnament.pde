@@ -42,23 +42,23 @@ class stainedglassRenderer extends AudioRenderer {
   int rotations;
   int w=canvasW;
   int h=canvasH;
-
-
+  int oX = w/2;
+  int oY = h/2;
+  int vFader5 = 128;
 
   CAMatrix ca;
   ToneMap toneMap;
-  
   ColorGradient grad;
 
   stainedglassRenderer(AudioSource source) {
     //rotations =  (int) source.sampleRate() / source.bufferSize();
   }
 
-  int oX = w/2;
-  int oY = h/2;
 
-  int vFader5 = 128;
-
+  public void setInitVals(){
+    
+  }
+  
   public void loadPresets() {
     println("Loading presets for" + skchName );
     doPresets();
@@ -106,85 +106,9 @@ class stainedglassRenderer extends AudioRenderer {
     // create a gradient for rendering/shading the CA
     grad=new ColorGradient();
     
-    
-    
     // NamedColors are preset colors, but any TColor can be added
     // see javadocs for list of names:
     // http://toxiclibs.org/docs/colorutils/toxi/color/NamedColor.html
-    /*    
-     //Flame1
-     if (preset==0){
-     grad.addColorAt(0,NamedColor.BLACK);
-     //grad.addColorAt(32,NamedColor.BLACK);
-     //grad.addColorAt(64,NamedColor.CYAN);
-     //grad.addColorAt(64,NamedColor.YELLOW);
-     
-     grad.addColorAt(124,NamedColor.MAROON);
-     grad.addColorAt(208,NamedColor.DARKORANGE);
-     //grad.addColorAt(192,NamedColor.BLACK);
-     grad.addColorAt(255,NamedColor.BLACK);
-     }
-     
-     
-     //Flame2
-     if (preset==1){
-     //grad.addColorAt(0,NamedColor.RED);
-     grad.addColorAt(0,NamedColor.PURPLE);
-     //grad.addColorAt(64,NamedColor.DARKORANGE);
-     //grad.addColorAt(86,NamedColor.BLACK);
-     //grad.addColorAt(88,NamedColor.PURPLE);
-     grad.addColorAt(128,NamedColor.DARKGOLDENROD);
-     grad.addColorAt(192,NamedColor.CRIMSON);
-     grad.addColorAt(255,NamedColor.PURPLE);
-     //grad.addColorAt(255,NamedColor.VIOLET);
-     }
-     
-     
-     //red/purple
-     if (preset==2){
-     grad.addColorAt(0, NamedColor.DARKORANGE);
-     //grad.addColorAt(64,NamedColor.DARKORANGE);
-     //grad.addColorAt(104, NamedColor.DEEPSKYBLUE);
-     grad.addColorAt(128, NamedColor.BLACK);
-     
-     grad.addColorAt(164,NamedColor.MAROON);
-     grad.addColorAt(192, NamedColor.BLACK);
-     grad.addColorAt(255, NamedColor.DARKORANGE);
-     }
-     
-    /*
-     //red/purple
-     grad.addColorAt(0, NamedColor.PURPLE);
-     //grad.addColorAt(64, NamedColor.BLACK);
-     grad.addColorAt(128, NamedColor.GREEN);
-     //grad.addColorAt(192, NamedColor.DARKVIOLET);
-     grad.addColorAt(255, NamedColor.PURPLE);
-     */
-    /*
-    if (preset==3){
-     
-     grad.addColorAt(0, NamedColor.SADDLEBROWN);
-     grad.addColorAt(34, NamedColor.BLACK);
-     grad.addColorAt(64, NamedColor.SIENNA);
-     grad.addColorAt(128, NamedColor.BLACK);
-     //grad.addColorAt(192, NamedColor.MOCCASIN);
-     grad.addColorAt(212, NamedColor.BLACK);
-     grad.addColorAt(255, NamedColor.SADDLEBROWN);
-                /*grad.addColorAt(0, NamedColor.DARKRED);
-     //grad.addColorAt(64, NamedColor.BLACK);
-     grad.addColorAt(120, NamedColor.DARKORANGE);
-     grad.addColorAt(136, NamedColor.ORANGE);
-     //grad.addColorAt(159, NamedColor.WHITE);
-     
-     grad.addColorAt(172, NamedColor.MAROON);
-     //grad.addColorAt(64, NamedColor.BLACK);
-     grad.addColorAt(200, NamedColor.BLACK);
-     //ungrad.addColorAt(206, NamedColor.DARKBLUE);
-     grad.addColorAt(212, NamedColor.BLACK);
-     grad.addColorAt(255, NamedColor.DARKRED);*/
-    /*  
-     }
-     */
 
     if (getSketchPresets("stainedGlass", false)) {
       XML[] xmlGradient = presets[preset].getChildren("gradient");

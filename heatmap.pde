@@ -1,15 +1,11 @@
 class HeatmapRenderer extends AudioRenderer {
-  public String skchName = "Heatmap";
   /*
-A touch heatmap with integration with led pixels.
-   Dan Cote, Dustin Edwards - GPLv2
-   
-   */
-
-  /* OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/46554*@* */
-  /* !do not delete the line above, required for linking your tweak if you re-upload */
-
-
+  A touch heatmap with integration with led pixels.
+  Dan Cote, Dustin Edwards - GPLv2
+  
+  OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/46554*@* 
+  !do not delete the line above, required for linking your tweak if you re-upload */
+  
   // Array to store the heat values for each pixel
   float heatmap[][][] = new float[2][canvasW][canvasH];
   // The index of the current heatmap
@@ -17,14 +13,17 @@ A touch heatmap with integration with led pixels.
   // A color gradient to see pretty colors
   Gradient g;
 
-
+  public String skchName = "Heatmap";
+  
   int rotations;
   //  boolean toggle = true;
 
   HeatmapRenderer(AudioSource source) {
     //rotations =  (int) source.sampleRate() / source.bufferSize();
   }
-
+  public void setInitVals(){
+    
+  }
   public void loadPresets() {
     println("Loading presets for" + skchName );
     doPresets();

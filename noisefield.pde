@@ -1,11 +1,17 @@
-/* OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/3897*@* */
-/* !do not delete the line above, required for linking your tweak if you re-upload */
+//// these values get accessed by both classes
+//// should be moved to main class tho
 int tId = 0;
 int NUM_PARTICLES = 800; 
+
 class NoiseFieldRenderer extends AudioRenderer {
 
-  
   int rotations;
+  int oX = mouseX;
+  int oY = mouseY;
+
+  ParticleSystem p;
+  
+
   public String skchName = "Noise Field";
 
   NoiseFieldRenderer(AudioSource source) {
@@ -13,12 +19,9 @@ class NoiseFieldRenderer extends AudioRenderer {
   }
 
 
-
-  int oX = mouseX;
-  int oY = mouseY;
-
-  ParticleSystem p;
-  
+  public void setInitVals(){
+    
+  }
 
   public void loadPresets() {
     println("Loading presets for" + skchName );

@@ -872,6 +872,7 @@ void setupPixelPusher() {
   testObserver = new TestObserver();
   registry.addObserver(testObserver);
   //registry.setAntiLog(true);
+  registry.setLogging(false);
   background(0);
 }
 

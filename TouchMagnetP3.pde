@@ -342,21 +342,17 @@ void setup() {
 
   oscP5.plug(this, "oscSave", "/luminous/save");
 }
-void setCurSketchParams(int tId){
-  println("I AM THE ID: " + tId);
-    /// visuals[tId].loadPresets();
-    /// visuals[tId].setColorMode();
-}
-void loadPresets(){
-  for(int i=0; i<visuals.length; i++){
-    //// visuals[i].loadPresets();
-    println("INDEX OF ALL VISUALS" + i);
-  }
+
+void reLoadSketch(){
+  /*
+   visuals[select].setInitVals();
+   visuals[select].loadPresets();
+   */
+   visuals[select].switchColorMode();
+   visuals[select].setupSketch();
 }
 
-void setColorMode(){
-  
-}
+
 void oscSketch1(float iA) {
   if (iA == 1) {
     transitionReset();
@@ -368,11 +364,8 @@ void oscSketch1(float iA) {
     // getSketchPresets("noiseParticles", true);
     //in.addListener(visuals[select]);
     //// visuals[select].setupSketch();
-    visuals[select].loadPresets();
-    visuals[select].switchColorMode();
-    setCurSketchParams(select);
 
-    
+    reLoadSketch();
   }
 }
 void oscSketch2(float iA) {
@@ -384,8 +377,8 @@ void oscSketch2(float iA) {
     //in.addListener(visuals[select]);
     /// visuals[select].setup();
     //add code to prevent double tap
-    visuals[select].loadPresets();
-    visuals[select].switchColorMode();
+    reLoadSketch();
+    
   }
 }
 void oscSketch3(float iA) {
@@ -396,9 +389,7 @@ void oscSketch3(float iA) {
     preset = 0;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
-    
-    visuals[select].loadPresets();
-    visuals[select].switchColorMode();
+    reLoadSketch();
   }
 }
 void oscSketch4(float iA) {
@@ -409,8 +400,7 @@ void oscSketch4(float iA) {
     preset = 0;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
-visuals[select].loadPresets();
-    visuals[select].switchColorMode();
+    reLoadSketch();
   }
 }
 void oscSketch5(float iA) {
@@ -421,8 +411,7 @@ void oscSketch5(float iA) {
     preset = 0;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
-    visuals[select].loadPresets();
-    visuals[select].switchColorMode();
+    reLoadSketch();
   }
 }
 void oscSketch6(float iA) {
@@ -436,8 +425,7 @@ void oscSketch6(float iA) {
     //  int vFader4 = 0;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
-    visuals[select].loadPresets();
-    visuals[select].switchColorMode();
+    reLoadSketch();
   }
 }
 void oscSketch7(float iA) { 
@@ -448,8 +436,7 @@ void oscSketch7(float iA) {
     preset = 0;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
-    visuals[select].loadPresets();
-    visuals[select].switchColorMode();
+    reLoadSketch();
   }
 }
 
@@ -461,8 +448,7 @@ void oscSketch8(float iA) {
     preset = 1;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
-    visuals[select].loadPresets();
-    visuals[select].switchColorMode();
+    reLoadSketch();
   }
 }
 void oscSketch9(float iA) {
@@ -472,8 +458,7 @@ void oscSketch9(float iA) {
     select = 6;
     preset = 3;
     //in.addListener(visuals[select]);
-    visuals[select].loadPresets();
-    visuals[select].switchColorMode();
+    reLoadSketch();
   }
 }
 
@@ -485,6 +470,7 @@ void oscSketch10(float iA) {
     preset = 2;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
+    reLoadSketch();
   }
 }
 void oscSketch11(float iA) {
@@ -495,6 +481,7 @@ void oscSketch11(float iA) {
     preset = 2;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
+    reLoadSketch();
   }
 }
 void oscSketch12(float iA) {
@@ -505,6 +492,7 @@ void oscSketch12(float iA) {
     preset = 0;
     //in.addListener(visuals[select]);
     ////visuals[select].setup();
+    reLoadSketch();
   }
 }
 void oscSketch13(float iA) {
@@ -515,7 +503,7 @@ void oscSketch13(float iA) {
     preset = 1;
     //in.addListener(visuals[select]);
     ////visuals[select].setup();
-    colorMode(HSB, 255);
+    reLoadSketch();
   }
 }
 void oscSketch14(float iA) {
@@ -526,6 +514,7 @@ void oscSketch14(float iA) {
     preset = 2;
     //in.addListener(visuals[select]);
     /// visuals[select].setup();
+    reLoadSketch();
   }
 }
 void oscSketch15(float iA) {
@@ -1106,7 +1095,7 @@ void keyPressed() {
   }
   
    if(key == 'p'){
-    loadPresets();
+    /// loadPresets();
     
   }
   if (key == ' ') {

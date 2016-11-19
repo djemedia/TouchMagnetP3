@@ -5,13 +5,8 @@ int fitzhughContrast = 40;
 */
 
 class FitzhughRenderer extends AudioRenderer {
-      public String skchName = "FITZHUGH";
-    int rotations;
-    
-     FitzhughRenderer(AudioSource source) {
-      //rotations =  (int) source.sampleRate() / source.bufferSize();
-    }
-  
+  public String skchName = "FITZHUGH";
+  int rotations;
   
   int w=canvasW;
   int h=canvasH;
@@ -54,10 +49,16 @@ class FitzhughRenderer extends AudioRenderer {
   //int vFader2 = 255;
   //int vFader3 = 200;
   
-   
+    
+  FitzhughRenderer(AudioSource source) {
+      //rotations =  (int) source.sampleRate() / source.bufferSize();
+  }
+  
     //size(canvasW,canvasH);
     //colorMode(HSB);
-  
+  public void setInitVals(){
+    
+  }
   public void loadPresets() {
     println("Loading presets for" + skchName );
     getSketchPresets("fitzhugh", true);   

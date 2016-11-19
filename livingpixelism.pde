@@ -1,6 +1,9 @@
 /* OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/17043*@* */
 /* !do not delete the line above, required for linking your tweak if you re-upload */
 
+
+//// these values get accessed by both classes
+//// should be moved to main class tho
 int type = 0;
 int scl = 8; 
 int res = 8;
@@ -29,6 +32,11 @@ class TuringRenderer extends AudioRenderer {
   boolean border, invert;
   PImage img;
 
+  // random angular offset
+  float R = random(TWO_PI);
+  // copy chemicals
+  float[] pnew = new float[s];
+  //for(int i=0; i<s; i++) pnew[i] = pat[i];
 
   float[] pat;
   int rotations;
@@ -47,17 +55,9 @@ class TuringRenderer extends AudioRenderer {
    */
   //  l i v  i n g              
 
-
-
-  // random angular offset
-  float R = random(TWO_PI);
-
-  // copy chemicals
-  float[] pnew = new float[s];
-  //for(int i=0; i<s; i++) pnew[i] = pat[i];
-
-
-
+  public void setInitVals(){
+    
+  }
   public void loadPresets() {
     println("Loading presets for" + skchName );
     doPresets();
