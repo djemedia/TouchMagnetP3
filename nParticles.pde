@@ -114,20 +114,26 @@ class NoiseParticlesRenderer extends AudioRenderer {
     }
 
     if (mousePressed && (mouseButton == LEFT))
-      onClick(mouseX, mouseY);
+    theX = mouseX;
+    theY = mouseY;
+      onClick();
     if (mousePressed && (mouseButton == RIGHT)) {
     }
   }
 
-
-
-  public void onClick(float mX, float mY) {
+  /////////////////////////////////////////////////////////
+  ////// WHY ARE THERE TWO onCLICK FUNCTIONS ////////////////
+  //////////////////////////////////////////////////////////
+/* 
+  public void onClick() {
     float cX = mX * canvasW;
     float cY = mY * canvasH;
     int oX = (int)cX;
     int oY = (int)cY;
     onClick(oX, oY);
   }
+  
+  */
   /// set the onClick funciton using the global X and Y values
 
   public void onClick() {

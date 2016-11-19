@@ -61,12 +61,14 @@ class NoiseFieldRenderer extends AudioRenderer {
   /////////////////////////////////////////////////////////
   ////// WHY ARE THERE TWO onCLICK FUNCTIONS ////////////////
   //////////////////////////////////////////////////////////
+  ///*
   public void onClick() {
     float cX = theX * canvasW;
     float cY = theY * canvasH;
     oX = (int)cX;
     oY = (int)cY;
   }
+  //*/
 }
 public void onClick() {
     int brush = 4;
