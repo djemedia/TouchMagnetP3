@@ -145,6 +145,8 @@ NoiseFieldRenderer noisefield;
 FitzhughRenderer fitzhugh;
 TuringRenderer turing;
 stainedglassRenderer stainedglass;
+LastCallRenderer lastcall;
+
 AudioRenderer[] visuals; 
 
 
@@ -188,10 +190,11 @@ void setup() {
   fitzhugh = new FitzhughRenderer(in);
   turing = new TuringRenderer(in);
   stainedglass = new stainedglassRenderer(in);
+  lastcall = new LastCallRenderer(in);
 
 //////////////////// set renderer array //////////////////////
   visuals = new AudioRenderer[] {
-    fluidje, perlincolor, heatmap, noiseParticles, noisefield, fitzhugh, stainedglass, turing
+    lastcall, fluidje, perlincolor, heatmap, noiseParticles, noisefield, fitzhugh, stainedglass, turing
   };
   
   
@@ -204,6 +207,7 @@ void setup() {
       // println("SKETCH DATA: " + i + visuals[i].skchName);
       //// visuals[i].initClassPresets();
     }
+     println("SKETCH DATA: " + i + visuals[i].skchName);
     //// visuals[i].loadPresets();
   }
 

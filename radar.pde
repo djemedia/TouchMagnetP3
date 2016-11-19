@@ -12,9 +12,9 @@ public String skchName = "Radar Renderer";
     rotations =  (int) source.sampleRate() / source.bufferSize();
   }
   
-    public void setInitVals(){
+ public void setInitVals(){
     
-  }
+ }
  public void loadPresets() {
     println("Loading presets for" + skchName );
   }
@@ -35,8 +35,7 @@ public String skchName = "Radar Renderer";
     //// do soemthing with (theX, theY);
   }
   
-  synchronized void renderSketch()
-  {
+  synchronized void renderSketch(){
     colorMode(HSB, 40 * rotations, 1, 1);
     if (left != null) {
       float t = map(millis(), 0, delay * 800, 0, PI);   

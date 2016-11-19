@@ -21,6 +21,7 @@ abstract class AudioRenderer implements AudioListener {
   abstract void loadPresets();
   abstract void switchColorMode();
   abstract void onClick();
+  String skchName;
 }
 
 
