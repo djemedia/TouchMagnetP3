@@ -35,10 +35,7 @@ class FluidRenderer extends AudioRenderer {
     //rotations =  (int) source.sampleRate() / source.bufferSize();
   }
 
-  public void setInitVals(){
-    
-  }
-  
+
   public void loadPresets() {
     println("Loading presets for" + skchName );
     getSketchPresets("fluidje", true);

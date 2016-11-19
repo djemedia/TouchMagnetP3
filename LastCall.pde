@@ -40,8 +40,7 @@ class LastCallRenderer extends AudioRenderer {
   LastCallRenderer(AudioSource source) {
   }
 
-  public void setInitVals() {
-  }
+ 
   public void loadPresets() {
     getSketchPresets("lastCall", true);   
   }

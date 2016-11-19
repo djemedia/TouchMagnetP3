@@ -21,9 +21,7 @@ class HeatmapRenderer extends AudioRenderer {
   HeatmapRenderer(AudioSource source) {
     //rotations =  (int) source.sampleRate() / source.bufferSize();
   }
-  public void setInitVals(){
-    
-  }
+ 
   public void loadPresets() {
     println("Loading presets for" + skchName );
     doPresets();

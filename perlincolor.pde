@@ -19,10 +19,7 @@ public String skchName = "Perlin color";
   PerlinColorRenderer(AudioSource source) {
     //rotations =  (int) source.sampleRate() / source.bufferSize();
   } 
-  public void setInitVals(){
-    
-  }
-
+ 
   public void loadPresets() {
     println("Loading presets for" + skchName );
     getSketchPresets("perlincolor", true);

@@ -55,9 +55,7 @@ class TuringRenderer extends AudioRenderer {
    */
   //  l i v  i n g              
 
-  public void setInitVals(){
-    
-  }
+ 
   public void loadPresets() {
     println("Loading presets for" + skchName );
     doPresets();

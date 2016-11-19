@@ -202,13 +202,7 @@ void setup() {
   for(int i=0; i<visuals.length; i++){
     /// println("Loading sketch: " + i);
     visuals[i].setupSketch();
-    if(i == 1){
-      println("SKETCH ID: " + i );
-      // println("SKETCH DATA: " + i + visuals[i].skchName);
-      //// visuals[i].initClassPresets();
-    }
-     println("SKETCH DATA: " + i + visuals[i].skchName);
-    //// visuals[i].loadPresets();
+    
   }
 
   // activate first renderer in list

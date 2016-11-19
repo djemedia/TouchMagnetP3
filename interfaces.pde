@@ -17,7 +17,7 @@ abstract class AudioRenderer implements AudioListener {
   abstract void renderSketch();
   
   /// functions to reset sketch
-  abstract void setInitVals();
+  //// abstract void setInitVals();
   abstract void loadPresets();
   abstract void switchColorMode();
   abstract void onClick();

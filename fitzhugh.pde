@@ -54,11 +54,7 @@ class FitzhughRenderer extends AudioRenderer {
       //rotations =  (int) source.sampleRate() / source.bufferSize();
   }
   
-    //size(canvasW,canvasH);
-    //colorMode(HSB);
-  public void setInitVals(){
-    
-  }
+   
   public void loadPresets() {
     println("Loading presets for" + skchName );
     getSketchPresets("fitzhugh", true);   

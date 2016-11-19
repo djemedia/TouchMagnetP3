@@ -26,9 +26,6 @@ class NoiseParticlesRenderer extends AudioRenderer {
     
   }
 
-  public void setInitVals(){
-    
-  }
   public void loadPresets() {
     println("Loading presets for" + skchName );
     getSketchPresets("noiseParticles", true);
