@@ -6,8 +6,12 @@ int NUM_PARTICLES = 800;
 class NoiseFieldRenderer extends AudioRenderer {
 
   int rotations;
-  int oX = mouseX;
-  int oY = mouseY;
+  //int oX;
+  //int oY;
+  
+   int oX = mouseX;
+   int oY = mouseY;
+  
 
   ParticleSystem p;
   
@@ -43,8 +47,8 @@ class NoiseFieldRenderer extends AudioRenderer {
 
   public void renderSketch()
   {
-    colorMode(HSB, 255);
-    noStroke();
+    //colorMode(HSB, 255);
+    //noStroke();
     int setTraceModeF = (int)map(vFader4, 0, 255, 0, 100);
     fill(0, setTraceModeF);
     rect(0, 0, width, height);
@@ -61,42 +65,20 @@ class NoiseFieldRenderer extends AudioRenderer {
   /////////////////////////////////////////////////////////
   ////// WHY ARE THERE TWO onCLICK FUNCTIONS ////////////////
   //////////////////////////////////////////////////////////
-  ///*
+  /*
+ 
   public void onClick() {
     float cX = theX * canvasW;
     float cY = theY * canvasH;
     oX = (int)cX;
     oY = (int)cY;
   }
-  //*/
-}
-public void onClick() {
-    int brush = 4;
-    int setContrastModeF = (int)map(vFader4, 0, 255, 0, 60);
-
-    for (int y=(int)theY - brush; y < brush + (int)theY; y+=4) {
-      for (int x=(int)theX - brush; x < brush + (int)theX; x+=4) {
-        //    for(int y=-particleMargin; y<height+particleMargin; y+=particlesDensity) {
-        //    for(int x=-particleMargin; x<width+particleMargin; x+=particlesDensity) {
-        if (tId == 8) {
-          println(tId);
-          tId=0;
-        }
-        //       int c = color(50+50*sin(PI*x/width), 127, 255*sin(PI*y/width));
-        //int c = color(200*sin(PI*x/width), 227, 255*sin(PI*y/width));
-        //int c = color(setcolorMode*sin(PI*x/width), 225, 255*sin(PI*y/width));
-
-        //int c = color(10+20*sin(PI*x/width), 200, 255*sin(PI*y/width));
-        //static color
-        //int c = color(setcolorMode+20*sin(PI*x/width), 255*sin(PI*(200)/width), 255);
-        //int c = color(setcolorMode, vFader2, vFader3);
-        int c = color((setcolorMode+20)-setContrastModeF*sin(PI*x/width), vFader2, vFader3);
-        //add variability
-        //position[i++] = new Particle(x, y, c);
-        //particles[i++] = new Particle(x, y, cP);
-      }
-    }
+  
+  */
+   public void onClick() {
+    //// do soemthing with (theX, theY);
   }
+}
 
 class Particle
 {

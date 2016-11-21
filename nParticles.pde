@@ -110,7 +110,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
         resetParticles();
 
       okToDraw = true;
-      //brush
+      //brush 
     }
 
     if (mousePressed && (mouseButton == LEFT))

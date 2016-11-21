@@ -11,25 +11,28 @@ class LastCallRenderer extends AudioRenderer {
   color theAlpha = 255;
   
   /// width, height, x and y for all boxes
-  float boxW0 = 100;
-  float boxH0 = 100;
+  float boxW0 = 1280;
+  float boxH0 = 255;
   float boxX0 = 0;
   float boxY0 = 0;
 
-  float boxW1 = 100;
-  float boxH1 = 100;
-  float boxX1 = 150;
+  //behind bar
+  float boxW1 = 600;
+  float boxH1 = 20;
+  float boxX1 = 260;
   float boxY1 = 0;
   
-  float boxW2 = 100;
-  float boxH2 = 100;
-  float boxX2 = 350;
-  float boxY2 = 00;
+  //soffits
+  float boxW2 = 860;
+  float boxH2 = 180;
+  float boxX2 = 420;
+  float boxY2 = 40;
   
-  float boxW3 = 100;
-  float boxH3 = 100;
-  float boxX3 = 650;
-  float boxY3 = 0;
+  //long wall
+  float boxW3 = 860;
+  float boxH3 = 20;
+  float boxX3 = 420;
+  float boxY3 = 230;
   
   ColorBox theBox;
   
@@ -83,6 +86,7 @@ class LastCallRenderer extends AudioRenderer {
       
     }
     background(0);
+    //getSketchPresets("lastCall", true); 
   }
 
 

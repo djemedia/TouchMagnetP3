@@ -77,7 +77,7 @@ int lastPosition;
 float theX = 0;
 float theY = 0;
 
-int ledsW = 48 * 5;
+int ledsW = 300;
 int ledsH = 72;
 int dmxAddr = 100;
 int dmxUniv = 1;
@@ -347,6 +347,7 @@ void setup() {
 void reLoadSketch(){
   /*
    visuals[select].setInitVals();
+   
    visuals[select].loadPresets();
    */
    visuals[select].switchColorMode();
@@ -467,8 +468,8 @@ void oscSketch10(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 6;
-    preset = 2;
+    select = 8;
+    preset = 0;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
     reLoadSketch();
@@ -500,7 +501,7 @@ void oscSketch13(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 3;
+    select = 0;
     preset = 1;
     //in.addListener(visuals[select]);
     ////visuals[select].setup();
@@ -511,7 +512,7 @@ void oscSketch14(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 3;
+    select = 0;
     preset = 2;
     //in.addListener(visuals[select]);
     /// visuals[select].setup();

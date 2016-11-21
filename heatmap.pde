@@ -117,9 +117,9 @@ class HeatmapRenderer extends AudioRenderer {
     colorMode(RGB, 255);
     // See if heat (or cold) needs applied
     if (mousePressed && (mouseButton == LEFT))
-      apply_heat(mouseX, mouseY, 20, .25);
+      apply_heat(mouseX, mouseY, 30, .25);
     if (mousePressed && (mouseButton == RIGHT))
-      apply_heat(mouseX, mouseY, 20, -.2);
+      apply_heat(mouseX, mouseY, 30, -.2);
 
     // Calculate the next step of the heatmap
     update_heatmap();
@@ -177,9 +177,9 @@ class HeatmapRenderer extends AudioRenderer {
     int oX = (int)cX;
     int oY = (int)cY;
     if (toggle == true)
-      apply_heat(oX, oY, 20, .25);
+      apply_heat(oX, oY, 30, .25);
     if (toggle == false)
-      apply_heat(oX, oY, 20, -.25);
+      apply_heat(oX, oY, 30, -.25);
   }
   /*
   public void heattoggle(float oscToggle) {
