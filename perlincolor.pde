@@ -37,7 +37,7 @@ public String skchName = "Perlin color";
     smooth();
 
     noiseDetail(3, .6);
-    colorMode(HSB, 1); //setupPixelPusher();
+    //colorMode(HSB, 1); //setupPixelPusher();
     /*
   setcolorMode = 205;
      vFader2 = 255;
