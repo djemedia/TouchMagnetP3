@@ -160,10 +160,10 @@
   </heatmap>
   <noisefield>
     <vFader1>206</vFader1>
-    <vFader2>173</vFader2>
+    <vFader2>255</vFader2>
     <vFader3>160</vFader3>
-    <vFader4>130</vFader4>
-    <vFader5>110</vFader5>
+    <vFader4>170</vFader4>
+    <vFader5>36</vFader5>
     <vFader6>133</vFader6>
     <vFader7>6</vFader7>
     <vFader8>247</vFader8>
