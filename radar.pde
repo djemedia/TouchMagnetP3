@@ -26,17 +26,21 @@ public String skchName = "Radar Renderer";
   
   public void setupSketch() {
     colorMode(HSB, TWO_PI * rotations, 1, 1);
-    background(0);
+    // background(0);
   }
 
-
+public void doMouseDrag(){
+  
+}
   /// set the onClick function using the global X and Y values
   public void onClick(){
     //// do soemthing with (theX, theY);
   }
   
   synchronized void renderSketch(){
-    colorMode(HSB, 40 * rotations, 1, 1);
+     fill(0);
+    rect(0,0,canvasW,canvasH);
+
     if (left != null) {
       float t = map(millis(), 0, delay * 800, 0, PI);   
       int n = left.length;

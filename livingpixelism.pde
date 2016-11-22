@@ -267,12 +267,24 @@ class TuringRenderer extends AudioRenderer {
   }
 
   // moving the canvas
-  public void mouseDragged() {
+  
+  public void doMouseDrag(){
     if (mouseButton == CENTER && !border) {
       dx = mod(dx + mouseX - pmouseX, width);
       dy = mod(dy + mouseY - pmouseY, height);
     }
+    
   }
+   /*
+  public void mouseDragged() {
+   
+    if (mouseButton == CENTER && !border) {
+      dx = mod(dx + mouseX - pmouseX, width);
+      dy = mod(dy + mouseY - pmouseY, height);
+    }
+   
+  }
+  */
 
   // floor modulo
   final int mod(int a, int n) {

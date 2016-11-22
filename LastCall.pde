@@ -54,6 +54,7 @@ class LastCallRenderer extends AudioRenderer {
   }
 
   public void setupSketch() {
+    noStroke();
     colorMode(HSB);
     println("SETTING UPr" + skchName );
     
@@ -86,19 +87,24 @@ class LastCallRenderer extends AudioRenderer {
       BoxArray.add(theBox);
       
     }
-    background(0);
+
     getSketchPresets("lastCall", true);
      
   }
 
 
   /// set the onClick function using the global X and Y values
+  public void doMouseDrag(){
+    
+  }
   public void onClick() {
     //// do soemthing with (theX, theY);
   }
 
   public void renderSketch() {
-    
+     fill(0);
+    rect(0,0,canvasW,canvasH);
+
     /// update fader arrays
     
      /// draw all boxes
@@ -167,6 +173,7 @@ class ColorBox {
   }
   
   void drawBox(){
+    noStroke();
     fill(theHue, 255,255);
     rect(boxX, boxY, tWidth, tHeight);
   }

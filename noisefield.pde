@@ -47,6 +47,8 @@ class NoiseFieldRenderer extends AudioRenderer {
 
   public void renderSketch()
   {
+    fill(0);
+    rect(0,0,canvasW,canvasH);
     //colorMode(HSB, 255);
     //noStroke();
     int setTraceModeF = (int)map(vFader4, 0, 255, 0, 100);
@@ -66,6 +68,9 @@ class NoiseFieldRenderer extends AudioRenderer {
   ////// WHY ARE THERE TWO onCLICK FUNCTIONS ////////////////
   //////////////////////////////////////////////////////////
   
+ public void doMouseDrag(){
+   
+ }
  
   public void onClick() {
     float cX = theX * canvasW;

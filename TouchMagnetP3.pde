@@ -1128,22 +1128,35 @@ void stop()
 }
 
 void mouseClicked() {
+  theX = mouseX;
+  theY = mouseY;
+  visuals[select].onClick();
+   
+  /*
   try {
     fluidje.mouseClicked();
     throw new NullPointerException();
   }
-  catch (NullPointerException e) {
+    catch (NullPointerException e) {
   }
+  */
 }
 
 void mouseDragged() {
+  theX = mouseX;
+  theY = mouseY;
+  visuals[select].doMouseDrag();
+  
+  /*
   try {
     fluidje.mouseClicked();
     throw new NullPointerException();
   }
   catch (NullPointerException e) {
   }
+  */
 }
+
 
 
 

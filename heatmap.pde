@@ -116,7 +116,7 @@ class HeatmapRenderer extends AudioRenderer {
 
   public void renderSketch()
   {
-    colorMode(RGB, 255);
+   
     // See if heat (or cold) needs applied
     if (mousePressed && (mouseButton == LEFT))
       apply_heat(mouseX, mouseY, 30, .25);
@@ -172,7 +172,9 @@ class HeatmapRenderer extends AudioRenderer {
   }
   
     /// set the onClick funciton using the global X and Y values
-
+ public void doMouseDrag(){
+   
+ }
   public void onClick() {
     float cX = theX * canvasW;
     float cY = theY * canvasH;

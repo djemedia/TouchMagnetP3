@@ -137,6 +137,10 @@ class NoiseParticlesRenderer extends AudioRenderer {
   */
   
   /// set the onClick funciton using the global X and Y values
+  
+  public void doMouseDrag(){
+    
+  }
 
   public void onClick() {
     int brush = 4;

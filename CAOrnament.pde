@@ -160,6 +160,9 @@ class stainedglassRenderer extends AudioRenderer {
     }
   }
   
+  public void doMouseDrag(){
+    
+  }
 
   public void onClick() {
     float cX = theX * canvasW;

@@ -63,6 +63,7 @@ class FitzhughRenderer extends AudioRenderer {
   public void switchColorMode() {
     println("switching color mode for" + skchName );
     colorMode(HSB, 255);
+    noStroke();
   }
   public void setupSketch() {
    
@@ -94,7 +95,6 @@ class FitzhughRenderer extends AudioRenderer {
   }
 
   void renderSketch() {
-    colorMode(HSB, 255);
 
     diffusionU();
     diffusionV();
@@ -215,6 +215,9 @@ class FitzhughRenderer extends AudioRenderer {
     }
   }
   
+  public void doMouseDrag(){
+    
+  }
     /// set the onClick funciton using the global X and Y values
 
    public void onClick() {

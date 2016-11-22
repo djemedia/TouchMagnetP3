@@ -63,7 +63,6 @@ class FluidRenderer extends AudioRenderer {
 
   public void renderSketch () {
 
-    colorMode(HSB, 255);
     /******** Physics ********/
     // time related stuff
     // Calculate amount of time since last frame (Delta means "change in")
@@ -99,7 +98,7 @@ class FluidRenderer extends AudioRenderer {
 
   /* Interation stuff below this line */
 
-  public void mouseDragged () {
+  public void doMouseDrag () {
     // The ripple size will be determined by mouse speed
     float force = dist(mouseX, mouseY, pmouseX, pmouseY) * 255;
 
@@ -153,10 +152,11 @@ class FluidRenderer extends AudioRenderer {
       ((int)(cX / grid.cellSize) > 0) && ((int)(cY / grid.cellSize) > 0)) {
       grid.velocity[(int)(cX / grid.cellSize)][(int)(cY / grid.cellSize)] += force;
     }
+    doPointRipple();
   }
 
   // If the user clicks instead of drags the mouse, we create a ripple at one spot.
-  public void mouseClicked () {
+  public void doPointRipple () {
     //float force = 200000;  //large
     float force = 50000;
     if (((int)(mouseX / grid.cellSize) < grid.density.length) && ((int)(mouseY / grid.cellSize) < grid.density[0].length) &&

@@ -90,6 +90,10 @@ public String skchName = "Perlin color";
   }
   /// set the onClick function using the global X and Y values
 
+
+public void doMouseDrag(){
+  
+}
   public void onClick() {
     cX = theX * canvasW;
     cY = theY * canvasH;
