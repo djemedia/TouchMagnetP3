@@ -57,6 +57,7 @@ class LastCallRenderer extends AudioRenderer {
     colorMode(HSB);
     println("SETTING UPr" + skchName );
     
+    
     /// initialize our box array
     for(int i=0; i<=numBoxes; i++){
       
@@ -86,7 +87,8 @@ class LastCallRenderer extends AudioRenderer {
       
     }
     background(0);
-    //getSketchPresets("lastCall", true); 
+    getSketchPresets("lastCall", true);
+     
   }
 
 

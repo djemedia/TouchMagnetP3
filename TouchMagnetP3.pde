@@ -472,7 +472,7 @@ void oscSketch10(float iA) {
     preset = 0;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
-    reLoadSketch();
+    //reLoadSketch();
   }
 }
 void oscSketch11(float iA) {
@@ -527,6 +527,7 @@ void oscSketch15(float iA) {
     preset = 1;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
+    reLoadSketch();
   }
 }
 void oscSketch16(float iA) {
@@ -540,6 +541,7 @@ void oscSketch16(float iA) {
     //  int vFader4 = 0;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
+    reLoadSketch();
   }
 }
 void oscSketch17(float iA) { 
@@ -550,6 +552,7 @@ void oscSketch17(float iA) {
     preset = 2;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
+    reLoadSketch();
   }
 }
 
@@ -563,6 +566,7 @@ void oscSketch18(float iA) {
     ///visuals[select].setup();
 
     //colorMode(RGB);
+    reLoadSketch();
   }
 }
 void oscSketch19(float iA) {
@@ -573,6 +577,7 @@ void oscSketch19(float iA) {
     preset = 1;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
+    reLoadSketch();
   }
 }
 
@@ -584,7 +589,8 @@ void oscSketch20(float iA) {
     preset = 1;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
-    colorMode(HSB, 255);
+    //colorMode(HSB, 255);
+    reLoadSketch();
   }
 }
 

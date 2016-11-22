@@ -101,13 +101,13 @@ class TuringRenderer extends AudioRenderer {
      */
     res = setResF;
     scl  = setScaleDetailF;  
-
-
+getSketchPresets("livingPixelism", true);
+/*
     if (getSketchPresets("livingPixelism", false)) {
       pattern = presets[preset].getChild("pattern").getIntContent();
       println("LivingPixelism Preset #" + preset + " Pattern: " + pattern + " Faders: " + setcolorMode + " " + vFader2 + " " + vFader3 + " " + vFader4 + " " + vFader5 + " " + vFader6 + " " + vFader7 + " " + vFader8);
     }
-
+*/
     reset();
   }
   

@@ -29,6 +29,7 @@ public String skchName = "Perlin color";
     println("switching color mode for" + skchName );
     colorMode(HSB, 1); //setupPixelPusher();
   }
+  
   public void setupSketch() {
     //size(256,256);
     r = width/PI;

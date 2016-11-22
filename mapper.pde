@@ -925,8 +925,8 @@ void drawPixelPusher() {
          float adjustedGreen = green(c) * .5;
          float adjustedBlue = blue(c) * .125;
          
-         Pixel p = new Pixel((byte)red(c), (byte)adjustedGreen, (byte)adjustedBlue);
-        //Pixel p = new Pixel((byte)red(c), (byte)green(c), (byte)blue(c));
+        // Pixel p = new Pixel((byte)red(c), (byte)adjustedGreen, (byte)adjustedBlue);
+        Pixel p = new Pixel((byte)red(c), (byte)green(c), (byte)blue(c));
         if (y < strips.size()) {
         //if (y < strips.size() && y >= 16) {
         //if (y == 6 || y == 7) {

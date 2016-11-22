@@ -78,6 +78,8 @@ class HeatmapRenderer extends AudioRenderer {
     //add gradient color
     //hsb picker
 */
+    getSketchPresets("heatmap", true);
+    
     if (getSketchPresets("heatmap", false)) {
       XML[] xmlGradient = presets[preset].getChildren("gradient");
       println("Heatmap Preset #" + preset + " Gradient elements: " + xmlGradient.length + " faders: " + setcolorMode + " " + vFader2 + " " + vFader3 + " " + vFader4 + " " + vFader5 + " " + vFader6 + " " + vFader7 + " " + vFader8);

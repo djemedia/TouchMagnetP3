@@ -36,7 +36,7 @@ class NoiseFieldRenderer extends AudioRenderer {
     smooth();
     //size(canvasW, canvasH);
     colorMode(HSB, 255);
-    background(0);
+    //background(0);
 
     int setTraceModeF = 10;
     int setSpeed = 20;
@@ -65,7 +65,7 @@ class NoiseFieldRenderer extends AudioRenderer {
   /////////////////////////////////////////////////////////
   ////// WHY ARE THERE TWO onCLICK FUNCTIONS ////////////////
   //////////////////////////////////////////////////////////
-  /*
+  
  
   public void onClick() {
     float cX = theX * canvasW;
@@ -74,10 +74,11 @@ class NoiseFieldRenderer extends AudioRenderer {
     oY = (int)cY;
   }
   
-  */
+  /*
    public void onClick() {
     //// do soemthing with (theX, theY);
   }
+  */
 }
 
 class Particle
