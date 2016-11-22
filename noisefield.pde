@@ -47,8 +47,10 @@ class NoiseFieldRenderer extends AudioRenderer {
 
   public void renderSketch()
   {
+    /*
     fill(0);
     rect(0,0,canvasW,canvasH);
+    */
     //colorMode(HSB, 255);
     //noStroke();
     int setTraceModeF = (int)map(vFader4, 0, 255, 0, 100);

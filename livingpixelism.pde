@@ -296,20 +296,29 @@ class TuringRenderer extends AudioRenderer {
   /// set the onClick funciton using the global X and Y values
   void onClick() {
     // add a circular drop of chemical
-    float cX = theX * canvasW;
-    float cY = theY * canvasH;
-    int oX = (int)cX;
-    int oY = (int)cY;
-    int x0 = mod((oX-dx)/res, w);
-    int y0 = mod((oY-dy)/res, h);
-    int r = rdrop * scl / res ;
-    for (int y=y0-r; y<y0+r; y++)
-      for (int x=x0-r; x<x0+r; x++) {
-        int xwrap = mod(x, w), ywrap = mod(y, w);
-        if (border && (x!=xwrap || y!=ywrap)) continue;          
-        if (dist(x, y, x0, y0) < r)
-          pat[xwrap+w*ywrap] = 255;
-      }
+    
+    try{
+      
+       float cX = theX * canvasW;
+        float cY = theY * canvasH;
+        int oX = (int)cX;
+        int oY = (int)cY;
+        int x0 = mod((oX-dx)/res, w);
+        int y0 = mod((oY-dy)/res, h);
+        int r = rdrop * scl / res ;
+        for (int y=y0-r; y<y0+r; y++)
+          for (int x=x0-r; x<x0+r; x++) {
+            int xwrap = mod(x, w), ywrap = mod(y, w);
+            if (border && (x!=xwrap || y!=ywrap)) continue;          
+            if (dist(x, y, x0, y0) < r)
+              pat[xwrap+w*ywrap] = 255;
+          }
+      
+      
+    } catch (Exception e){
+      println("error drawing pixelism on canvas: " + e);
+    }
+   
   }
 
   void directiontoggle(float oscToggle) {
