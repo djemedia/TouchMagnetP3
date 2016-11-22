@@ -69,30 +69,27 @@ public class ArtnetP5 implements ArtNetDiscoveryListener{
 
       public void send(byte[] buffer, String interfaceIP){
                     // added the following two strings specific to the e131:
-                    String nodeSubNet = "236.255.";
+                    String nodeSubNet = "239.255.";
                     String nodeDmxOuts = "3";
                     
-                    float nodeSubNetF = 236.255f;
-                    float nodeDmxOutsF = 3f;
-        
-                    
-        
+                    //float nodeSubNetF = 236.255f;
+                    //float nodeDmxOutsF = 3f;
                     try{
                        // /*
-                        int nSn = Integer.parseInt(nodeSubNet);
-                        int nDo = Integer.parseInt(nodeDmxOuts);
+                        //int nSn = Integer.parseInt(nodeSubNet);
+                        //int nDo = Integer.parseInt(nodeDmxOuts);
                         ArtDmxPacket dmx = new ArtDmxPacket();
-                        /// dmx.setUniverse(nodeSubNet, nodeDmxOuts); /// try as string
-                        dmx.setUniverse(nSn, nDo); /// try as int
-                        // dmx.setUniverse(nodeSubNetF, nodeDmxOutsF); /// try as float
+                   // dmx.setUniverse(nodeSubNet, nodeDmxOuts); /// try as string
+                        //dmx.setUniverse(nSn, nDo); /// try as int
+                        //dmx.setUniverse(nodeSubNetF, nodeDmxOutsF); /// try as float
                         /// dmx.setUniverse(nodeSubNet, nodeDmxOuts); 
                         dmx.setSequenceID(sequenceID % 255);
                         dmx.setDMX(buffer, buffer.length);
                         sequenceID++;
                     ///  */
-                    } catch(Exception e){
+                  } catch(Exception e){
                       //// System.out.println("error sending DMX data: " + e);
-                    }
+                   }
         }	
 
 

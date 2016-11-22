@@ -92,7 +92,8 @@ class NoiseParticlesRenderer extends AudioRenderer {
           particles[i].update();
           particles[i].drawParticles();
         }
-        /*try {
+        /*
+        try {
          particles[i].update();
          if (particles.length > i - 3)
          particles[i].draw();
@@ -112,13 +113,14 @@ class NoiseParticlesRenderer extends AudioRenderer {
       okToDraw = true;
       
     }
-
+/*
     if (mousePressed && (mouseButton == LEFT))
     theX = mouseX;
     theY = mouseY;
     onClick();
     if (mousePressed && (mouseButton == RIGHT)) {
     }
+    */
   }
 
   /////////////////////////////////////////////////////////

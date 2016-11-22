@@ -337,8 +337,8 @@
   </stainedGlass>
   <!-- CODE STUB  -->
   <lastCall>
-    <vFader1>20</vFader1>
-    <vFader2>190</vFader2>
+    <vFader1>0</vFader1>
+    <vFader2>255</vFader2>
     <vFader3>145</vFader3>
     <vFader4>140</vFader4>
     <vFader5>125</vFader5>
