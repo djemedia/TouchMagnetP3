@@ -877,7 +877,12 @@ void setupPixelPusher() {
 }
 
 void drawPixelPusher() {
-  loadPixels();
+  try{
+    loadPixels();
+  } catch(Exception e){
+    
+    println("error loading pixel pusher load pixels function: " + e);
+  }
 
    //Pixel blackP = new Pixel((byte)0, (byte)0, (byte)0);
 
