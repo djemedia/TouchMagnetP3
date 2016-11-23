@@ -153,18 +153,10 @@ class FluidRenderer extends AudioRenderer {
       ((int)(cX / grid.cellSize) > 0) && ((int)(cY / grid.cellSize) > 0)) {
       grid.velocity[(int)(cX / grid.cellSize)][(int)(cY / grid.cellSize)] += force;
     }
-    doPointRipple();
+    /// doPointRipple();
   }
 
-  // If the user clicks instead of drags the mouse, we create a ripple at one spot.
-  public void doPointRipple () {
-    //float force = 200000;  //large
-    float force = 50000;
-    if (((int)(mouseX / grid.cellSize) < grid.density.length) && ((int)(mouseY / grid.cellSize) < grid.density[0].length) &&
-      ((int)(mouseX / grid.cellSize) > 0) && ((int)(mouseY / grid.cellSize) > 0)) {
-      grid.velocity[(int)(mouseX / grid.cellSize)][(int)(mouseY / grid.cellSize)] += force;
-    }
-  }
+  
 }
 
 
