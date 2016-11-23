@@ -223,25 +223,30 @@ class FitzhughRenderer extends AudioRenderer {
         oY = (int)cY;
         
         int brush = 16;
-      for (int i=oX - brush; i < brush + oX; ++i) {
-        for (int j=oY - brush; j < brush + oY; ++j) {
-        //  gridU[i][j] = cY-.1;
-        //gridV[i][j] = cX-.1;
-      //pixels[j*w+i] = color((gridU[i][j]*setcolorMode-100), vFader2,gridU[i][j]*vFader3);
-    
+        try{
+            for (int i=oX - brush; i < brush + oX; ++i) {
+                for (int j=oY - brush; j < brush + oY; ++j) {
+                //  gridU[i][j] = cY-.1;
+                //gridV[i][j] = cX-.1;
+                //pixels[j*w+i] = color((gridU[i][j]*setcolorMode-100), vFader2,gridU[i][j]*vFader3);
+                //for(int i=0;i<w;++i) {
+                //for(int j=0;j<h;++j) {
+                //gridU[i][j] = cY/2-.1;
+                //gridV[i][j] = cX/2-.1;
+                // new varible because we redefine gridU[i][j] but have to use it in the calculation of gridV[i][j]
+                float  uVal = gridU[i][j]; 
+                //gridU[i][j] = gridU[i][j] + deltaT*(2*reactionU(gridU[i][j],gridV[i][j], Farr[i][j], karr[i][j]));
+                //gridV[i][j] = gridV[i][j] + deltaT*(2*reactionV(uVal,gridV[i][j], Farr[i][j], karr[i][j]));
+                gridU[i][j] = .5+random(-.01,.01);
+                gridV[i][j] = .25+random(-.01,.01);  
+             }
+           }
           
-          //for(int i=0;i<w;++i) {
-      //for(int j=0;j<h;++j) {
-        //gridU[i][j] = cY/2-.1;
-        //gridV[i][j] = cX/2-.1;
-        // new varible because we redefine gridU[i][j] but have to use it in the calculation of gridV[i][j]
-        float  uVal = gridU[i][j]; 
-        //gridU[i][j] = gridU[i][j] + deltaT*(2*reactionU(gridU[i][j],gridV[i][j], Farr[i][j], karr[i][j]));
-        //gridV[i][j] = gridV[i][j] + deltaT*(2*reactionV(uVal,gridV[i][j], Farr[i][j], karr[i][j]));
-       gridU[i][j] = .5+random(-.01,.01);
-        gridV[i][j] = .25+random(-.01,.01);  
-     }
-     }
+        } catch (Exception e){
+          
+          println("error drawing brush on fitzhugh: " + e);
+        }
+        
    }
    
 }
