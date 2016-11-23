@@ -52,6 +52,7 @@ public String skchName = "Perlin color";
 
   public void renderSketch()
   {
+    colorMode(HSB, 1);
     // colorMode(HSB, 1);
     //ox += max(-speed,min(speed,(mouseX-width/2)*speed/r));
     //oy += max(-speed,min(speed,(mouseY-height/2)*speed/r));
