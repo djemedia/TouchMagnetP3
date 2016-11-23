@@ -115,14 +115,14 @@ class NoiseParticlesRenderer extends AudioRenderer {
       okToDraw = true;
       
     }
-/*
+//*
     if (mousePressed && (mouseButton == LEFT))
     theX = mouseX;
     theY = mouseY;
     onClick();
     if (mousePressed && (mouseButton == RIGHT)) {
     }
-    */
+    //*/
   }
 
   /////////////////////////////////////////////////////////
@@ -141,10 +141,12 @@ class NoiseParticlesRenderer extends AudioRenderer {
   /// set the onClick funciton using the global X and Y values
   
   public void doMouseDrag(){
-    
+    onClick();
   }
 
   public void onClick() {
+    
+    println("NOISE PARTICLES: mouse" + theX + " " + theY + " osx: " + theOSCX + " " + theOSCY);
     int brush = 4;
     int setContrastModeF = (int)map(vFader4, 0, 255, 0, 60);
 

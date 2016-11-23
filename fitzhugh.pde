@@ -212,35 +212,50 @@ class FitzhughRenderer extends AudioRenderer {
   }
   
   public void doMouseDrag(){
-    
+    onClick();
   }
     /// set the onClick funciton using the global X and Y values
 
+//// if data is coming from mouse position, map from mouseX to 0 to 1 and mouseY to 1
    public void onClick() {
-        float cX = theX * canvasW;
-        float cY = theY * canvasH;
+        float cX = theOSCX * canvasW;
+        float cY = theOSCY * canvasH;
         oX = (int)cX;
         oY = (int)cY;
         
+        
+        /*
+        println("OX : " + oX);
+        println("OY: " + oY);
+        */
         int brush = 16;
-        try{
-            for (int i=oX - brush; i < brush + oX; ++i) {
-                for (int j=oY - brush; j < brush + oY; ++j) {
-                //  gridU[i][j] = cY-.1;
-                //gridV[i][j] = cX-.1;
-                //pixels[j*w+i] = color((gridU[i][j]*setcolorMode-100), vFader2,gridU[i][j]*vFader3);
-                //for(int i=0;i<w;++i) {
-                //for(int j=0;j<h;++j) {
-                //gridU[i][j] = cY/2-.1;
-                //gridV[i][j] = cX/2-.1;
-                // new varible because we redefine gridU[i][j] but have to use it in the calculation of gridV[i][j]
+        
+        for (int i=oX - brush; i < brush + oX; ++i) {
+            for (int j=oY - brush; j < brush + oY; ++j) {
+            //  gridU[i][j] = cY-.1;
+            //gridV[i][j] = cX-.1;
+            //pixels[j*w+i] = color((gridU[i][j]*setcolorMode-100), vFader2,gridU[i][j]*vFader3);
+            //for(int i=0;i<w;++i) {
+            //for(int j=0;j<h;++j) {
+            //gridU[i][j] = cY/2-.1;
+            //gridV[i][j] = cX/2-.1;
+            // new varible because we redefine gridU[i][j] but have to use it in the calculation of gridV[i][j]
+            
+            try{
                 float  uVal = gridU[i][j]; 
-                //gridU[i][j] = gridU[i][j] + deltaT*(2*reactionU(gridU[i][j],gridV[i][j], Farr[i][j], karr[i][j]));
-                //gridV[i][j] = gridV[i][j] + deltaT*(2*reactionV(uVal,gridV[i][j], Farr[i][j], karr[i][j]));
-                gridU[i][j] = .5+random(-.01,.01);
-                gridV[i][j] = .25+random(-.01,.01);  
-             }
-           }
+              //gridU[i][j] = gridU[i][j] + deltaT*(2*reactionU(gridU[i][j],gridV[i][j], Farr[i][j], karr[i][j]));
+              //gridV[i][j] = gridV[i][j] + deltaT*(2*reactionV(uVal,gridV[i][j], Farr[i][j], karr[i][j]));
+              gridU[i][j] = .5+random(-.01,.01);
+              gridV[i][j] = .25+random(-.01,.01);  
+            } catch(Exception e){
+              println("exception on gridU array: " + e);
+            }
+          
+         }
+       }
+           
+        try{
+           
           
         } catch (Exception e){
           

@@ -73,9 +73,13 @@ boolean showFramerate = false;
 boolean ready_to_go = true;
 int lastPosition;
 
-//// global X and Y positions for touch/mouse/gui
+//// global X and Y positions for mouse
 float theX = 0;
 float theY = 0;
+
+//// global X and Y positions for touchgui
+float theOSCX = 0;
+float theOSCY = 0;
 
 int ledsW = 300;
 int ledsH = 72;
@@ -158,6 +162,13 @@ int preset=0;
 XML xml;
 XML[] presets;
 
+
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+///////// SETUP ///////////////////
+////////////////////////////////////////////////
+//////////////////////////////////////////////////
 void setup() {
   //size(canvasW, canvasH);
   background(0);
@@ -222,9 +233,6 @@ void setup() {
   if (syphonEnable == true)
     setupSyphon();
     */
-    
-    
-
 
   //setup oscp5
   oscP5 = new OscP5(this, 12000);
@@ -355,6 +363,127 @@ void reLoadSketch(){
    visuals[select].setupSketch();
 }
 
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+///////// DRAW ///////////////////
+////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+void draw() {    
+  
+  /// background(0);
+  oscFaderSet();
+  
+  /// println("cur sketch : " + select);
+  visuals[select].renderSketch();
+  transitionDraw();
+  
+  
+  if (pixEnable == true){
+    drawPixelPusher();
+  }
+  if (artnetEnable == true){
+    drawArtnet();
+  }
+  if (dmxEnable == true){
+    drawDMX();
+  }
+
+  if(showFramerate){
+    println(frameRate);
+  }
+}
+
+void transitionDraw() {
+  if (transitionOpacity > 0) {
+    transitionOpacity -= 1;
+    tint(255, transitionOpacity);
+    //float value = alpha(transition);
+    image(transition, 0, 0);
+    tint(255, 255);
+  }
+}
+
+void transitionReset() {
+  transition = get();
+  transitionOpacity = 255;
+}
+
+void keyPressed() {
+  if(key == 'f'){
+    if(showFramerate){
+      showFramerate = false;
+    } else {
+      showFramerate = true;
+    }
+    
+  }
+  
+  if(key == 'p'){
+    /// loadPresets();
+    
+  }
+  if (key == ' ') {
+    transitionReset();
+    //in.removeListener(visuals[select]);
+    if(select >= visuals.length-1){
+      select = 0;
+    } else {
+      select++;
+    }
+    
+    /// select %= visuals.length;
+    //in.addListener(visuals[select]);
+    /// visuals[select].setup();
+  } else {
+    if (select == 7)
+    {
+      turing.keyPressed();
+    }
+  }
+}
+
+
+
+void stop()
+{
+  // always close Minim audio classes when you are done with them
+  //in.close();
+  minim.stop();
+  super.stop();
+}
+
+void mouseClicked() {
+  theX = mouseX;
+  theY = mouseY;
+  println("MOUSE ON CLICK: " + theX + " " + theY);
+  visuals[select].onClick();
+  
+   
+ 
+}
+
+void mouseDragged() {
+
+  if(select == 5){
+    theOSCX = map(mouseX, 0, canvasW, 0, 1);
+    theOSCY = map(mouseY, 0, canvasH, 0, 1);
+     println("MAPPED ON CLICK: " + theOSCX + " " + theOSCY);
+    
+  } else {
+      theX = mouseX;
+      theY = mouseY;
+  }
+  visuals[select].doMouseDrag();
+  
+  
+}
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+///////// ALL OSC FUNCTIONS ///////////////////
+////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
 void oscSketch1(float iA) {
   if (iA == 1) {
@@ -719,18 +848,18 @@ void oscEffectB2B(float iA) {
   }
 }
 
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+///////// OSC CLICK ///////////////////
+////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
 void oscOnClick(float iA, float iB) {
   /// set the global X and Y to whichever interface is passing it
-  theX = iA;
-  theY = iB;
+  theX = theOSCX = iA;
+  theY = theOSCY = iB;
   visuals[select].onClick();
-  /*
-  if (select == 0){
-    fluidje.onClick(iA, iB);
-  }
-  
- */
+
 }
 
 void oscOnClick2(float iA, float iB) {
@@ -1047,120 +1176,6 @@ void oscFaderSet() {
   }
 }
 
-
-void draw() {    
-  
-  /// background(0);
-  oscFaderSet();
-  
-  /// println("cur sketch : " + select);
-  visuals[select].renderSketch();
-  transitionDraw();
-  
-  
-  if (pixEnable == true){
-    drawPixelPusher();
-  }
-  if (artnetEnable == true){
-    drawArtnet();
-  }
-  if (dmxEnable == true){
-    drawDMX();
-  }
-
-  if(showFramerate){
-    println(frameRate);
-  }
-}
-
-void transitionDraw() {
-  if (transitionOpacity > 0) {
-    transitionOpacity -= 1;
-    tint(255, transitionOpacity);
-    //float value = alpha(transition);
-    image(transition, 0, 0);
-    tint(255, 255);
-  }
-}
-
-void transitionReset() {
-  transition = get();
-  transitionOpacity = 255;
-}
-
-void keyPressed() {
-  if(key == 'f'){
-    if(showFramerate){
-      showFramerate = false;
-    } else {
-      showFramerate = true;
-    }
-    
-  }
-  
-  if(key == 'p'){
-    /// loadPresets();
-    
-  }
-  if (key == ' ') {
-    transitionReset();
-    //in.removeListener(visuals[select]);
-    if(select >= visuals.length-1){
-      select = 0;
-    } else {
-      select++;
-    }
-    
-    /// select %= visuals.length;
-    //in.addListener(visuals[select]);
-    /// visuals[select].setup();
-  } else {
-    if (select == 7)
-    {
-      turing.keyPressed();
-    }
-  }
-}
-
-
-
-void stop()
-{
-  // always close Minim audio classes when you are done with them
-  //in.close();
-  minim.stop();
-  super.stop();
-}
-
-void mouseClicked() {
-  theX = mouseX;
-  theY = mouseY;
-  visuals[select].onClick();
-   
-  /*
-  try {
-    fluidje.mouseClicked();
-    throw new NullPointerException();
-  }
-    catch (NullPointerException e) {
-  }
-  */
-}
-
-void mouseDragged() {
-  theX = mouseX;
-  theY = mouseY;
-  visuals[select].doMouseDrag();
-  
-  /*
-  try {
-    fluidje.mouseClicked();
-    throw new NullPointerException();
-  }
-  catch (NullPointerException e) {
-  }
-  */
-}
 
 
 
