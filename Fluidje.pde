@@ -143,8 +143,8 @@ class FluidRenderer extends AudioRenderer {
   /// set the onClick funciton using the global X and Y values
 
   public void onClick() {
-    float cX = theX * canvasW;
-    float cY = theY * canvasH;
+    float cX = mouseX * canvasW;
+    float cY = mouseX * canvasH;
     int oX = (int)cX;
     int oY = (int)cY;
     float force = 50000;
