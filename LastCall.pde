@@ -1,7 +1,7 @@
 class LastCallRenderer extends AudioRenderer {
 
 
-  public String skchName = "Last Call";
+  public String skchName = "lastCall";
 
   int numBoxes = 3;
   

@@ -353,140 +353,8 @@ void setup() {
   oscP5.plug(this, "oscSave", "/luminous/save");
 }
 
-void reLoadSketch(){
-  /*
-   visuals[select].setInitVals();
-   
-   visuals[select].loadPresets();
-   */
-   /// visuals[select].switchColorMode();
-   visuals[select].setupSketch();
-}
-
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
-///////// DRAW ///////////////////
-////////////////////////////////////////////////
-//////////////////////////////////////////////////
-
-void draw() {    
-  
-  /// background(0);
-  oscFaderSet();
-  
-  /// println("cur sketch : " + select);
-  
-  visuals[select].renderSketch();
-  transitionDraw();
-  
-  
-  if (pixEnable == true){
-    drawPixelPusher();
-  }
-  if (artnetEnable == true){
-    drawArtnet();
-  }
-  if (dmxEnable == true){
-    drawDMX();
-  }
-
-  if(showFramerate){
-    println(frameRate);
-  }
-}
-
-void transitionDraw() {
-  if (transitionOpacity > 0) {
-    transitionOpacity -= 1;
-    tint(255, transitionOpacity);
-    //float value = alpha(transition);
-    image(transition, 0, 0);
-    tint(255, 255);
-  }
-}
-
-void transitionReset() {
-  transition = get();
-  transitionOpacity = 255;
-}
 
 
-
-
-void stop()
-{
-  // always close Minim audio classes when you are done with them
-  //in.close();
-  minim.stop();
-  super.stop();
-}
-
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
-///////// MOUSE AND KEYBOARD ///////////////////
-////////////////////////////////////////////////
-//////////////////////////////////////////////////
-
-
-void keyPressed() {
-  if(key == 'f'){
-    if(showFramerate){
-      showFramerate = false;
-    } else {
-      showFramerate = true;
-    }
-    
-  }
-  
-  if(key == 'p'){
-    /// loadPresets();
-    
-  }
-  if (key == ' ') {
-    transitionReset();
-    //in.removeListener(visuals[select]);
-    if(select >= visuals.length-1){
-      select = 0;
-    } else {
-      select++;
-    }
-    
-    /// select %= visuals.length;
-    //in.addListener(visuals[select]);
-    /// visuals[select].setup();
-  } else {
-    if (select == 7)
-    {
-      turing.keyPressed();
-    }
-  }
-}
-
-
-void mouseClicked() {
-  theX = mouseX;
-  theY = mouseY;
-  visuals[select].onClick();
-  
-   
- 
-}
-
-void mouseDragged() {
-
-   /// Drawing for these sketches requires 0-1 pos values, not canvasW-H
-  if(select == 5 || select == 3){
-    theOSCX = map(mouseX, 0, canvasW, 0, 1);
-    theOSCY = map(mouseY, 0, canvasH, 0, 1);
-
-  } else {
-      theX = mouseX;
-      theY = mouseY;
-  }
-  visuals[select].doMouseDrag();
-  
-  
-}
 
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
@@ -1185,6 +1053,143 @@ void oscFaderSet() {
   }
 }
 
+
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+///////// DRAW ///////////////////
+////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+
+void reLoadSketch(){
+  /*
+   visuals[select].setInitVals();
+    */
+   visuals[select].loadPresets();
+  
+   /// visuals[select].switchColorMode();
+   visuals[select].setupSketch();
+}
+
+void draw() {    
+  
+  /// background(0);
+  oscFaderSet();
+  
+  /// println("cur sketch : " + select);
+  
+  visuals[select].renderSketch();
+  transitionDraw();
+  
+  
+  if (pixEnable == true){
+    drawPixelPusher();
+  }
+  if (artnetEnable == true){
+    drawArtnet();
+  }
+  if (dmxEnable == true){
+    drawDMX();
+  }
+
+  if(showFramerate){
+    println(frameRate);
+  }
+}
+
+void transitionDraw() {
+  if (transitionOpacity > 0) {
+    transitionOpacity -= 1;
+    tint(255, transitionOpacity);
+    //float value = alpha(transition);
+    image(transition, 0, 0);
+    tint(255, 255);
+  }
+}
+
+void transitionReset() {
+  transition = get();
+  transitionOpacity = 255;
+}
+
+
+
+
+void stop()
+{
+  // always close Minim audio classes when you are done with them
+  //in.close();
+  minim.stop();
+  super.stop();
+}
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+///////// MOUSE AND KEYBOARD ///////////////////
+////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+
+void keyPressed() {
+  if(key == 'f'){
+    if(showFramerate){
+      showFramerate = false;
+    } else {
+      showFramerate = true;
+    }
+    
+  }
+  
+  if(key == 'p'){
+    /// loadPresets();
+    
+  }
+  if (key == ' ') {
+    transitionReset();
+    //in.removeListener(visuals[select]);
+    if(select >= visuals.length-1){
+      select = 0;
+    } else {
+      select++;
+    }
+    
+    /// select %= visuals.length;
+    //in.addListener(visuals[select]);
+    /// visuals[select].setup();
+  } else {
+    if (select == 7)
+    {
+      turing.keyPressed();
+    }
+  }
+}
+
+
+void mouseClicked() {
+  theX = mouseX;
+  theY = mouseY;
+  visuals[select].onClick();
+  
+   
+ 
+}
+
+void mouseDragged() {
+
+   /// Drawing for these sketches requires 0-1 pos values, not canvasW-H
+  if(select == 5 || select == 3){
+    theOSCX = map(mouseX, 0, canvasW, 0, 1);
+    theOSCY = map(mouseY, 0, canvasH, 0, 1);
+
+  } else {
+      theX = mouseX;
+      theY = mouseY;
+  }
+  visuals[select].doMouseDrag();
+  
+  
+}
 
 
 
