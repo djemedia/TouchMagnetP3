@@ -88,9 +88,13 @@ class NoiseParticlesRenderer extends AudioRenderer {
       imgProc.scaleBrightness(tempFrame, tempFrame, width, height, 0.2);  
       arraycopy(tempFrame, currFrame);
       for (int i=0; i<particles.length; i++) {
-        if (particles.length > i - 10) {
-          particles[i].update();
-          particles[i].drawParticles();
+        try{
+          if (particles.length > i - 10) {
+            particles[i].update();
+            particles[i].drawParticles();
+          }
+        } catch(Exception e){
+          println("error drawing noise field particles: " + e);
         }
         /*
         try {

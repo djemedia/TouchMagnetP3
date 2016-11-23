@@ -60,9 +60,10 @@ class NoiseFieldRenderer extends AudioRenderer {
     try {
       p.update();
       p.render();
-      throw new NullPointerException();
-    }
-    catch (NullPointerException e) {
+      
+    } catch (Exception e) {
+      println("error drawing noise particles: " + e);
+      
     }
   }
 
