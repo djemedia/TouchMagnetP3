@@ -19,11 +19,7 @@ public String skchName = "Radar Renderer";
     println("Loading presets for" + skchName );
   }
   
-  public void switchColorMode() {
-    println("switching color mode for" + skchName );
-    colorMode(HSB, TWO_PI * rotations, 1, 1);
-  }
-  
+
   public void setupSketch() {
     colorMode(HSB, TWO_PI * rotations, 1, 1);
     // background(0);
@@ -37,9 +33,10 @@ public void doMouseDrag(){
     //// do soemthing with (theX, theY);
   }
   
-  synchronized void renderSketch(){
+void renderSketch(){
      fill(0);
     rect(0,0,canvasW,canvasH);
+    colorMode(HSB, TWO_PI * rotations, 1, 1);
 
     if (left != null) {
       float t = map(millis(), 0, delay * 800, 0, PI);   

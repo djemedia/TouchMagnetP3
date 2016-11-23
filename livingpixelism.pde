@@ -60,12 +60,7 @@ class TuringRenderer extends AudioRenderer {
     println("Loading presets for" + skchName );
     doPresets();
   }
-  
-  public void switchColorMode() {
-    println("switching color mode for" + skchName );
-      colorMode(HSB, 255);
-  }
-  
+
   public void setupSketch() {
 
     colorMode(HSB, 255);
@@ -132,7 +127,7 @@ class TuringRenderer extends AudioRenderer {
 
   public void renderSketch() {
 
-
+     colorMode(HSB, 255);
     // constrain the mouse position
     if (border) {
       mouseX = constrain(mouseX, 0, width-1);

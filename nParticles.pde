@@ -30,11 +30,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
     println("Loading presets for" + skchName );
     getSketchPresets("noiseParticles", true);
   }
-  
-  public void switchColorMode() {
-    println("switching color mode for" + skchName );
-    colorMode(HSB, 255);
-  }
+
   public void setupSketch() {
     
     colorMode(HSB, 255);
@@ -81,6 +77,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
 
 
   public void renderSketch() {
+    colorMode(HSB, 255);
     if (okToDraw) {
       okToDraw = false;
       noiseZ += 2*noiseScale;

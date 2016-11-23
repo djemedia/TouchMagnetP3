@@ -60,10 +60,6 @@ class stainedglassRenderer extends AudioRenderer {
     doPresets();
   }
 
-  public void switchColorMode() {
-    println("switching color mode for" + skchName );
-    colorMode(RGB, 255);
-  }
 
   public void setupSketch() {
     //size(canvasW, canvasH);
@@ -133,6 +129,7 @@ class stainedglassRenderer extends AudioRenderer {
   }
 
   public void renderSketch() {
+    colorMode(RGB, 255);
     loadPixels();
     if (mousePressed) {
       ca.drawBoxAt(mouseX, mouseY, 18, 4);

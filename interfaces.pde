@@ -18,8 +18,8 @@ abstract class AudioRenderer implements AudioListener {
   
   /// functions to reset sketch
   //// abstract void setInitVals();
+  // abstract void switchColorMode();
   abstract void loadPresets();
-  abstract void switchColorMode();
   abstract void onClick();
   abstract void doMouseDrag();
   String skchName;

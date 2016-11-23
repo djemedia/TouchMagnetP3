@@ -41,12 +41,7 @@ class FluidRenderer extends AudioRenderer {
     getSketchPresets("fluidje", true);
     
   }
-  
-  public void switchColorMode() {
-    println("switching color mode for" + skchName );
-    colorMode(HSB, 255);
-    noStroke();
-  }
+
   
   public void setupSketch() {
     //size(canvasW, canvasH, P3D);
@@ -62,7 +57,7 @@ class FluidRenderer extends AudioRenderer {
   }
 
   public void renderSketch () {
-
+    colorMode(HSB, 255);
     /******** Physics ********/
     // time related stuff
     // Calculate amount of time since last frame (Delta means "change in")

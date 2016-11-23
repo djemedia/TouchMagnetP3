@@ -27,11 +27,6 @@ class HeatmapRenderer extends AudioRenderer {
     doPresets();
   }
   
-  public void switchColorMode() {
-    println("switching color mode for" + skchName );
-    colorMode(RGB, 255);
-  }
-  
   public void setupSketch() {
     noStroke();
     colorMode(RGB, 255);

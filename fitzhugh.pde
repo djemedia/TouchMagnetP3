@@ -59,12 +59,7 @@ class FitzhughRenderer extends AudioRenderer {
     println("Loading presets for" + skchName );
     getSketchPresets("fitzhugh", true);   
   }
-  
-  public void switchColorMode() {
-    println("switching color mode for" + skchName );
-    colorMode(HSB, 255);
-    noStroke();
-  }
+
   public void setupSketch() {
      noStroke();
      colorMode(HSB, 255);
@@ -96,7 +91,7 @@ class FitzhughRenderer extends AudioRenderer {
   }
 
   void renderSketch() {
-
+    colorMode(HSB, 255);
     diffusionU();
     diffusionV();
     reaction();

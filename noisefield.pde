@@ -27,11 +27,7 @@ class NoiseFieldRenderer extends AudioRenderer {
     getSketchPresets("noisefield", true);    
   }
   
-  public void switchColorMode() {
-    println("switching color mode for" + skchName );
-    colorMode(HSB, 255);
-  }
-  
+
   public void setupSketch() {
     smooth();
     //size(canvasW, canvasH);
@@ -48,6 +44,7 @@ class NoiseFieldRenderer extends AudioRenderer {
 
   public void renderSketch()
   {
+    colorMode(HSB, 255);
     /*
     fill(0);
     rect(0,0,canvasW,canvasH);
