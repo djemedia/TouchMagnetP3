@@ -160,6 +160,7 @@ XML[] presets;
 
 void setup() {
   //size(canvasW, canvasH);
+  background(0);
   size(1280, 255, P3D);
 
   frameRate(60);
@@ -1048,11 +1049,15 @@ void oscFaderSet() {
 
 
 void draw() {    
+  
+  background(0);
   oscFaderSet();
   
   /// println("cur sketch : " + select);
-  visuals[select].renderSketch();
+  
   transitionDraw();
+  
+  visuals[select].renderSketch();
   if (pixEnable == true){
     drawPixelPusher();
   }

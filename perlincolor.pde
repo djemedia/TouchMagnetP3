@@ -24,14 +24,9 @@ public String skchName = "Perlin color";
     println("Loading presets for" + skchName );
     getSketchPresets("perlincolor", true);
   }
-  
-  public void switchColorMode() {
-    println("switching color mode for" + skchName );
-    colorMode(HSB, 1); //setupPixelPusher();
-  }
-  
+
   public void setupSketch() {
-    colorMode(HSB, 255);
+    colorMode(HSB, 1);
     r = width/PI;
     noStroke();
     smooth();
@@ -52,7 +47,9 @@ public String skchName = "Perlin color";
 
   public void renderSketch()
   {
-    colorMode(HSB, 255);
+    
+    /// HSB 255 makes everything black
+    colorMode(HSB, 1);
     // colorMode(HSB, 1);
     //ox += max(-speed,min(speed,(mouseX-width/2)*speed/r));
     //oy += max(-speed,min(speed,(mouseY-height/2)*speed/r));
