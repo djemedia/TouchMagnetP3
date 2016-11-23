@@ -160,7 +160,7 @@ XML[] presets;
 
 void setup() {
   //size(canvasW, canvasH);
-  size(1280, 255, OPENGL);
+  size(1280, 255, P3D);
 
   frameRate(60);
   colorMode(HSB, 255);
