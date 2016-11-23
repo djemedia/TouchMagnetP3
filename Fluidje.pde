@@ -107,23 +107,23 @@ class FluidRenderer extends AudioRenderer {
      Instead of plotting points for a line, we create a ripple for each pixel between the
      last cursor pos and the current cursor pos 
      */
-    float dx = abs(mouseX - pmouseX);
-    float dy = abs(mouseY - pmouseY);
+    float dx = abs(theX - pmouseX);
+    float dy = abs(theY - pmouseY);
     float sx;
     float sy;
-    if (pmouseX < mouseX)
+    if (pmouseX < theX)
       sx = 1;
     else
       sx = -1;
-    if (pmouseY < mouseY)
+    if (pmouseY < theY)
       sy = 1;
     else
       sy = -1;
     float err = dx - dy;
     float x0 = pmouseX;
-    float x1 = mouseX;
+    float x1 = theX;
     float y0 = pmouseY;
-    float y1 = mouseY;
+    float y1 = theY;
     while ( (x0 != x1) || (y0 != y1)) {
       // Make sure the coordinate is within the window
       if (((int)(x0 / grid.cellSize) < grid.density.length) && ((int)(y0 / grid.cellSize) < grid.density[0].length) &&
@@ -143,8 +143,9 @@ class FluidRenderer extends AudioRenderer {
   /// set the onClick funciton using the global X and Y values
 
   public void onClick() {
-    float cX = mouseX * canvasW;
-    float cY = mouseX * canvasH;
+    
+    float cX = theX * canvasW;
+    float cY = theY * canvasH;
     int oX = (int)cX;
     int oY = (int)cY;
     float force = 50000;
