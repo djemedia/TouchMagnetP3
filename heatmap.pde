@@ -110,8 +110,7 @@ class HeatmapRenderer extends AudioRenderer {
 
   }
 
-  public void renderSketch()
-  {
+  public void renderSketch(){
     colorMode(RGB, 255);
     // See if heat (or cold) needs applied
     if (mousePressed && (mouseButton == LEFT))

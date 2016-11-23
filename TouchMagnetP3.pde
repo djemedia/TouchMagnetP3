@@ -375,6 +375,7 @@ void draw() {
   oscFaderSet();
   
   /// println("cur sketch : " + select);
+  
   visuals[select].renderSketch();
   transitionDraw();
   
@@ -408,6 +409,24 @@ void transitionReset() {
   transition = get();
   transitionOpacity = 255;
 }
+
+
+
+
+void stop()
+{
+  // always close Minim audio classes when you are done with them
+  //in.close();
+  minim.stop();
+  super.stop();
+}
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+///////// MOUSE AND KEYBOARD ///////////////////
+////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
 
 void keyPressed() {
   if(key == 'f'){
@@ -444,19 +463,9 @@ void keyPressed() {
 }
 
 
-
-void stop()
-{
-  // always close Minim audio classes when you are done with them
-  //in.close();
-  minim.stop();
-  super.stop();
-}
-
 void mouseClicked() {
   theX = mouseX;
   theY = mouseY;
-  println("MOUSE ON CLICK: " + theX + " " + theY);
   visuals[select].onClick();
   
    
@@ -465,11 +474,11 @@ void mouseClicked() {
 
 void mouseDragged() {
 
-  if(select == 5){
+   /// Drawing for these sketches requires 0-1 pos values, not canvasW-H
+  if(select == 5 || select == 3){
     theOSCX = map(mouseX, 0, canvasW, 0, 1);
     theOSCY = map(mouseY, 0, canvasH, 0, 1);
-     println("MAPPED ON CLICK: " + theOSCX + " " + theOSCY);
-    
+
   } else {
       theX = mouseX;
       theY = mouseY;
