@@ -68,7 +68,8 @@ class stainedglassRenderer extends AudioRenderer {
   public void setupSketch() {
     //size(canvasW, canvasH);
     //colorMode(RGB,255);
-
+    noStroke();
+    colorMode(RGB, 255);
     // the birth rules specify options for when a cell becomes active
     // the numbers refer to the amount of ACTIVE neighbour cells allowed,
     // their order is irrelevant

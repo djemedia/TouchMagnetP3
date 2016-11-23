@@ -36,6 +36,7 @@ class NoiseFieldRenderer extends AudioRenderer {
     smooth();
     //size(canvasW, canvasH);
     colorMode(HSB, 255);
+    noStroke();
     //background(0);
 
     int setTraceModeF = 10;

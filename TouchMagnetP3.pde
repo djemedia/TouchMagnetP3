@@ -350,7 +350,7 @@ void reLoadSketch(){
    
    visuals[select].loadPresets();
    */
-   visuals[select].switchColorMode();
+   /// visuals[select].switchColorMode();
    visuals[select].setupSketch();
 }
 
