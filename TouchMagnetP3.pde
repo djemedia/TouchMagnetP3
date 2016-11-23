@@ -1050,14 +1050,14 @@ void oscFaderSet() {
 
 void draw() {    
   
-  background(0);
+  /// background(0);
   oscFaderSet();
   
   /// println("cur sketch : " + select);
-  
+  visuals[select].renderSketch();
   transitionDraw();
   
-  visuals[select].renderSketch();
+  
   if (pixEnable == true){
     drawPixelPusher();
   }

@@ -34,8 +34,7 @@ public void doMouseDrag(){
   }
   
 void renderSketch(){
-     fill(0);
-    rect(0,0,canvasW,canvasH);
+     
     colorMode(HSB, TWO_PI * rotations, 1, 1);
 
     if (left != null) {

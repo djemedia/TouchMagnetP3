@@ -26,6 +26,7 @@ public String skchName = "Perlin color";
   }
 
   public void setupSketch() {
+    background(0);
     colorMode(HSB, 1);
     r = width/PI;
     noStroke();
@@ -47,6 +48,7 @@ public String skchName = "Perlin color";
 
   public void renderSketch()
   {
+    background(0);
     
     /// HSB 255 makes everything black
     colorMode(HSB, 1);
