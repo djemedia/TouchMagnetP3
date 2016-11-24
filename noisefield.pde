@@ -23,16 +23,16 @@ class NoiseFieldRenderer extends AudioRenderer {
   }
 
   public void loadPresets() {
-    println("Loading presets for" + skchName );
+    println("Loading presets for " + skchName );
     getSketchPresets("noisefield", true);    
   }
   
 
   public void setupSketch() {
-    smooth();
+    //smooth(); //used in processing 2
     //size(canvasW, canvasH);
     colorMode(HSB, 255);
-    noStroke();
+    //noStroke();
     //background(0);
 
     int setTraceModeF = 10;
@@ -66,10 +66,6 @@ class NoiseFieldRenderer extends AudioRenderer {
     }
   }
 
-  /////////////////////////////////////////////////////////
-  ////// WHY ARE THERE TWO onCLICK FUNCTIONS ////////////////
-  //////////////////////////////////////////////////////////
-  
  public void doMouseDrag(){
    
  }

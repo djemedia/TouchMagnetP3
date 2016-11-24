@@ -64,6 +64,7 @@ class TuringRenderer extends AudioRenderer {
   public void setupSketch() {
 
     colorMode(HSB, 255);
+    noStroke();
     /*
     int setcolorMode = 0;
      int setContrastModeF = 60;

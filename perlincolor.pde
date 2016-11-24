@@ -27,13 +27,14 @@ public String skchName = "Perlin color";
 
   public void setupSketch() {
     //background(0);
-    colorMode(HSB, 1);
+    
     r = width/PI;
     //noStroke();
     //smooth();
     
     noiseDetail(3, .6);
     //colorMode(HSB, 1); //setupPixelPusher();
+    colorMode(HSB, 1);
     /*
   setcolorMode = 205;
      vFader2 = 255;
@@ -48,7 +49,7 @@ public String skchName = "Perlin color";
 
   public void renderSketch()
   {
-    background(0);
+    //background(0);
     
     /// HSB 255 makes everything black
     colorMode(HSB, 1);
