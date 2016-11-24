@@ -46,14 +46,14 @@ class FluidRenderer extends AudioRenderer {
   public void setupSketch() {
     //size(canvasW, canvasH, P3D);
     colorMode(HSB, 255);
-    noStroke();
+    //noStroke();
 
     // grid = new GridSolver(integer cellWidth)
-    grid = new GridSolver(5);
+    grid = new GridSolver(4);
     //colorMode(RGB, 255);
     //setcolorMode = 0;
     //vFader3 = 100;
-    getSketchPresets("fluidje", true);
+    //getSketchPresets("fluidje", true);
   }
 
   public void renderSketch () {
@@ -84,6 +84,7 @@ class FluidRenderer extends AudioRenderer {
         throw new NullPointerException();
       }
       catch (NullPointerException e) {
+        //println("null pointer in fluidje at grid.solve");
       }
     }
 

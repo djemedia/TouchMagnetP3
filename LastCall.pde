@@ -23,13 +23,13 @@ class LastCallRenderer extends AudioRenderer {
   float boxY1 = 0;
   
   //soffits
-  float boxW2 = 860;
+  float boxW2 = 800;
   float boxH2 = 180;
   float boxX2 = 420;
   float boxY2 = 40;
   
   //long wall
-  float boxW3 = 860;
+  float boxW3 = 800;
   float boxH3 = 20;
   float boxX3 = 420;
   float boxY3 = 230;
@@ -45,7 +45,8 @@ class LastCallRenderer extends AudioRenderer {
 
  
   public void loadPresets() {
-    getSketchPresets("lastCall", true);   
+    getSketchPresets("lastCall", true); 
+    println("Loading presets for" + skchName );
   }
 
   public void switchColorMode() {
@@ -56,8 +57,11 @@ class LastCallRenderer extends AudioRenderer {
   public void setupSketch() {
     noStroke();
     colorMode(HSB);
+    if (BoxArray.size() > 0) {
+      BoxArray.clear();
+    }
     println("SETTING UPr" + skchName );
-    
+    //getSketchPresets("lastCall", true);
     
     /// initialize our box array
     for(int i=0; i<=numBoxes; i++){
@@ -88,7 +92,7 @@ class LastCallRenderer extends AudioRenderer {
       
     }
 
-    getSketchPresets("lastCall", true);
+    
      
   }
 

@@ -61,7 +61,7 @@ class FitzhughRenderer extends AudioRenderer {
   }
 
   public void setupSketch() {
-     noStroke();
+     //noStroke();
      colorMode(HSB, 255);
   //  if(movieOn) mm = new MovieMaker(this,width,height,"reaction"+day()+hour()+minute()+second()+".mov",30, MovieMaker.H263, MovieMaker.HIGH);
     //int w=canvasW;
@@ -74,7 +74,7 @@ class FitzhughRenderer extends AudioRenderer {
     vFader4 = fitzhughContrast;
     */
     //int fader = h;
-    getSketchPresets("fitzhugh", true);    
+    //getSketchPresets("fitzhugh", true);    
     /*
     // random to make it 2D otherwise it will just be 1d gradient like
     for(int i=0;i<w;++i) {

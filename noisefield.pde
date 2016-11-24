@@ -32,13 +32,13 @@ class NoiseFieldRenderer extends AudioRenderer {
     smooth();
     //size(canvasW, canvasH);
     colorMode(HSB, 255);
-    //noStroke();
+    noStroke();
     //background(0);
 
     int setTraceModeF = 10;
     int setSpeed = 20;
     int setContrastModeF = 2;
-    getSketchPresets("noisefield", true);    
+    //getSketchPresets("noisefield", true);    
     p = new ParticleSystem();
   }
 
@@ -50,7 +50,8 @@ class NoiseFieldRenderer extends AudioRenderer {
     rect(0,0,canvasW,canvasH);
     */
     //colorMode(HSB, 255);
-    //noStroke();
+    noStroke();
+    //background(0);
     int setTraceModeF = (int)map(vFader4, 0, 255, 0, 100);
     fill(0, setTraceModeF);
     rect(0, 0, width, height);
@@ -60,7 +61,7 @@ class NoiseFieldRenderer extends AudioRenderer {
       p.render();
       
     } catch (Exception e) {
-      println("error drawing noise particles: " + e);
+      println("error drawing noisefield: " + e);
       
     }
   }

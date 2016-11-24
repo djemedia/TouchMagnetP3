@@ -34,7 +34,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
   public void setupSketch() {
     
     colorMode(HSB, 255);
-    noStroke();
+    //noStroke();
     currFrame = new int[width*height];
     prevFrame = new int[width*height];
     tempFrame = new int[width*height];
@@ -45,7 +45,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
     vFader5 = 50;
     vFader6 = 60;
     */
-    getSketchPresets("noiseParticles", true);
+    //getSketchPresets("noiseParticles", true);
     for (int i=0; i<width*height; i++) {
       currFrame[i] = color(0, 0, 0);
       prevFrame[i] = color(0, 0, 0);

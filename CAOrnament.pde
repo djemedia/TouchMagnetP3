@@ -112,6 +112,7 @@ class stainedglassRenderer extends AudioRenderer {
         grad.addColorAt(xmlGradient[xg].getInt("at"), NamedColor.getForName(xmlGradient[xg].getContent()) );
       }
     }
+    
     // the tone map will map cell states/ages to a gradient color
     toneMap=new ToneMap(0, rule.getStateCount()-1, grad);
   }

@@ -58,7 +58,7 @@ class TuringRenderer extends AudioRenderer {
  
   public void loadPresets() {
     println("Loading presets for" + skchName );
-    doPresets();
+    //doPresets();
   }
 
   public void setupSketch() {
@@ -96,7 +96,7 @@ class TuringRenderer extends AudioRenderer {
      */
     res = setResF;
     scl  = setScaleDetailF;  
-   getSketchPresets("livingPixelism", true);
+   //getSketchPresets("livingPixelism", true);
 
     if (getSketchPresets("livingPixelism", false)) {
       pattern = presets[preset].getChild("pattern").getIntContent();
@@ -105,7 +105,7 @@ class TuringRenderer extends AudioRenderer {
 
     reset();
   }
-  
+  /*
   void doPresets(){
     if (getSketchPresets("livingPixelism", false)) {
       pattern = presets[preset].getChild("pattern").getIntContent();
@@ -113,7 +113,7 @@ class TuringRenderer extends AudioRenderer {
     }
 
   }
-
+*/
   void reset() {
     w = width/res; 
     h = height/res; 

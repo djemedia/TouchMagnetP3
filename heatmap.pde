@@ -28,7 +28,7 @@ class HeatmapRenderer extends AudioRenderer {
   }
   
   public void setupSketch() {
-    noStroke();
+    //noStroke();
     colorMode(RGB, 255);
     g = new Gradient();
     /*
@@ -74,7 +74,7 @@ class HeatmapRenderer extends AudioRenderer {
     //add gradient color
     //hsb picker
 */
-    getSketchPresets("heatmap", true);
+    //getSketchPresets("heatmap", true);
     
     if (getSketchPresets("heatmap", false)) {
       XML[] xmlGradient = presets[preset].getChildren("gradient");
@@ -87,6 +87,7 @@ class HeatmapRenderer extends AudioRenderer {
         g.addColor(color(xmlGradient[xg].getInt("r"),xmlGradient[xg].getInt("g"),xmlGradient[xg].getInt("b")));
       }
     }
+   
     /* // Initalize the heat map (make sure everything is 0.0)
      for (int i = 0; i < canvasW; ++i)
      for (int j = 0; j < canvasH; ++j)

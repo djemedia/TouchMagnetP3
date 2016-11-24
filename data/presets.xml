@@ -21,32 +21,10 @@
     <vFader8>0</vFader8>
     <vFader9>0</vFader9>
   </master>
-  <noiseParticles>
-    <vFader1>18</vFader1>
-    <vFader2>255</vFader2>
-    <vFader3>255</vFader3>
-    <vFader4>117</vFader4>
-    <vFader5>30</vFader5>
-    <vFader6>50</vFader6>
-    <vFader7>201</vFader7>
-    <vFader8>0</vFader8>
-    <vFader9>0</vFader9>
-  </noiseParticles>
-  <noiseParticles>
-    <vFader1>18</vFader1>
-    <vFader2>255</vFader2>
-    <vFader3>255</vFader3>
-    <vFader4>117</vFader4>
-    <vFader5>30</vFader5>
-    <vFader6>50</vFader6>
-    <vFader7>201</vFader7>
-    <vFader8>0</vFader8>
-    <vFader9>0</vFader9>
-  </noiseParticles>
   <fluidje>
-    <vFader1>19</vFader1>
+    <vFader1>16</vFader1>
     <vFader2>255</vFader2>
-    <vFader3>49</vFader3>
+    <vFader3>126</vFader3>
     <vFader4>119</vFader4>
     <vFader5>100</vFader5>
     <vFader6>121</vFader6>
@@ -76,6 +54,28 @@
     <vFader8>0</vFader8>
     <vFader9>0</vFader9>
   </fluidje>
+  <noiseParticles>
+    <vFader1>18</vFader1>
+    <vFader2>255</vFader2>
+    <vFader3>255</vFader3>
+    <vFader4>117</vFader4>
+    <vFader5>30</vFader5>
+    <vFader6>50</vFader6>
+    <vFader7>201</vFader7>
+    <vFader8>0</vFader8>
+    <vFader9>0</vFader9>
+  </noiseParticles>
+  <noiseParticles>
+    <vFader1>18</vFader1>
+    <vFader2>255</vFader2>
+    <vFader3>255</vFader3>
+    <vFader4>117</vFader4>
+    <vFader5>30</vFader5>
+    <vFader6>50</vFader6>
+    <vFader7>201</vFader7>
+    <vFader8>0</vFader8>
+    <vFader9>0</vFader9>
+  </noiseParticles>
   <fitzhugh>
     <vFader1>164</vFader1>
     <vFader2>255</vFader2>
@@ -88,10 +88,10 @@
     <vFader9>0</vFader9>
   </fitzhugh>
   <fitzhugh>
-    <vFader1>37</vFader1>
+    <vFader1>91</vFader1>
     <vFader2>255</vFader2>
     <vFader3>255</vFader3>
-    <vFader4>45</vFader4>
+    <vFader4>154</vFader4>
     <vFader5>75</vFader5>
     <vFader6>50</vFader6>
     <vFader7>255</vFader7>
@@ -249,10 +249,10 @@
     <pattern>1</pattern>
   </livingPixelism>
   <livingPixelism>
-    <vFader1>252</vFader1>
-    <vFader2>177</vFader2>
+    <vFader1>0</vFader1>
+    <vFader2>255</vFader2>
     <vFader3>149</vFader3>
-    <vFader4>182</vFader4>
+    <vFader4>110</vFader4>
     <vFader5>21</vFader5>
     <vFader6>40</vFader6>
     <vFader7>137</vFader7>
@@ -335,12 +335,11 @@
     <gradient at="212">BLACK</gradient>
     <gradient at="255">SADDLEBROWN</gradient>
   </stainedGlass>
-  <!-- CODE STUB  -->
   <lastCall>
-    <vFader1>0</vFader1>
-    <vFader2>0</vFader2>
-    <vFader3>0</vFader3>
-    <vFader4>0</vFader4>
+    <vFader1>218</vFader1>
+    <vFader2>149</vFader2>
+    <vFader3>61</vFader3>
+    <vFader4>147</vFader4>
     <vFader5>0</vFader5>
     <vFader6>0</vFader6>
     <vFader7>125</vFader7>
@@ -349,7 +348,7 @@
   </lastCall>
   <lastCall>
     <vFader1>220</vFader1>
-    <vFader2>0</vFader2>
+    <vFader2>255</vFader2>
     <vFader3>255</vFader3>
     <vFader4>100</vFader4>
     <vFader5>125</vFader5>

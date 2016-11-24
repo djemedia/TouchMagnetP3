@@ -171,7 +171,7 @@ XML[] presets;
 //////////////////////////////////////////////////
 void setup() {
   //size(canvasW, canvasH);
-  background(0);
+  //background(0);
   size(1280, 255, P3D);
 
   frameRate(60);
@@ -183,6 +183,7 @@ void setup() {
   //////////// LOAD ALL PRESETS /////////////////////
   xml = loadXML("data/presets.xml");
   loadMasterPresets();
+  
   // setup player
   //minim = new Minim(this);
 
@@ -370,7 +371,7 @@ void oscSketch1(float iA) {
     preset = 0;
     //  vFader5 = 30;
     //  vFader6 = 50;
-    // getSketchPresets("noiseParticles", true);
+    //getSketchPresets("fluidje", true);
     //in.addListener(visuals[select]);
     //// visuals[select].setupSketch();
 
@@ -479,7 +480,8 @@ void oscSketch10(float iA) {
     preset = 0;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
-    //reLoadSketch();
+    
+    reLoadSketch();
   }
 }
 void oscSketch11(float iA) {
@@ -1065,11 +1067,12 @@ void oscFaderSet() {
 void reLoadSketch(){
   /*
    visuals[select].setInitVals();
-    */
+  */  
    visuals[select].loadPresets();
   
    /// visuals[select].switchColorMode();
    visuals[select].setupSketch();
+   
 }
 
 void draw() {    
