@@ -131,6 +131,7 @@ class HeatmapRenderer extends AudioRenderer {
         set(i, j, thisColor);
       }
     }
+    colorMode(HSB, 255);
   }
 
   void update_heatmap()

@@ -1,7 +1,7 @@
 //// these values get accessed by both classes
 //// should be moved to main class tho
 int tId = 0;
-int NUM_PARTICLES = 1000; 
+int NUM_PARTICLES = 800; 
 
 class NoiseFieldRenderer extends AudioRenderer {
 

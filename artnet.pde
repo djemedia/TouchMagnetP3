@@ -88,8 +88,8 @@ void drawArtnet()  {
   for(int i = 0; i < 170; i++){    
     color c = color(artnetimg.pixels[i]);
          
-   artnetimg.pixels[i] = color(hue(c), saturation(c), brightness(c) - dimmer4);
-   artnetimg.pixels[i] = color(hue(c), saturation(c), brightness(c) - dimmer1);
+   artnetimg.pixels[i] = color(hue(c), saturation(c), brightness(c) - dimmer4- dimmer1);
+   //artnetimg.pixels[i] = color(hue(c), saturation(c), brightness(c) - dimmer1);
   
    artnetimg.updatePixels();   
      

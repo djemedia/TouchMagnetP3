@@ -180,10 +180,10 @@ class TuringRenderer extends AudioRenderer {
           //          
           //case 0: img.pixels[c] = color(setcolorMode + 20 * sin(val*setContrastModeF), vFader2,val-vFader3 + 127 * sin(val*0.0004));  break;
         case 0: 
-          img.pixels[c] = color(setcolorMode + 20 * sin(val*setContrastF), vFader2, val + 127 * sin(val*.0004));  
-          break;
+        img.pixels[c] = color(setcolorMode + 20 * sin(val*setContrastF), vFader2, vFader3 - val);
+           break; 
         case 1: 
-          img.pixels[c] = color(setcolorMode + 20 * sin(val*setContrastF), vFader2, vFader3 - val);  
+         img.pixels[c] = color(setcolorMode + 20 * sin(val*setContrastF), vFader2, val + 127 * sin(val*.0004));           
           break;
         case 2: 
           img.pixels[c] = color(setcolorMode + 20 * sin(val*setContrastF), vFader2, val + vFader3 * sin(val*.0004));  

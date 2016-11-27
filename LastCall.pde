@@ -55,8 +55,9 @@ class LastCallRenderer extends AudioRenderer {
   }
 
   public void setupSketch() {
-    noStroke();
-    colorMode(HSB);
+    //noStroke();
+    //colorMode(HSB);
+    
     if (BoxArray.size() > 0) {
       BoxArray.clear();
     }
@@ -106,6 +107,7 @@ class LastCallRenderer extends AudioRenderer {
   }
 
   public void renderSketch() {
+    colorMode(HSB);
      fill(0);
     rect(0,0,canvasW,canvasH);
 
@@ -141,7 +143,7 @@ class LastCallRenderer extends AudioRenderer {
     }
     
     
-    
+    colorMode(HSB, 255);
    
     
   }

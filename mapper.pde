@@ -56,24 +56,24 @@ if(down == true){
    ledPos[xyPixels(x, 1, ledsW)] = xyPixels(internalX, internalY, canvasW);
    internalX--;//direction
    }
+//chamged for testing   
+   internalX = 640;
+   internalY = 250;//starting point on canvas
    
-   internalX = 440;
-   internalY = 4;//starting point on canvas
-   
-   for (int x = 0; x < 197; x++) {//start and number of pixels on strip
+   for (int x = 0; x < 119; x++) {//start and number of pixels on strip
    //v strip #
    ledPos[xyPixels(x, 2, ledsW)] = xyPixels(internalX, internalY, canvasW);
    //internalX++;//direction
-   internalX++;
+   internalY-= 2;
    }
-   internalX = 440;
-   internalY = 4;//starting point on canvas
+   internalX = 640;
+   internalY = 40;//starting point on canvas
    
-   for (int x = 198; x < 240; x++) {//start and number of pixels on strip
+   for (int x = 120; x < 240; x++) {//start and number of pixels on strip
    //v strip #
    ledPos[xyPixels(x, 2, ledsW)] = xyPixels(internalX, internalY, canvasW);
    //internalX++;//direction
-   internalY++;
+   internalX-= 4;
    }
 
    internalX = 500;
@@ -873,7 +873,7 @@ void setupPixelPusher() {
   registry.addObserver(testObserver);
   //registry.setAntiLog(true);
   registry.setLogging(false);
-  background(0);
+  //background(0);
 }
 
 void drawPixelPusher() {
