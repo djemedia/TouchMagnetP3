@@ -1,4 +1,0 @@
-#!/bin/sh
-
-APPDIR=$(dirname "$0")
-java -Xms64m -Xmx1024m -Djna.nosys=true -Djava.library.path="$APPDIR:$APPDIR/lib" -cp "$APPDIR/lib/colorutils.jar:$APPDIR/lib/simutils.jar:$APPDIR/lib/toxiclibscore.jar:$APPDIR/lib/TouchMagnetCL_V2_C1.jar:$APPDIR/lib/core.jar:$APPDIR/lib/jogl-all.jar:$APPDIR/lib/gluegen-rt.jar:$APPDIR/lib/jogl-all-natives-linux-i586.jar:$APPDIR/lib/gluegen-rt-natives-linux-i586.jar:$APPDIR/lib/nrserial.jar:$APPDIR/lib/PixelPusher.jar:$APPDIR/lib/jl1.0.jar:$APPDIR/lib/jsminim.jar:$APPDIR/lib/minim.jar:$APPDIR/lib/mp3spi1.9.4.jar:$APPDIR/lib/tritonus_aos.jar:$APPDIR/lib/tritonus_share.jar:$APPDIR/lib/dmxP512.jar:$APPDIR/lib/jssc.jar:$APPDIR/lib/serial.jar:$APPDIR/lib/udp.jar:$APPDIR/lib/oscP5.jar" TouchMagnetCL_V2_C1 "$@"

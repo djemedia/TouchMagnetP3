@@ -7,11 +7,13 @@
 //// P2 to P3 conversion by TenTon Raygun
 *********************************************/
 
+
 import com.heroicrobot.dropbit.devices.*;
 import com.heroicrobot.dropbit.common.*;
 import com.heroicrobot.dropbit.discovery.*;
 import com.heroicrobot.dropbit.registry.*;
 import com.heroicrobot.dropbit.devices.pixelpusher.*;
+
 
 
 ///*
@@ -20,12 +22,8 @@ import toxi.math.*;
 import toxi.color.*;
 ///*/
 
-import artnetP5.*;
-//
-import dmxP512.*;
-import processing.serial.*;
 
-/*
+ /*
  import com.heroicrobot.dropbit.devices.pixelpusher.Pixel;
  import com.heroicrobot.dropbit.devices.pixelpusher.Strip;
  */
