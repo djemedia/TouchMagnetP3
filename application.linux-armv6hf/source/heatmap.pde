@@ -29,7 +29,7 @@ class HeatmapRenderer extends AudioRenderer {
   
   public void setupSketch() {
     //noStroke();
-    colorMode(RGB, 255, 255, 255, 100);
+    colorMode(RGB, 255, 255, 255, 225);
     g = new Gradient();
     /*
     g.addColor(color(0, 0, 0));
@@ -112,7 +112,7 @@ class HeatmapRenderer extends AudioRenderer {
   }
 
   public void renderSketch(){
-    colorMode(RGB, 255, 255, 255);
+    colorMode(RGB, 255, 255, 255, 255);
     // See if heat (or cold) needs applied
     if (mousePressed && (mouseButton == LEFT))
       apply_heat(mouseX, mouseY, 30, .25);
@@ -131,7 +131,7 @@ class HeatmapRenderer extends AudioRenderer {
         set(i, j, thisColor);
       }
     }
-    colorMode(HSB, 255, 255, 255);
+    //colorMode(HSB, 255, 255, 255, 255);
   }
 
   void update_heatmap()
@@ -178,9 +178,9 @@ class HeatmapRenderer extends AudioRenderer {
     int oX = (int)cX;
     int oY = (int)cY;
     if (toggle == true)
-      apply_heat(oX, oY, 30, .25);
+      apply_heat(oX, oY, 60, .10);
     if (toggle == false)
-      apply_heat(oX, oY, 30, -.25);
+      apply_heat(oX, oY, 60, -.10);
   }
   /*
   public void heattoggle(float oscToggle) {

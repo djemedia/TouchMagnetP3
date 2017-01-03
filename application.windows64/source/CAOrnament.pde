@@ -65,7 +65,7 @@ class stainedglassRenderer extends AudioRenderer {
     //size(canvasW, canvasH);
     //colorMode(RGB,255);
     //noStroke();
-    colorMode(RGB, 255, 255, 255, 100);
+    colorMode(RGB, 255, 255, 255, 255);
     // the birth rules specify options for when a cell becomes active
     // the numbers refer to the amount of ACTIVE neighbour cells allowed,
     // their order is irrelevant
@@ -130,7 +130,7 @@ class stainedglassRenderer extends AudioRenderer {
   }
 
   public void renderSketch() {
-    colorMode(RGB, 255);
+    //colorMode(RGB, 255, 255, 255, 255);
     loadPixels();
     if (mousePressed) {
       ca.drawBoxAt(mouseX, mouseY, 18, 4);

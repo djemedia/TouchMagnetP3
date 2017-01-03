@@ -36,6 +36,7 @@ public void setupArtnet() {
   
   artnet = new ArtnetP5();
   artnetimg = new PImage(170, 1, PApplet.RGB);
+  colorMode(HSB, 255, 255, 255, 255);
  
      //mapSection(100, 20, 0,12);                                      here??
 }

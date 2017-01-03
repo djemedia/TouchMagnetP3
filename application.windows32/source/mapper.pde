@@ -894,7 +894,7 @@ void drawPixelPusher() {
     //   strips1.addAll(registry.getStrips(3));  
     //List<Strip> strips2 = registry.getStrips(2);      
 
-    colorMode(HSB, 255, 255, 255, 100);
+    colorMode(HSB, 255, 255, 255, 255);
 
     for (int y = 0; y < ledsH; y++) {     
       for (int x = 0; x < ledsW; x++) {

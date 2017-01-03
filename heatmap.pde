@@ -178,9 +178,9 @@ class HeatmapRenderer extends AudioRenderer {
     int oX = (int)cX;
     int oY = (int)cY;
     if (toggle == true)
-      apply_heat(oX, oY, 30, .25);
+      apply_heat(oX, oY, 60, .10);
     if (toggle == false)
-      apply_heat(oX, oY, 30, -.25);
+      apply_heat(oX, oY, 60, -.10);
   }
   /*
   public void heattoggle(float oscToggle) {

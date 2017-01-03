@@ -130,7 +130,7 @@ class stainedglassRenderer extends AudioRenderer {
   }
 
   public void renderSketch() {
-    colorMode(RGB, 255);
+    //colorMode(RGB, 255, 255, 255, 255);
     loadPixels();
     if (mousePressed) {
       ca.drawBoxAt(mouseX, mouseY, 18, 4);

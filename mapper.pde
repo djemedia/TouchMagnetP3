@@ -110,10 +110,10 @@ if(down == true){
   
 
 
-   internalX = 240;
+   internalX = 300;
    internalY = 4;//starting point on canvas
    
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
+   for (int x = 0; x < 300; x++) {//start and number of pixels on strip
    //v strip #
    ledPos[xyPixels(x, 6, ledsW)] = xyPixels(internalX, internalY, canvasW);
    //internalX++;//direction
@@ -871,7 +871,7 @@ void setupPixelPusher() {
   registry = new DeviceRegistry();
   testObserver = new TestObserver();
   registry.addObserver(testObserver);
-  //registry.setAntiLog(true);
+  registry.setAntiLog(true);
   registry.setLogging(false);
   //background(0);
 }

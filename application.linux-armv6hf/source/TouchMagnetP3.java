@@ -145,7 +145,7 @@ int thisLedPos;
 int thisartnetPos;
 int thisDmxPos;
 
-int canvasW = 640;
+int canvasW = 1280;
 int canvasH = 255;
 
 //these seetings can be overridden by the data/presets.xml file
@@ -228,7 +228,7 @@ public void setup() {
   
 
   frameRate(60);
-  colorMode(HSB, 255,255, 255,100);
+  colorMode(RGB, 255,255, 255,255);
   transition = get();
   
  
@@ -1169,7 +1169,7 @@ public void draw() {
 
 public void transitionDraw() {
   if (transitionOpacity > 0) {
-    //colorMode(HSB, 255, 255, 255, 255);
+    colorMode(RGB, 255, 255, 255, 255);
     //transition = get();
     transitionOpacity -= 1;
     tint(255, transitionOpacity);
@@ -1181,6 +1181,7 @@ public void transitionDraw() {
 }
 
 public void transitionReset  () {
+  //  colorMode(RGB, 255, 255, 255, 255);
   transition = get();
   transitionOpacity = 255;
   
@@ -1330,7 +1331,7 @@ class stainedglassRenderer extends AudioRenderer {
     //size(canvasW, canvasH);
     //colorMode(RGB,255);
     //noStroke();
-    colorMode(RGB, 255, 255, 255, 100);
+    colorMode(RGB, 255, 255, 255, 255);
     // the birth rules specify options for when a cell becomes active
     // the numbers refer to the amount of ACTIVE neighbour cells allowed,
     // their order is irrelevant
@@ -1395,7 +1396,7 @@ class stainedglassRenderer extends AudioRenderer {
   }
 
   public void renderSketch() {
-    colorMode(RGB, 255);
+    //colorMode(RGB, 255, 255, 255, 255);
     loadPixels();
     if (mousePressed) {
       ca.drawBoxAt(mouseX, mouseY, 18, 4);
@@ -1483,7 +1484,7 @@ class FluidRenderer extends AudioRenderer {
   
   public void setupSketch() {
     //size(canvasW, canvasH, P3D);
-    colorMode(HSB, 255, 255, 255, 100);
+    colorMode(HSB, 255, 255, 255, 255);
     //noStroke();
 
     // grid = new GridSolver(integer cellWidth)
@@ -1495,7 +1496,7 @@ class FluidRenderer extends AudioRenderer {
   }
 
   public void renderSketch () {
-    colorMode(HSB, 255, 255, 255);
+   // colorMode(HSB, 255, 255, 255, 255);
     /******** Physics ********/
     // time related stuff
     // Calculate amount of time since last frame (Delta means "change in")
@@ -1763,7 +1764,7 @@ class LastCallRenderer extends AudioRenderer {
 
   public void setupSketch() {
     //noStroke();
-    colorMode(HSB, 255, 255, 255, 100);
+    colorMode(HSB, 255, 255, 255, 225);
     
     if (BoxArray.size() > 0) {
       BoxArray.clear();
@@ -1934,6 +1935,7 @@ public void setupArtnet() {
   
   artnet = new ArtnetP5();
   artnetimg = new PImage(170, 1, PApplet.RGB);
+  colorMode(HSB, 255, 255, 255, 255);
  
      //mapSection(100, 20, 0,12);                                      here??
 }
@@ -2122,7 +2124,7 @@ class FitzhughRenderer extends AudioRenderer {
 
   public void setupSketch() {
      //noStroke();
-     colorMode(HSB, 255, 255, 255,100);
+     colorMode(HSB, 255, 255, 255,225);
   //  if(movieOn) mm = new MovieMaker(this,width,height,"reaction"+day()+hour()+minute()+second()+".mov",30, MovieMaker.H263, MovieMaker.HIGH);
     //int w=canvasW;
     //int h=canvasH;
@@ -2396,7 +2398,7 @@ class HeatmapRenderer extends AudioRenderer {
   
   public void setupSketch() {
     //noStroke();
-    colorMode(RGB, 255, 255, 255, 100);
+    colorMode(RGB, 255, 255, 255, 225);
     g = new Gradient();
     /*
     g.addColor(color(0, 0, 0));
@@ -2479,7 +2481,7 @@ class HeatmapRenderer extends AudioRenderer {
   }
 
   public void renderSketch(){
-    colorMode(RGB, 255, 255, 255);
+    colorMode(RGB, 255, 255, 255, 255);
     // See if heat (or cold) needs applied
     if (mousePressed && (mouseButton == LEFT))
       apply_heat(mouseX, mouseY, 30, .25f);
@@ -2498,7 +2500,7 @@ class HeatmapRenderer extends AudioRenderer {
         set(i, j, thisColor);
       }
     }
-    colorMode(HSB, 255, 255, 255);
+    //colorMode(HSB, 255, 255, 255, 255);
   }
 
   public void update_heatmap()
@@ -2545,9 +2547,9 @@ class HeatmapRenderer extends AudioRenderer {
     int oX = (int)cX;
     int oY = (int)cY;
     if (toggle == true)
-      apply_heat(oX, oY, 30, .25f);
+      apply_heat(oX, oY, 60, .10f);
     if (toggle == false)
-      apply_heat(oX, oY, 30, -.25f);
+      apply_heat(oX, oY, 60, -.10f);
   }
   /*
   public void heattoggle(float oscToggle) {
@@ -3983,7 +3985,7 @@ public void drawPixelPusher() {
     //   strips1.addAll(registry.getStrips(3));  
     //List<Strip> strips2 = registry.getStrips(2);      
 
-    colorMode(HSB, 255, 255, 255, 100);
+    colorMode(HSB, 255, 255, 255, 255);
 
     for (int y = 0; y < ledsH; y++) {     
       for (int x = 0; x < ledsW; x++) {
@@ -4071,7 +4073,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
 
   public void setupSketch() {
     
-    colorMode(HSB, 255, 255, 255, 100);
+    colorMode(HSB, 255, 255, 255, 225);
     //noStroke();
     currFrame = new int[width*height];
     prevFrame = new int[width*height];
@@ -4115,7 +4117,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
 
 
   public void renderSketch() {
-    colorMode(HSB, 255, 255, 255);
+    //colorMode(HSB, 255, 255, 255);
     if (okToDraw) {
       okToDraw = false;
       noiseZ += 2*noiseScale;
@@ -4415,7 +4417,7 @@ class NoiseFieldRenderer extends AudioRenderer {
   public void setupSketch() {
     //smooth(); //used in processing 2
     //size(canvasW, canvasH);
-    colorMode(HSB, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255, 255);
     //noStroke();
     //background(0);
 
@@ -4577,15 +4579,15 @@ public String skchName = "Perlin color";
 
   public void setupSketch() {
     //background(0);
-    //colorMode(HSB, 255, 255, 255, 100);
-     colorMode(HSB, 1,1,1,100);
+   colorMode(HSB, 255, 255, 255, 255);
+    
     r = width/PI;
     //noStroke();
     //smooth();
     
     noiseDetail(3, .6f);
     //colorMode(HSB, 1); //setupPixelPusher();
-    colorMode(HSB, 1);
+    //colorMode(HSB, 1,1,1, 255);
     /*
   setcolorMode = 205;
      vFader2 = 255;
@@ -4595,6 +4597,7 @@ public String skchName = "Perlin color";
      vFader6 = 200;
      */
     //getSketchPresets("perlincolor", true);
+   //  colorMode(HSB, 1,1,1, 255);
   }
 
 
@@ -4604,7 +4607,7 @@ public String skchName = "Perlin color";
     
     /// HSB 255 makes everything black
    
-   colorMode(HSB, 1,1,1,100);
+   colorMode(HSB, 1,1,1,255);
     //ox += max(-speed,min(speed,(mouseX-width/2)*speed/r));
     //oy += max(-speed,min(speed,(mouseY-height/2)*speed/r));
     float setSpeedModeF = (float)map(vFader5, 0, 255, .0001f, .08f);
@@ -4632,11 +4635,11 @@ public String skchName = "Perlin color";
         //float v = noise(ox+x*kNoiseDetail,oy+y*kNoiseDetail,millis()*setSpeedModeF);     
         //float v = noise(ox+x*kNoiseDetail,oy+y*kNoiseDetail,millis()*.0001);     
         //set(x,y,color(setcolorModeF-y*.05/height,(4-v)*setSatModeF,(setContrastModeF+v*v)*setBrightModeF));    
-        float v = noise(ox+x*(kNoiseDetail+setNoiseDetailF), oy+y*(kNoiseDetail+setNoiseDetailF), millis()*.00005f);
+        float v = noise(ox+x*(kNoiseDetail+setNoiseDetailF), oy+y*(kNoiseDetail+setNoiseDetailF), setNoiseDetailF);
         set(x, y, color(setcolorModeF-setContrastModeF*v, setSatModeF, (v+v)*setBrightModeF));
       }
     }
-    colorMode(HSB, 255, 255, 255, 100);
+    //colorMode(HSB, 255, 255, 255, 255);
 
     //drawPixelPusher();
   }
@@ -4829,7 +4832,7 @@ public void renderSketch(){
   }
 }
 
-  public void settings() {  size(640,255, P3D); }
+  public void settings() {  size(1280,255, P3D); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "TouchMagnetP3" };
     if (passedArgs != null) {

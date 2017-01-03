@@ -57,7 +57,7 @@ class FluidRenderer extends AudioRenderer {
   }
 
   public void renderSketch () {
-    colorMode(HSB, 255, 255, 255, 255);
+   // colorMode(HSB, 255, 255, 255, 255);
     /******** Physics ********/
     // time related stuff
     // Calculate amount of time since last frame (Delta means "change in")

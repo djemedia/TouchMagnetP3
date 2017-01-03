@@ -27,7 +27,7 @@ public String skchName = "Perlin color";
 
   public void setupSketch() {
     //background(0);
-    //colorMode(HSB, 255, 255, 255, 100);
+   colorMode(HSB, 255, 255, 255, 255);
     
     r = width/PI;
     //noStroke();
@@ -45,7 +45,7 @@ public String skchName = "Perlin color";
      vFader6 = 200;
      */
     //getSketchPresets("perlincolor", true);
-     colorMode(HSB, 1,1,1, 255);
+   //  colorMode(HSB, 1,1,1, 255);
   }
 
 
@@ -87,7 +87,7 @@ public String skchName = "Perlin color";
         set(x, y, color(setcolorModeF-setContrastModeF*v, setSatModeF, (v+v)*setBrightModeF));
       }
     }
-    colorMode(HSB, 255, 255, 255, 255);
+    //colorMode(HSB, 255, 255, 255, 255);
 
     //drawPixelPusher();
   }
