@@ -29,7 +29,7 @@ class HeatmapRenderer extends AudioRenderer {
   
   public void setupSketch() {
     //noStroke();
-    colorMode(RGB, 255, 255, 255, 225);
+    colorMode(RGB, 255, 255, 255, 255);
     g = new Gradient();
     /*
     g.addColor(color(0, 0, 0));

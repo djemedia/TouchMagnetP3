@@ -33,7 +33,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
 
   public void setupSketch() {
     
-    colorMode(HSB, 255, 255, 255, 225);
+    colorMode(HSB, 255, 255, 255, 255);
     //noStroke();
     currFrame = new int[width*height];
     prevFrame = new int[width*height];

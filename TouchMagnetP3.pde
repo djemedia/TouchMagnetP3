@@ -1,11 +1,10 @@
+
 /////////////////////////////
-/* UPDATED FOR PROCESSING 3 11/16/2016 
+/* open source - 
+created by dustin edwards with dan cote, 2011-2015. 
+Artnet upgrade with Rich Trapani/Jamie Schwetmann 2015
+P3 upgrade and additional programming with TenTon Raygun 2016
 ///////////////////////////////////////*/
-
-
-/********************************************
-//// P2 to P3 conversion by TenTon Raygun
-*********************************************/
 
 
 import com.heroicrobot.dropbit.devices.*;
@@ -13,7 +12,14 @@ import com.heroicrobot.dropbit.common.*;
 import com.heroicrobot.dropbit.discovery.*;
 import com.heroicrobot.dropbit.registry.*;
 import com.heroicrobot.dropbit.devices.pixelpusher.*;
+ /*
+ import com.heroicrobot.dropbit.devices.pixelpusher.Pixel;
+ import com.heroicrobot.dropbit.devices.pixelpusher.Strip;
+ */
+ 
+DeviceRegistry registry;
 
+TestObserver testObserver;
 
 
 ///*
@@ -22,17 +28,11 @@ import toxi.math.*;
 import toxi.color.*;
 ///*/
 
-
- /*
- import com.heroicrobot.dropbit.devices.pixelpusher.Pixel;
- import com.heroicrobot.dropbit.devices.pixelpusher.Strip;
- */
- 
 import ddf.minim.*;
 
 import artnetP5.*;
 
-// import codeanticode.syphon.*;
+
 
 import dmxP512.*;
 import processing.serial.*;
@@ -46,27 +46,31 @@ import java.awt.Color;
 import java.util.*;
 
 import oscP5.*;
-import netP5.*;
-
 OscP5 oscP5;
 OscP5 oscP5B;
+
+import netP5.*;
 NetAddress myRemoteLocation;
 NetAddress stripApp;
 
-DeviceRegistry registry;
 
-TestObserver testObserver;
+import spout.*;
+Spout spout;
 
+// import codeanticode.syphon.*;
 /// SyphonClient client;
-PGraphics canvas;
+
+//PGraphics canvas;
 
 PImage transition;
 
-boolean artnetEnable = true;
+boolean artnetEnable = false;
 boolean dmxEnable =false;
 boolean pixEnable = true;
+boolean spoutEnable = true;
+//boolean syphonEnable = false;
 
-boolean showFramerate = false;
+boolean showFramerate = true;
 
 boolean ready_to_go = true;
 int lastPosition;
@@ -128,6 +132,7 @@ float audioResponseState;
 
 int faderWait = 0;
 int resetPixelsWait = 0;
+
 int transitionOpacity = 0;
 
 OscMessage faderOut;
@@ -136,8 +141,9 @@ float faderOutFloat;
 
 
 Minim minim;
-
 AudioInput in;
+
+ 
 AudioRenderer radar;
 HeatmapRenderer heatmap;
 NoiseParticlesRenderer noiseParticles;
@@ -149,7 +155,8 @@ TuringRenderer turing;
 stainedglassRenderer stainedglass;
 LastCallRenderer lastcall;
 
-AudioRenderer[] visuals; 
+AudioRenderer[] visuals;
+
 
 
 int select =0;
@@ -169,29 +176,32 @@ XML[] presets;
 //////////////////////////////////////////////////
 void setup() {
   //size(canvasW, canvasH);
-  background(0);
-  size(1280,255, P3D);
-
+  //fullScreen();
+  size(1280,255, P2D);
+  //textureMode(NORMAL);
+  //background(0);
   frameRate(60);
   colorMode(HSB, 255,255, 255,255);
   transition = get();
-  
+  //transition = createImage(0,0, ARGB);
  
   
   //////////// LOAD ALL PRESETS /////////////////////
   xml = loadXML("data/presets.xml");
   loadMasterPresets();
   
-  // setup player
+ 
+  //// setup player
   //minim = new Minim(this);
 
-  // get a line in from Minim, default bit depth is 16
+  //// get a line in from Minim, default bit depth is 16
   //in = minim.getLineIn(Minim.STEREO, 512);
 
 
   //in.addListener(visuals[select]);
-  /// visuals[select].setupSketch();
-   // setup renderers
+  // visuals[select].setupSketch();
+  
+  //// setup renderers
   noiseParticles = new NoiseParticlesRenderer(in);
   perlincolor = new PerlinColorRenderer(in);
   //radar = new RadarRenderer(in);
@@ -228,12 +238,14 @@ void setup() {
   if (dmxEnable == true){
     setupDMX();
   }
-    /*
+  if (spoutEnable == true)
+    setupSpout();
+  /*  
   if (syphonEnable == true)
     setupSyphon();
     */
-
-  //setup oscp5
+    
+ ////setup oscp5/////
   oscP5 = new OscP5(this, 12000);
   oscP5B = new OscP5(this, 9001);
 
@@ -352,9 +364,6 @@ void setup() {
   oscP5.plug(this, "oscSave", "/luminous/save");
 }
 
-
-
-
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
 ///////// ALL OSC FUNCTIONS ///////////////////
@@ -378,7 +387,7 @@ void oscSketch1(float iA) {
 }
 void oscSketch2(float iA) {
   if (iA == 1) {
-    
+     transitionReset();
     //in.removeListener(visuals[select]);
     select = 1;
     preset = 0;
@@ -1065,6 +1074,7 @@ void oscEvent(OscMessage theOscMessage) {
     println("### addrpattern\t"+theOscMessage.addrPattern());
     println("### typetag\t"+theOscMessage.typetag());
   }
+
 }
 
 
@@ -1076,11 +1086,9 @@ void oscEvent(OscMessage theOscMessage) {
 
 
 void reLoadSketch(){
-  /*
-   visuals[select].setInitVals();
-  */  
-   visuals[select].loadPresets();
   
+   //visuals[select].setInitVals();
+  visuals[select].loadPresets();
    /// visuals[select].switchColorMode();
    visuals[select].setupSketch();
    
@@ -1088,7 +1096,7 @@ void reLoadSketch(){
 
 void draw() {    
   
-  /// background(0);
+  //background(0);
   oscFaderSet();
   
   /// println("cur sketch : " + select);
@@ -1106,7 +1114,11 @@ void draw() {
   if (dmxEnable == true){
     drawDMX();
   }
-
+  if (spoutEnable == true){
+    drawSpout();
+    //spout.sendTexture();
+  }
+  
   if(showFramerate){
     println(frameRate);
   }
@@ -1114,19 +1126,20 @@ void draw() {
 
 void transitionDraw() {
   if (transitionOpacity > 0) {
-    //colorMode(RGB, 255, 255, 255, 255);
+    //colorMode(HSB, 255, 255, 255, 255);
     //transition = get();
     transitionOpacity -= 1;
-    tint(255, transitionOpacity);
+    tint(255, 255,255,transitionOpacity);
     //float value = alpha(transition);
     image(transition, 0, 0);
-    tint(255, 255);
+    //tint(255, 255);
+    noTint();
   }
       //colorMode(HSB, 255, 255, 255,255);
 }
 
 void transitionReset  () {
-  //  colorMode(RGB, 255, 255, 255, 255);
+   // colorMode(HSB, 255, 255, 255, 255);
   transition = get();
   transitionOpacity = 255;
   

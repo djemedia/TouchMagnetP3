@@ -46,7 +46,7 @@ class FluidRenderer extends AudioRenderer {
   public void setupSketch() {
     //size(canvasW, canvasH, P3D);
     colorMode(HSB, 255, 255, 255, 255);
-    //noStroke();
+    noStroke();
 
     // grid = new GridSolver(integer cellWidth)
     grid = new GridSolver(4);

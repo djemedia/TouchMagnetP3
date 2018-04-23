@@ -94,7 +94,7 @@ class stainedglassRenderer extends AudioRenderer {
     ca.setRule(rule);
 
     // create initial seed pattern
-    ca.drawBoxAt(0, height/2, 5, 1);
+    ca.drawBoxAt(width/2, height/2, 5, 1);
 
     // create a gradient for rendering/shading the CA
     grad=new ColorGradient();

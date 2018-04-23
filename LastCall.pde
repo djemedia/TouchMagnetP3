@@ -56,7 +56,7 @@ class LastCallRenderer extends AudioRenderer {
 
   public void setupSketch() {
     //noStroke();
-    colorMode(HSB, 255, 255, 255, 225);
+    colorMode(HSB, 255, 255, 255, 255);
     
     if (BoxArray.size() > 0) {
       BoxArray.clear();
