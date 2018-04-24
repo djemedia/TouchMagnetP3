@@ -128,5 +128,15 @@ public void doMouseDrag(){
    set(x,y,color(.1-y*.1/height,4-v,.3+v*v));    
    }
    }
+    public void onClick() {
+    float cX = theX * canvasW;
+    float cY = theY * canvasH;
+    int oX = (int)cX;
+    int oY = (int)cY;
+    if (toggle == true)
+      apply_heat(oX, oY, 60, .10);
+    if (toggle == false)
+      apply_heat(oX, oY, 60, -.10);
+  }
    }*/
 }

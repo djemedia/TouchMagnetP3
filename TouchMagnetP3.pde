@@ -1,9 +1,9 @@
 
 /////////////////////////////
-/* open source - 
-created by dustin edwards with dan cote, 2011-2015. 
-Artnet upgrade with Rich Trapani/Jamie Schwetmann 2015
-P3 upgrade and additional programming with TenTon Raygun 2016
+/* open source - hacked code from openprocessing.org
+created by dustin edwards with dan cote, 2013-2015. 
+OPC/Artnet with Rich Trapani/Jamie Schwetmann 2015
+GitHub/P3 implementation with TenTon Raygun 2016
 ///////////////////////////////////////*/
 
 
@@ -12,13 +12,10 @@ import com.heroicrobot.dropbit.common.*;
 import com.heroicrobot.dropbit.discovery.*;
 import com.heroicrobot.dropbit.registry.*;
 import com.heroicrobot.dropbit.devices.pixelpusher.*;
- /*
- import com.heroicrobot.dropbit.devices.pixelpusher.Pixel;
- import com.heroicrobot.dropbit.devices.pixelpusher.Strip;
- */
+// import com.heroicrobot.dropbit.devices.pixelpusher.Pixel;
+// import com.heroicrobot.dropbit.devices.pixelpusher.Strip;
  
 DeviceRegistry registry;
-
 TestObserver testObserver;
 
 
@@ -31,19 +28,16 @@ import toxi.color.*;
 import ddf.minim.*;
 
 import artnetP5.*;
-
-
-
 import dmxP512.*;
+import img2opc.*;
+import processing.net.*;
 import processing.serial.*;
 
 import javax.swing.JColorChooser;
 import java.awt.Color; 
-
-// import hypermedia.net.*;
-
-//import processing.core.*;
 import java.util.*;
+// import hypermedia.net.*;
+//import processing.core.*;
 
 import oscP5.*;
 OscP5 oscP5;
@@ -67,7 +61,8 @@ PImage transition;
 boolean artnetEnable = false;
 boolean dmxEnable =false;
 boolean pixEnable = true;
-boolean spoutEnable = true;
+boolean opcEnable = false;
+boolean spoutEnable = false;
 //boolean syphonEnable = false;
 
 boolean showFramerate = true;
@@ -234,6 +229,9 @@ void setup() {
   }
   if (artnetEnable == true){
     setupArtnet();
+  }
+  if (opcEnable == true){
+     setupOPC();
   }
   if (dmxEnable == true){
     setupDMX();
@@ -1111,6 +1109,9 @@ void draw() {
   if (artnetEnable == true){
     drawArtnet();
   }
+  if (opcEnable == true){
+    drawOPC();
+  }
   if (dmxEnable == true){
     drawDMX();
   }
@@ -1174,6 +1175,8 @@ void keyPressed() {
   }
   
   if(key == 'p'){
+    registry.startDatRecording("canned.dat", 0, 0);
+    print("recording");
     /// loadPresets();
     
   }
