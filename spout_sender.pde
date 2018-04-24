@@ -1,3 +1,4 @@
+/*
 //
 //            SpoutSender
 //
@@ -57,7 +58,7 @@ void drawSpout()  {
     scale(110);
     TexturedCube(img);
     popMatrix();
-    */
+    
     // OPTION 1: SEND THE TEXTURE OF THE DRAWING SURFACE
     // Sends at the size of the window    
     spout.sendTexture();
@@ -94,6 +95,7 @@ void drawSpout()  {
     // Sends at the size of the image
     spout.sendTexture(spoutImage);
     //image(img, 0, 0, width, height); //render spoutImage
-    */
+    
    
 }
+*/

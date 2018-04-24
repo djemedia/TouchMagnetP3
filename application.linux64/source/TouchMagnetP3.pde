@@ -62,7 +62,7 @@ PGraphics canvas;
 
 PImage transition;
 
-boolean artnetEnable = true;
+boolean artnetEnable = false;
 boolean dmxEnable =false;
 boolean pixEnable = true;
 
@@ -90,8 +90,8 @@ int thisLedPos;
 int thisartnetPos;
 int thisDmxPos;
 
-int canvasW = 1280;
-int canvasH = 255;
+int canvasW = 300;
+int canvasH = 80;
 
 //these seetings can be overridden by the data/presets.xml file
 int setcolorMode = 220;
@@ -170,10 +170,10 @@ XML[] presets;
 void setup() {
   //size(canvasW, canvasH);
   background(0);
-  size(1280,255, P3D);
+  size(300,80, P3D);
 
   frameRate(60);
-  colorMode(RGB, 255,255, 255,255);
+  colorMode(HSB, 255,255, 255,100);
   transition = get();
   
  
@@ -1114,7 +1114,7 @@ void draw() {
 
 void transitionDraw() {
   if (transitionOpacity > 0) {
-    colorMode(RGB, 255, 255, 255, 255);
+    //colorMode(HSB, 255, 255, 255, 255);
     //transition = get();
     transitionOpacity -= 1;
     tint(255, transitionOpacity);
@@ -1126,7 +1126,6 @@ void transitionDraw() {
 }
 
 void transitionReset  () {
-  //  colorMode(RGB, 255, 255, 255, 255);
   transition = get();
   transitionOpacity = 255;
   

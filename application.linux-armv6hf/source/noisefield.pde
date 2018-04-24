@@ -31,7 +31,7 @@ class NoiseFieldRenderer extends AudioRenderer {
   public void setupSketch() {
     //smooth(); //used in processing 2
     //size(canvasW, canvasH);
-    colorMode(HSB, 255, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255);
     //noStroke();
     //background(0);
 

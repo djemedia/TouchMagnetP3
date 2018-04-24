@@ -48,7 +48,7 @@ if(down == true){
    }
  
 
-   internalX = 354;
+   internalX = 280;
    internalY = 40;//starting point on canvas
    
    for (int x = 0; x < 240; x++) {//start and number of pixels on strip
@@ -56,7 +56,7 @@ if(down == true){
    ledPos[xyPixels(x, 1, ledsW)] = xyPixels(internalX, internalY, canvasW);
    internalX--;//direction
    }
-//chamged for testing   
+//chamged for testing  
    internalX = 440;
    internalY = 250;//starting point on canvas
    
@@ -76,6 +76,16 @@ if(down == true){
    internalX-= 4;
    }
 
+    internalX = 10;
+   internalY = 40;//starting point on canvas
+   
+   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
+   //v strip #
+   ledPos[xyPixels(x, 2, ledsW)] = xyPixels(internalX, internalY, canvasW);
+   //internalX++;//direction
+   internalX++;
+   }
+   
    internalX = 500;
    internalY = 40;//starting point on canvas
    
@@ -86,10 +96,10 @@ if(down == true){
    internalX++;
    }
 
-   internalX = 240;
+   internalX = 290;
    internalY = 19;//starting point on canvas
    
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
+   for (int x = 0; x < 288; x++) {//start and number of pixels on strip
    //v strip #
    ledPos[xyPixels(x, 4, ledsW)] = xyPixels(internalX, internalY, canvasW);
    //internalX++;//direction
@@ -97,10 +107,10 @@ if(down == true){
    }
 
 
-   internalX = 240;
+   internalX = 290;
    internalY = 11;//starting point on canvas
    
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
+   for (int x = 0; x < 288; x++) {//start and number of pixels on strip
    //v strip #
    ledPos[xyPixels(x, 5, ledsW)] = xyPixels(internalX, internalY, canvasW);
    //internalX++;//direction
@@ -129,7 +139,8 @@ if(down == true){
    //internalX++;//direction
    internalX--;
    }
-//*/
+
+/*
 
 //group2
 //controller1
@@ -845,6 +856,7 @@ if(down == true){
    //internalX++;//direction
    internalX--;
    }
+   */
 }
 
 
@@ -894,7 +906,7 @@ void drawPixelPusher() {
     //   strips1.addAll(registry.getStrips(3));  
     //List<Strip> strips2 = registry.getStrips(2);      
 
-    colorMode(HSB, 255, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255, 100);
 
     for (int y = 0; y < ledsH; y++) {     
       for (int x = 0; x < ledsW; x++) {
@@ -911,8 +923,8 @@ void drawPixelPusher() {
          
          c = color(hue(c), saturation(c), brightness(c) - dimmer1); 
          
-         if (y >= 16 && y <= 71) //upstairs
-         c = color(hue(c), saturation(c), brightness(c) - dimmer2); 
+       //  if (y >= 16 && y <= 71) //upstairs
+        // c = color(hue(c), saturation(c), brightness(c) - dimmer2); 
          
          //if (y >= 40 && y <= 47) //downstairs
          //c = color(hue(c), saturation(c), brightness(c) - dimmer3); 

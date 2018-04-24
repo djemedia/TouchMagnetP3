@@ -27,15 +27,15 @@ public String skchName = "Perlin color";
 
   public void setupSketch() {
     //background(0);
-   colorMode(HSB, 255, 255, 255, 255);
-    
+    //colorMode(HSB, 255, 255, 255, 100);
+     colorMode(HSB, 1,1,1,100);
     r = width/PI;
     //noStroke();
     //smooth();
     
     noiseDetail(3, .6);
     //colorMode(HSB, 1); //setupPixelPusher();
-    //colorMode(HSB, 1,1,1, 255);
+    colorMode(HSB, 1);
     /*
   setcolorMode = 205;
      vFader2 = 255;
@@ -45,7 +45,6 @@ public String skchName = "Perlin color";
      vFader6 = 200;
      */
     //getSketchPresets("perlincolor", true);
-   //  colorMode(HSB, 1,1,1, 255);
   }
 
 
@@ -55,7 +54,7 @@ public String skchName = "Perlin color";
     
     /// HSB 255 makes everything black
    
-   colorMode(HSB, 1,1,1,255);
+   colorMode(HSB, 1,1,1,100);
     //ox += max(-speed,min(speed,(mouseX-width/2)*speed/r));
     //oy += max(-speed,min(speed,(mouseY-height/2)*speed/r));
     float setSpeedModeF = (float)map(vFader5, 0, 255, .0001, .08);
@@ -83,11 +82,11 @@ public String skchName = "Perlin color";
         //float v = noise(ox+x*kNoiseDetail,oy+y*kNoiseDetail,millis()*setSpeedModeF);     
         //float v = noise(ox+x*kNoiseDetail,oy+y*kNoiseDetail,millis()*.0001);     
         //set(x,y,color(setcolorModeF-y*.05/height,(4-v)*setSatModeF,(setContrastModeF+v*v)*setBrightModeF));    
-        float v = noise(ox+x*(kNoiseDetail+setNoiseDetailF), oy+y*(kNoiseDetail+setNoiseDetailF), setNoiseDetailF);
+        float v = noise(ox+x*(kNoiseDetail+setNoiseDetailF), oy+y*(kNoiseDetail+setNoiseDetailF), millis()*.00005);
         set(x, y, color(setcolorModeF-setContrastModeF*v, setSatModeF, (v+v)*setBrightModeF));
       }
     }
-    //colorMode(HSB, 255, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255, 100);
 
     //drawPixelPusher();
   }

@@ -62,7 +62,7 @@ class FitzhughRenderer extends AudioRenderer {
 
   public void setupSketch() {
      //noStroke();
-     colorMode(HSB, 255, 255, 255,255);
+     colorMode(HSB, 255, 255, 255,100);
   //  if(movieOn) mm = new MovieMaker(this,width,height,"reaction"+day()+hour()+minute()+second()+".mov",30, MovieMaker.H263, MovieMaker.HIGH);
     //int w=canvasW;
     //int h=canvasH;
@@ -91,7 +91,7 @@ class FitzhughRenderer extends AudioRenderer {
   }
 
   void renderSketch() {
-   // colorMode(HSB, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255);
     diffusionU();
     diffusionV();
     reaction();

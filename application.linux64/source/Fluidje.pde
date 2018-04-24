@@ -45,7 +45,7 @@ class FluidRenderer extends AudioRenderer {
   
   public void setupSketch() {
     //size(canvasW, canvasH, P3D);
-    colorMode(HSB, 255, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255, 100);
     //noStroke();
 
     // grid = new GridSolver(integer cellWidth)
@@ -57,7 +57,7 @@ class FluidRenderer extends AudioRenderer {
   }
 
   public void renderSketch () {
-   // colorMode(HSB, 255, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255);
     /******** Physics ********/
     // time related stuff
     // Calculate amount of time since last frame (Delta means "change in")

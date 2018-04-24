@@ -22,8 +22,6 @@ import oscP5.*;
 import netP5.*; 
 import ddf.minim.analysis.*; 
 
-import toxi.color.*; 
-import toxi.color.theory.*; 
 import toxi.sim.automata.*; 
 import toxi.sim.dla.*; 
 import toxi.sim.erosion.*; 
@@ -41,6 +39,8 @@ import toxi.math.waves.*;
 import toxi.util.*; 
 import toxi.util.datatypes.*; 
 import toxi.util.events.*; 
+import toxi.color.*; 
+import toxi.color.theory.*; 
 
 import java.util.HashMap; 
 import java.util.ArrayList; 
@@ -117,7 +117,7 @@ PGraphics canvas;
 
 PImage transition;
 
-boolean artnetEnable = true;
+boolean artnetEnable = false;
 boolean dmxEnable =false;
 boolean pixEnable = true;
 
@@ -145,8 +145,8 @@ int thisLedPos;
 int thisartnetPos;
 int thisDmxPos;
 
-int canvasW = 1280;
-int canvasH = 255;
+int canvasW = 300;
+int canvasH = 80;
 
 //these seetings can be overridden by the data/presets.xml file
 int setcolorMode = 220;
@@ -228,7 +228,7 @@ public void setup() {
   
 
   frameRate(60);
-  colorMode(RGB, 255,255, 255,255);
+  colorMode(HSB, 255,255, 255,100);
   transition = get();
   
  
@@ -1169,7 +1169,7 @@ public void draw() {
 
 public void transitionDraw() {
   if (transitionOpacity > 0) {
-    colorMode(RGB, 255, 255, 255, 255);
+    //colorMode(HSB, 255, 255, 255, 255);
     //transition = get();
     transitionOpacity -= 1;
     tint(255, transitionOpacity);
@@ -1181,7 +1181,6 @@ public void transitionDraw() {
 }
 
 public void transitionReset  () {
-  //  colorMode(RGB, 255, 255, 255, 255);
   transition = get();
   transitionOpacity = 255;
   
@@ -1331,7 +1330,7 @@ class stainedglassRenderer extends AudioRenderer {
     //size(canvasW, canvasH);
     //colorMode(RGB,255);
     //noStroke();
-    colorMode(RGB, 255, 255, 255, 255);
+    colorMode(RGB, 255, 255, 255, 100);
     // the birth rules specify options for when a cell becomes active
     // the numbers refer to the amount of ACTIVE neighbour cells allowed,
     // their order is irrelevant
@@ -1396,7 +1395,7 @@ class stainedglassRenderer extends AudioRenderer {
   }
 
   public void renderSketch() {
-    //colorMode(RGB, 255, 255, 255, 255);
+    colorMode(RGB, 255);
     loadPixels();
     if (mousePressed) {
       ca.drawBoxAt(mouseX, mouseY, 18, 4);
@@ -1484,7 +1483,7 @@ class FluidRenderer extends AudioRenderer {
   
   public void setupSketch() {
     //size(canvasW, canvasH, P3D);
-    colorMode(HSB, 255, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255, 100);
     //noStroke();
 
     // grid = new GridSolver(integer cellWidth)
@@ -1496,7 +1495,7 @@ class FluidRenderer extends AudioRenderer {
   }
 
   public void renderSketch () {
-   // colorMode(HSB, 255, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255);
     /******** Physics ********/
     // time related stuff
     // Calculate amount of time since last frame (Delta means "change in")
@@ -1764,7 +1763,7 @@ class LastCallRenderer extends AudioRenderer {
 
   public void setupSketch() {
     //noStroke();
-    colorMode(HSB, 255, 255, 255, 225);
+    colorMode(HSB, 255, 255, 255, 100);
     
     if (BoxArray.size() > 0) {
       BoxArray.clear();
@@ -1935,7 +1934,6 @@ public void setupArtnet() {
   
   artnet = new ArtnetP5();
   artnetimg = new PImage(170, 1, PApplet.RGB);
-  colorMode(HSB, 255, 255, 255, 255);
  
      //mapSection(100, 20, 0,12);                                      here??
 }
@@ -1960,8 +1958,8 @@ public void drawArtnet()  {
   
   //address the fixtures
   //mapSection(sketchX, sketchY, startDMX, endDMX);
-  mapSection(480, 240, 0,12);
-  mapSection(540, 240, 12,24);
+  mapSection(300, 40, 0,12);
+  /*mapSection(540, 240, 12,24);
   mapSection(600, 240, 24,36);
   mapSection(660, 240, 36,48);
   mapSection(720, 240, 48,60);
@@ -1975,7 +1973,7 @@ public void drawArtnet()  {
   mapSection(1020, 240, 144, 156);
   mapSection(1260, 240, 156, 168);
  
- 
+ */
   
   
 
@@ -2124,7 +2122,7 @@ class FitzhughRenderer extends AudioRenderer {
 
   public void setupSketch() {
      //noStroke();
-     colorMode(HSB, 255, 255, 255,225);
+     colorMode(HSB, 255, 255, 255,100);
   //  if(movieOn) mm = new MovieMaker(this,width,height,"reaction"+day()+hour()+minute()+second()+".mov",30, MovieMaker.H263, MovieMaker.HIGH);
     //int w=canvasW;
     //int h=canvasH;
@@ -2398,7 +2396,7 @@ class HeatmapRenderer extends AudioRenderer {
   
   public void setupSketch() {
     //noStroke();
-    colorMode(RGB, 255, 255, 255, 225);
+    colorMode(RGB, 255, 255, 255, 100);
     g = new Gradient();
     /*
     g.addColor(color(0, 0, 0));
@@ -2481,7 +2479,7 @@ class HeatmapRenderer extends AudioRenderer {
   }
 
   public void renderSketch(){
-    colorMode(RGB, 255, 255, 255, 255);
+    colorMode(RGB, 255, 255, 255);
     // See if heat (or cold) needs applied
     if (mousePressed && (mouseButton == LEFT))
       apply_heat(mouseX, mouseY, 30, .25f);
@@ -2500,7 +2498,7 @@ class HeatmapRenderer extends AudioRenderer {
         set(i, j, thisColor);
       }
     }
-    //colorMode(HSB, 255, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255);
   }
 
   public void update_heatmap()
@@ -2547,9 +2545,9 @@ class HeatmapRenderer extends AudioRenderer {
     int oX = (int)cX;
     int oY = (int)cY;
     if (toggle == true)
-      apply_heat(oX, oY, 60, .10f);
+      apply_heat(oX, oY, 30, .25f);
     if (toggle == false)
-      apply_heat(oX, oY, 60, -.10f);
+      apply_heat(oX, oY, 30, -.25f);
   }
   /*
   public void heattoggle(float oscToggle) {
@@ -3139,7 +3137,7 @@ if(down == true){
    }
  
 
-   internalX = 354;
+   internalX = 280;
    internalY = 40;//starting point on canvas
    
    for (int x = 0; x < 240; x++) {//start and number of pixels on strip
@@ -3147,7 +3145,7 @@ if(down == true){
    ledPos[xyPixels(x, 1, ledsW)] = xyPixels(internalX, internalY, canvasW);
    internalX--;//direction
    }
-//chamged for testing   
+//chamged for testing  
    internalX = 440;
    internalY = 250;//starting point on canvas
    
@@ -3167,6 +3165,16 @@ if(down == true){
    internalX-= 4;
    }
 
+    internalX = 10;
+   internalY = 40;//starting point on canvas
+   
+   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
+   //v strip #
+   ledPos[xyPixels(x, 2, ledsW)] = xyPixels(internalX, internalY, canvasW);
+   //internalX++;//direction
+   internalX++;
+   }
+   
    internalX = 500;
    internalY = 40;//starting point on canvas
    
@@ -3177,10 +3185,10 @@ if(down == true){
    internalX++;
    }
 
-   internalX = 240;
+   internalX = 290;
    internalY = 19;//starting point on canvas
    
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
+   for (int x = 0; x < 288; x++) {//start and number of pixels on strip
    //v strip #
    ledPos[xyPixels(x, 4, ledsW)] = xyPixels(internalX, internalY, canvasW);
    //internalX++;//direction
@@ -3188,10 +3196,10 @@ if(down == true){
    }
 
 
-   internalX = 240;
+   internalX = 290;
    internalY = 11;//starting point on canvas
    
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
+   for (int x = 0; x < 288; x++) {//start and number of pixels on strip
    //v strip #
    ledPos[xyPixels(x, 5, ledsW)] = xyPixels(internalX, internalY, canvasW);
    //internalX++;//direction
@@ -3220,7 +3228,8 @@ if(down == true){
    //internalX++;//direction
    internalX--;
    }
-//*/
+
+/*
 
 //group2
 //controller1
@@ -3936,6 +3945,7 @@ if(down == true){
    //internalX++;//direction
    internalX--;
    }
+   */
 }
 
 
@@ -3985,7 +3995,7 @@ public void drawPixelPusher() {
     //   strips1.addAll(registry.getStrips(3));  
     //List<Strip> strips2 = registry.getStrips(2);      
 
-    colorMode(HSB, 255, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255, 100);
 
     for (int y = 0; y < ledsH; y++) {     
       for (int x = 0; x < ledsW; x++) {
@@ -4002,8 +4012,8 @@ public void drawPixelPusher() {
          
          c = color(hue(c), saturation(c), brightness(c) - dimmer1); 
          
-         if (y >= 16 && y <= 71) //upstairs
-         c = color(hue(c), saturation(c), brightness(c) - dimmer2); 
+       //  if (y >= 16 && y <= 71) //upstairs
+        // c = color(hue(c), saturation(c), brightness(c) - dimmer2); 
          
          //if (y >= 40 && y <= 47) //downstairs
          //c = color(hue(c), saturation(c), brightness(c) - dimmer3); 
@@ -4073,7 +4083,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
 
   public void setupSketch() {
     
-    colorMode(HSB, 255, 255, 255, 225);
+    colorMode(HSB, 255, 255, 255, 100);
     //noStroke();
     currFrame = new int[width*height];
     prevFrame = new int[width*height];
@@ -4117,7 +4127,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
 
 
   public void renderSketch() {
-    //colorMode(HSB, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255);
     if (okToDraw) {
       okToDraw = false;
       noiseZ += 2*noiseScale;
@@ -4417,7 +4427,7 @@ class NoiseFieldRenderer extends AudioRenderer {
   public void setupSketch() {
     //smooth(); //used in processing 2
     //size(canvasW, canvasH);
-    colorMode(HSB, 255, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255);
     //noStroke();
     //background(0);
 
@@ -4579,15 +4589,15 @@ public String skchName = "Perlin color";
 
   public void setupSketch() {
     //background(0);
-   colorMode(HSB, 255, 255, 255, 255);
-    
+    //colorMode(HSB, 255, 255, 255, 100);
+     colorMode(HSB, 1,1,1,100);
     r = width/PI;
     //noStroke();
     //smooth();
     
     noiseDetail(3, .6f);
     //colorMode(HSB, 1); //setupPixelPusher();
-    //colorMode(HSB, 1,1,1, 255);
+    colorMode(HSB, 1);
     /*
   setcolorMode = 205;
      vFader2 = 255;
@@ -4597,7 +4607,6 @@ public String skchName = "Perlin color";
      vFader6 = 200;
      */
     //getSketchPresets("perlincolor", true);
-   //  colorMode(HSB, 1,1,1, 255);
   }
 
 
@@ -4607,7 +4616,7 @@ public String skchName = "Perlin color";
     
     /// HSB 255 makes everything black
    
-   colorMode(HSB, 1,1,1,255);
+   colorMode(HSB, 1,1,1,100);
     //ox += max(-speed,min(speed,(mouseX-width/2)*speed/r));
     //oy += max(-speed,min(speed,(mouseY-height/2)*speed/r));
     float setSpeedModeF = (float)map(vFader5, 0, 255, .0001f, .08f);
@@ -4635,11 +4644,11 @@ public String skchName = "Perlin color";
         //float v = noise(ox+x*kNoiseDetail,oy+y*kNoiseDetail,millis()*setSpeedModeF);     
         //float v = noise(ox+x*kNoiseDetail,oy+y*kNoiseDetail,millis()*.0001);     
         //set(x,y,color(setcolorModeF-y*.05/height,(4-v)*setSatModeF,(setContrastModeF+v*v)*setBrightModeF));    
-        float v = noise(ox+x*(kNoiseDetail+setNoiseDetailF), oy+y*(kNoiseDetail+setNoiseDetailF), setNoiseDetailF);
+        float v = noise(ox+x*(kNoiseDetail+setNoiseDetailF), oy+y*(kNoiseDetail+setNoiseDetailF), millis()*.00005f);
         set(x, y, color(setcolorModeF-setContrastModeF*v, setSatModeF, (v+v)*setBrightModeF));
       }
     }
-    //colorMode(HSB, 255, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255, 100);
 
     //drawPixelPusher();
   }
@@ -4832,7 +4841,7 @@ public void renderSketch(){
   }
 }
 
-  public void settings() {  size(1280,255, P3D); }
+  public void settings() {  size(300,80, P3D); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "TouchMagnetP3" };
     if (passedArgs != null) {

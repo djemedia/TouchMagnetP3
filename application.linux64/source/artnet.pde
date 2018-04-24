@@ -36,7 +36,6 @@ public void setupArtnet() {
   
   artnet = new ArtnetP5();
   artnetimg = new PImage(170, 1, PApplet.RGB);
-  colorMode(HSB, 255, 255, 255, 255);
  
      //mapSection(100, 20, 0,12);                                      here??
 }
@@ -61,8 +60,8 @@ void drawArtnet()  {
   
   //address the fixtures
   //mapSection(sketchX, sketchY, startDMX, endDMX);
-  mapSection(480, 240, 0,12);
-  mapSection(540, 240, 12,24);
+  mapSection(300, 40, 0,12);
+  /*mapSection(540, 240, 12,24);
   mapSection(600, 240, 24,36);
   mapSection(660, 240, 36,48);
   mapSection(720, 240, 48,60);
@@ -76,7 +75,7 @@ void drawArtnet()  {
   mapSection(1020, 240, 144, 156);
   mapSection(1260, 240, 156, 168);
  
- 
+ */
   
   
 

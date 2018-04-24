@@ -1,7 +1,7 @@
 
 /////////////////////////////
 /* open source - 
-created by dustin edwards with dan cote, 2011-2015. 
+created by dustin edwards with dan cote, 2013. 
 Artnet upgrade with Rich Trapani/Jamie Schwetmann 2015
 P3 upgrade and additional programming with TenTon Raygun 2016
 ///////////////////////////////////////*/
@@ -12,10 +12,9 @@ import com.heroicrobot.dropbit.common.*;
 import com.heroicrobot.dropbit.discovery.*;
 import com.heroicrobot.dropbit.registry.*;
 import com.heroicrobot.dropbit.devices.pixelpusher.*;
- /*
- import com.heroicrobot.dropbit.devices.pixelpusher.Pixel;
- import com.heroicrobot.dropbit.devices.pixelpusher.Strip;
- */
+ //import com.heroicrobot.dropbit.devices.pixelpusher.Pixel;
+ //import com.heroicrobot.dropbit.devices.pixelpusher.Strip;
+ 
  
 DeviceRegistry registry;
 
@@ -54,12 +53,11 @@ NetAddress myRemoteLocation;
 NetAddress stripApp;
 
 
-import spout.*;
-Spout spout;
+//import spout.*;
+//Spout spout;
 
 // import codeanticode.syphon.*;
 /// SyphonClient client;
-
 //PGraphics canvas;
 
 PImage transition;
@@ -67,7 +65,7 @@ PImage transition;
 boolean artnetEnable = false;
 boolean dmxEnable =false;
 boolean pixEnable = true;
-boolean spoutEnable = true;
+//boolean spoutEnable = true;
 //boolean syphonEnable = false;
 
 boolean showFramerate = true;
@@ -94,13 +92,13 @@ int thisLedPos;
 int thisartnetPos;
 int thisDmxPos;
 
-int canvasW = 1280;
-int canvasH = 255;
+int canvasW = 300;
+int canvasH = 80;
 
 //these seetings can be overridden by the data/presets.xml file
 int setcolorMode = 220;
 int vFader2 = 255;
-int vFader3 = 250;
+int vFader3 = 200;
 int vFader4 = 228;
 int vFader5 = 1;
 int vFader6 = 200;
@@ -177,7 +175,7 @@ XML[] presets;
 void setup() {
   //size(canvasW, canvasH);
   //fullScreen();
-  size(1280,255, P2D);
+  size(300,80, P2D);
   //textureMode(NORMAL);
   //background(0);
   frameRate(60);
@@ -238,9 +236,11 @@ void setup() {
   if (dmxEnable == true){
     setupDMX();
   }
+  
+  /*
   if (spoutEnable == true)
     setupSpout();
-  /*  
+    
   if (syphonEnable == true)
     setupSyphon();
     */
@@ -1114,11 +1114,11 @@ void draw() {
   if (dmxEnable == true){
     drawDMX();
   }
+  /*
   if (spoutEnable == true){
     drawSpout();
-    //spout.sendTexture();
   }
-  
+  */
   if(showFramerate){
     println(frameRate);
   }
