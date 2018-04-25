@@ -1,6 +1,7 @@
-
-/////////////////////////////
-/* open source - 
+///////////////////////////
+//////TouchMagnet///////////
+//////////////////////////////
+/* open source - GNU 3+ Public license
 created by dustin edwards with dan cote, 2013. 
 Artnet upgrade with Rich Trapani/Jamie Schwetmann 2015
 P3 upgrade and additional programming with TenTon Raygun 2016
@@ -65,10 +66,12 @@ PImage transition;
 boolean artnetEnable = false;
 boolean dmxEnable =false;
 boolean pixEnable = true;
+boolean apaEnable = false;
+boolean hcsr04Enable = false;
 //boolean spoutEnable = true;
 //boolean syphonEnable = false;
 
-boolean showFramerate = true;
+boolean showFramerate = false;
 
 boolean ready_to_go = true;
 int lastPosition;
@@ -95,7 +98,7 @@ int thisDmxPos;
 int canvasW = 300;
 int canvasH = 80;
 
-//these seetings can be overridden by the data/presets.xml file
+//these settings can be overridden by the data/presets.xml file
 int setcolorMode = 220;
 int vFader2 = 255;
 int vFader3 = 200;
@@ -236,14 +239,21 @@ void setup() {
   if (dmxEnable == true){
     setupDMX();
   }
-  
+  if (apaEnable == true){
+    setupApa();
+  }
   /*
+    if (hcsr04Enable == true){
+    setupHCSR04();
+  }
+
   if (spoutEnable == true)
     setupSpout();
-    
+  }    
   if (syphonEnable == true)
     setupSyphon();
-    */
+  }
+  */
     
  ////setup oscp5/////
   oscP5 = new OscP5(this, 12000);
@@ -1114,7 +1124,14 @@ void draw() {
   if (dmxEnable == true){
     drawDMX();
   }
+  if (apaEnable == true){
+    drawApa();
+  }
   /*
+  if (hrsc04Enable == true){
+    drawHCSR04;
+  }
+  
   if (spoutEnable == true){
     drawSpout();
   }
