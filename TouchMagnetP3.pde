@@ -5,7 +5,11 @@
 created by dustin edwards with dan cote, 2013. 
 Artnet upgrade with Rich Trapani/Jamie Schwetmann 2015
 P3 upgrade and additional programming with TenTon Raygun 2016
-///////////////////////////////////////*/
+/////////////////////////////////////////////////////////////
+////use mouse to interact/////space bar = next sketch///////
+/////////////////////////////////////////////////////////////
+//////run TouchMagnet GUI for advanced functionality//
+////////////////////////////////////////////////////////////*/
 
 
 import com.heroicrobot.dropbit.devices.*;
@@ -13,35 +17,28 @@ import com.heroicrobot.dropbit.common.*;
 import com.heroicrobot.dropbit.discovery.*;
 import com.heroicrobot.dropbit.registry.*;
 import com.heroicrobot.dropbit.devices.pixelpusher.*;
- //import com.heroicrobot.dropbit.devices.pixelpusher.Pixel;
- //import com.heroicrobot.dropbit.devices.pixelpusher.Strip;
- 
  
 DeviceRegistry registry;
-
 TestObserver testObserver;
 
 
-///*
 import toxi.sim.automata.*;
 import toxi.math.*;
 import toxi.color.*;
-///*/
+
 
 import ddf.minim.*;
 
 import artnetP5.*;
 
-
-
 import dmxP512.*;
+
 import processing.serial.*;
 
 import javax.swing.JColorChooser;
 import java.awt.Color; 
 
 // import hypermedia.net.*;
-
 //import processing.core.*;
 import java.util.*;
 
@@ -57,8 +54,6 @@ NetAddress stripApp;
 //import spout.*;
 //Spout spout;
 
-// import codeanticode.syphon.*;
-/// SyphonClient client;
 //PGraphics canvas;
 
 PImage transition;
@@ -76,13 +71,9 @@ boolean showFramerate = false;
 boolean ready_to_go = true;
 int lastPosition;
 
-//// global X and Y positions for mouse
-float theX = 0;
-float theY = 0;
 
-//// global X and Y positions for touchgui
-float theOSCX = 0;
-float theOSCY = 0;
+int canvasW = 300;
+int canvasH = 80;
 
 int ledsW = 300;
 int ledsH = 72;
@@ -94,9 +85,6 @@ int[] dmxPos;
 int thisLedPos;
 int thisartnetPos;
 int thisDmxPos;
-
-int canvasW = 300;
-int canvasH = 80;
 
 //these settings can be overridden by the data/presets.xml file
 int setcolorMode = 220;
@@ -126,6 +114,15 @@ int dimmer9 = 0;
 int dimmer10 = 0;
 boolean toggle = false;
 boolean toggleB = false;
+
+
+//// global X and Y positions for mouse
+float theX = 0;
+float theY = 0;
+
+//// global X and Y positions for touchgui
+float theOSCX = 0;
+float theOSCY = 0;
 
 
 float randomTouchState;
@@ -217,19 +214,16 @@ void setup() {
 //////////////////// set renderer array //////////////////////
   visuals = new AudioRenderer[] {
     fluidje, perlincolor, heatmap, noiseParticles, noisefield, fitzhugh, stainedglass, turing, lastcall 
-  };
-  
-  
-  
+  };  
   for(int i=0; i<visuals.length; i++){
     /// println("Loading sketch: " + i);
     visuals[i].setupSketch();
     
   }
-
   // activate first renderer in list
   select = 0;
   preset = 0;
+  
   if (pixEnable == true){
     setupPixelPusher();
   }
@@ -250,33 +244,14 @@ void setup() {
   if (spoutEnable == true)
     setupSpout();
   }    
-  if (syphonEnable == true)
-    setupSyphon();
-  }
   */
     
  ////setup oscp5/////
   oscP5 = new OscP5(this, 12000);
   oscP5B = new OscP5(this, 9001);
-
-  /* myRemoteLocation is a NetAddress. a NetAddress takes 2 parameters,
-   * an ip address and a port number. myRemoteLocation is used as parameter in
-   * oscP5.send() when sending osc packets to another computer, device, 
-   * application. usage see below. for testing purposes the listening port
-   * and the port of the remote location address are the same, hence you will
-   * send messages back to this sketch.
-   */
   myRemoteLocation = new NetAddress("255.255.255.255", 9000);
   stripApp = new NetAddress("127.0.0.1", 12001);
-
-  /* osc plug service
-   * osc messages with a specific address pattern can be automatically
-   * forwarded to a specific method of an object. in this example 
-   * a message with address pattern /test will be forwarded to a method
-   * test(). below the method test takes 2 arguments - 2 ints. therefore each
-   * message with address pattern /test and typetag ii will be forwarded to
-   * the method test(int theA, int theB)
-   */
+  
   oscP5.plug(this, "oscOnClick", "/luminous/xy");
   oscP5.plug(this, "oscOnClick2", "/luminous/xyB");
 
@@ -1095,6 +1070,13 @@ void oscEvent(OscMessage theOscMessage) {
 //////////////////////////////////////////////////
 
 
+void transitionReset  () {
+   // colorMode(HSB, 255, 255, 255, 255);
+  transition = get();
+  transitionOpacity = 255;
+  
+}
+
 void reLoadSketch(){
   
    //visuals[select].setInitVals();
@@ -1155,12 +1137,6 @@ void transitionDraw() {
       //colorMode(HSB, 255, 255, 255,255);
 }
 
-void transitionReset  () {
-   // colorMode(HSB, 255, 255, 255, 255);
-  transition = get();
-  transitionOpacity = 255;
-  
-}
 
 
 
