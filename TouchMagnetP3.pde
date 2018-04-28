@@ -33,6 +33,7 @@ import artnetP5.*;
 
 import dmxP512.*;
 
+import processing.net.*;
 import processing.serial.*;
 
 import javax.swing.JColorChooser;
@@ -54,8 +55,7 @@ NetAddress stripApp;
 //import spout.*;
 //Spout spout;
 
-//PGraphics canvas;
-
+PGraphics canvas;
 PImage transition;
 
 boolean artnetEnable = false;
@@ -1194,10 +1194,7 @@ void keyPressed() {
 void mouseClicked() {
   theX = mouseX;
   theY = mouseY;
-  visuals[select].onClick();
-  
-   
- 
+  visuals[select].onClick(); 
 }
 
 void mouseDragged() {

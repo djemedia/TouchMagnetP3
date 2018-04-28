@@ -1,15 +1,14 @@
 class HeatmapRenderer extends AudioRenderer {
   /*
-  A touch heatmap with integration with led pixels.
-  Dan Cote, Dustin Edwards - GPLv2
-  
   OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/46554*@* 
-  !do not delete the line above, required for linking your tweak if you re-upload */
-  
+  */
+
   // Array to store the heat values for each pixel
   float heatmap[][][] = new float[2][canvasW][canvasH];
+  
   // The index of the current heatmap
   int index = 0;
+  
   // A color gradient to see pretty colors
   Gradient g;
 
@@ -31,49 +30,7 @@ class HeatmapRenderer extends AudioRenderer {
     //noStroke();
     colorMode(RGB, 255, 255, 255, 255);
     g = new Gradient();
-    /*
-    g.addColor(color(0, 0, 0));
-     g.addColor(color(102, 11, 0));
-     g.addColor(color(140, 29, 72));
-     g.addColor(color(204, 50, 0));
-     g.addColor(color(200, 40, 102));
-     g.addColor(color(111, 20, 75));
-     g.addColor(color(191, 0, 50));
-     g.addColor(color(255, 102, 0));
-     g.addColor(color(204, 0, 20));
-     g.addColor(color(153, 0, 0));
-     g.addColor(color(255, 153, 102));
-     g.addColor(color(255, 255, 255));
-     g.addColor(color(0, 0, 0));
-     */
-/*
-    g.addColor(color(102, 11, 0));
-    g.addColor(color(204, 50, 0));
-    g.addColor(color(111, 0, 75));
-    g.addColor(color(10, 0, 50));
-    g.addColor(color(102, 11, 0));
-    g.addColor(color(0, 0, 0));
-    g.addColor(color(151, 10, 0));
-    g.addColor(color(204, 0, 20));
-    g.addColor(color(153, 0, 0));
-    g.addColor(color(250, 153, 0));
 
-    g.addColor(color(255, 200, 200));
-    g.addColor(color(0, 0, 0));
-
-    g.addColor(color(2, 11, 75));
-    g.addColor(color(111, 20, 0));
-    g.addColor(color(111, 0, 10));
-    g.addColor(color(10, 0, 50));
-    //g.addColor(color(102, 11, 0));
-    g.addColor(color(0, 0, 0));
-    g.addColor(color(151, 10, 0));
-    g.addColor(color(204, 0, 20));
-    g.addColor(color(153, 0, 0));
-    g.addColor(color(250, 153, 0));
-    //add gradient color
-    //hsb picker
-*/
     //getSketchPresets("heatmap", true);
     
     if (getSketchPresets("heatmap", false)) {
@@ -216,3 +173,47 @@ class HeatmapRenderer extends AudioRenderer {
     }
   }
 }
+//example gradient colors
+    /*
+    g.addColor(color(0, 0, 0));
+     g.addColor(color(102, 11, 0));
+     g.addColor(color(140, 29, 72));
+     g.addColor(color(204, 50, 0));
+     g.addColor(color(200, 40, 102));
+     g.addColor(color(111, 20, 75));
+     g.addColor(color(191, 0, 50));
+     g.addColor(color(255, 102, 0));
+     g.addColor(color(204, 0, 20));
+     g.addColor(color(153, 0, 0));
+     g.addColor(color(255, 153, 102));
+     g.addColor(color(255, 255, 255));
+     g.addColor(color(0, 0, 0));
+     */
+/*
+    g.addColor(color(102, 11, 0));
+    g.addColor(color(204, 50, 0));
+    g.addColor(color(111, 0, 75));
+    g.addColor(color(10, 0, 50));
+    g.addColor(color(102, 11, 0));
+    g.addColor(color(0, 0, 0));
+    g.addColor(color(151, 10, 0));
+    g.addColor(color(204, 0, 20));
+    g.addColor(color(153, 0, 0));
+    g.addColor(color(250, 153, 0));
+
+    g.addColor(color(255, 200, 200));
+    g.addColor(color(0, 0, 0));
+
+    g.addColor(color(2, 11, 75));
+    g.addColor(color(111, 20, 0));
+    g.addColor(color(111, 0, 10));
+    g.addColor(color(10, 0, 50));
+    //g.addColor(color(102, 11, 0));
+    g.addColor(color(0, 0, 0));
+    g.addColor(color(151, 10, 0));
+    g.addColor(color(204, 0, 20));
+    g.addColor(color(153, 0, 0));
+    g.addColor(color(250, 153, 0));
+    //add gradient color
+    //hsb picker
+*/

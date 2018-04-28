@@ -1,11 +1,6 @@
-
 ArtnetP5 artnet;
 PImage artnetimg;
-
-
 /*
-
-
 #controller ip address
 #hint, use unicast address or 239.255.0.0 for multicast 
 #e131.ip=239.255.0.0
@@ -18,19 +13,6 @@ PImage artnetimg;
 #define the first universe id
 #e131.first.universe.id=1
 
-
-//universes
-int artnetPixels(int x, int y, int yScale) {
-  return(x+(y*yScale));
-}
-
-int artnetxPixels(int pxN, int yScale) {
-  return(pxN % yScale);
-}
-
-int artnetyPixels(int pxN, int yScale) {
-  return(pxN / yScale);
-}
 */
 public void setupArtnet() {
   
@@ -75,13 +57,7 @@ void drawArtnet()  {
   mapSection(960, 240, 132,144);
   mapSection(1020, 240, 144, 156);
   mapSection(1260, 240, 156, 168);
- 
- 
   
-  
-
-  
-
   //add a dimmer
   artnetimg.loadPixels();
   //colorMode(HSB, 255, 255, 255);

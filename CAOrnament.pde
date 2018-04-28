@@ -1,3 +1,6 @@
+
+
+class stainedglassRenderer extends AudioRenderer {
 /* OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/18093*@* */
 /* !do not delete the line above, required for linking your tweak if you re-upload */
 /**
@@ -33,9 +36,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-
-
-class stainedglassRenderer extends AudioRenderer {
 
 
   public String skchName = "Stained Glass CA Ornament";

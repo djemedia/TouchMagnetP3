@@ -1,7 +1,4 @@
 /* OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/17043*@* */
-/* !do not delete the line above, required for linking your tweak if you re-upload */
-
-
 //// these values get accessed by both classes
 //// should be moved to main class tho
 int type = 0;
@@ -14,11 +11,9 @@ int res = 8;
 /////////////////////////////////////////////////
 //                                             //
 class TuringRenderer extends AudioRenderer {
-
   //    The Secret Life of Turing Patterns       //
   //                                             //
   /////////////////////////////////////////////////
-
   // Inspired by the work of Jonathan McCabe
   // (c) Martin Schneider 2010
 
