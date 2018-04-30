@@ -13,7 +13,7 @@ byte[] apaColor = new byte[num_LEDS*3];
 
 void setupApa() {
   
-  
+ 
 //python socket  
 //  apaClient = new Client(this, "127.0.0.1", 5211);
 //////////////////////////////////////////////////  
@@ -23,7 +23,7 @@ void setupApa() {
   
   //static public void main(String args[]) throws Exception {
 
-Apa102Output.initSpi();
+//Apa102Output.initSpi();
 // Could also init with non-defaults using #initSpi(SpiChannel spiChannel, int spiSpeed, SpiMode spiMode)
 // Default speed is 7.8 Mhz
 
@@ -31,7 +31,7 @@ Apa102Output strip = new Apa102Output(num_LEDS);
 
 //byte[] ledRGBs = new byte[ NUM_LEDS * 3 ];
 
-/*
+ /*
     Apa102Output.initSpi();
     Apa102Output output = new Apa102Output(NUM_LEDS);
 
@@ -90,6 +90,7 @@ Apa102Output strip = new Apa102Output(num_LEDS);
     
 
 void drawApa(){
+  
   for (int i = 0; i<= num_LEDS; i++){
   color pixColor = get(i,i);
   apaRed = red(pixColor);
@@ -100,7 +101,7 @@ void drawApa(){
   apaColor[i-100/10*4-3+2] = (byte) apaBlue;
   //apaColor[i-100/10*4-3+2] = (byte) 0;
   //} 
-  strip.writeStrip(apaColor)
+  strip.writeStrip(apaColor);
 }
 /*
   for (int i=0; i<leds.length; i += 3) {
