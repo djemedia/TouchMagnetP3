@@ -1,4 +1,6 @@
 
+//PImage dmximg;
+
 DmxP512 dmxOutput;
 int universeSize=128;
 
@@ -11,6 +13,19 @@ String DMXPRO_PORT = "/dev/tty.usbserial-6AWY0JLI";//case matters ! on windows p
 int DMXPRO_BAUDRATE=115000;
 
 void setupDMX() {
+  
+ /* dmximg = new PImage(170, 1, PApplet.RGB);
+ void mapSection(int sketchX, int sketchY, int startDMX, int endDMX)
+{
+   
+   for(int i = startDMX; i < endDMX; i++){
+     
+     dmximg.set(i % dmximg.width, i / dmximg.width, get(sketchX + (i % width), sketchY + (i / width)));
+     sketchX-= 4;
+  
+  }  
+}
+*/
 
 
   dmxOutput=new DmxP512(this, universeSize, false);
@@ -40,7 +55,20 @@ dmxPos = new int[dmxAddr*dmxUniv];
 
 void drawDMX() {
   loadPixels();
+  //dmximg.loadPixels();
+  
   //    colorMode(HSB, 255);
+  
+  /*
+    int sketchX = 0;
+  int sketchY = 0;
+  int startDMX = 0;
+  int endDMX = 0;
+  
+  //address the fixtures
+  //mapSection(sketchX, sketchY, startDMX, endDMX);
+  mapSection(240, 240, 0,1);
+  */
 
   for (int y = 1; y < dmxAddr+1; y+=3) {     
     for (int x = 1; x < dmxUniv+1; x++) {

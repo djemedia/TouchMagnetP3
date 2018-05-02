@@ -1,11 +1,6 @@
-
 ArtnetP5 artnet;
 PImage artnetimg;
-
-
 /*
-
-
 #controller ip address
 #hint, use unicast address or 239.255.0.0 for multicast 
 #e131.ip=239.255.0.0
@@ -18,24 +13,12 @@ PImage artnetimg;
 #define the first universe id
 #e131.first.universe.id=1
 
-
-//universes
-int artnetPixels(int x, int y, int yScale) {
-  return(x+(y*yScale));
-}
-
-int artnetxPixels(int pxN, int yScale) {
-  return(pxN % yScale);
-}
-
-int artnetyPixels(int pxN, int yScale) {
-  return(pxN / yScale);
-}
 */
 public void setupArtnet() {
   
   artnet = new ArtnetP5();
   artnetimg = new PImage(170, 1, PApplet.RGB);
+  colorMode(HSB, 255, 255, 255, 255);
  
      //mapSection(100, 20, 0,12);                                      here??
 }
@@ -60,27 +43,21 @@ void drawArtnet()  {
   
   //address the fixtures
   //mapSection(sketchX, sketchY, startDMX, endDMX);
-  mapSection(300, 40, 0,12);
-  /*mapSection(540, 240, 12,24);
-  mapSection(600, 240, 24,36);
-  mapSection(660, 240, 36,48);
-  mapSection(720, 240, 48,60);
-  mapSection(780, 240, 60,72);
-  mapSection(840, 240, 72,84);
-  mapSection(900, 240, 84,96);
-  mapSection(960, 240, 96,108);
-  mapSection(1020, 240, 108,120);
-  mapSection(1080, 240, 120,132);
+  mapSection(240, 240, 0,1);
+  mapSection(241, 240, 2,3);
+  mapSection(242, 240, 4,5);
+  mapSection(243, 240, 6,7);
+  mapSection(244, 240, 8,9);
+  mapSection(245, 240, 10,11);
+  mapSection(246, 240, 12,13);
+  mapSection(247, 240, 14, 15);
+  mapSection(248, 240, 16,17);
+  mapSection(249, 240, 18,19);
+  mapSection(250, 240, 20,21);
   mapSection(960, 240, 132,144);
   mapSection(1020, 240, 144, 156);
   mapSection(1260, 240, 156, 168);
- 
- */
   
-  
-
-  
-
   //add a dimmer
   artnetimg.loadPixels();
   //colorMode(HSB, 255, 255, 255);

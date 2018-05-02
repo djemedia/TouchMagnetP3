@@ -14,6 +14,7 @@ import toxi.color.*;
 import ddf.minim.*; 
 import artnetP5.*; 
 import dmxP512.*; 
+import processing.net.*; 
 import processing.serial.*; 
 import javax.swing.JColorChooser; 
 import java.awt.Color; 
@@ -53,41 +54,40 @@ import java.io.IOException;
 
 public class TouchMagnetP3 extends PApplet {
 
-/////////////////////////////
-/* UPDATED FOR PROCESSING 3 11/16/2016 
-///////////////////////////////////////*/
-
-
-/********************************************
-//// P2 to P3 conversion by TenTon Raygun
-*********************************************/
-
-
-
-
-
-
-
+///////////////////////////
+//////TouchMagnet///////////
+//////////////////////////////
+/* open source - GNU 3+ Public license
+created by dustin edwards with dan cote, 2013. 
+Artnet upgrade with Rich Trapani/Jamie Schwetmann 2015
+P3 upgrade and additional programming with TenTon Raygun 2016
+/////////////////////////////////////////////////////////////
+////use mouse to interact/////space bar = next sketch///////
+/////////////////////////////////////////////////////////////
+//////run TouchMagnet GUI for advanced functionality//
+////////////////////////////////////////////////////////////*/
 
 
 
-///*
 
 
 
-///*/
 
-
- /*
- import com.heroicrobot.dropbit.devices.pixelpusher.Pixel;
- import com.heroicrobot.dropbit.devices.pixelpusher.Strip;
- */
  
+DeviceRegistry registry;
+TestObserver testObserver;
 
 
 
 
-// import codeanticode.syphon.*;
+
+
+
+
+
+
+
+
 
 
 
@@ -96,43 +96,40 @@ public class TouchMagnetP3 extends PApplet {
  
 
 // import hypermedia.net.*;
-
 //import processing.core.*;
-
-
 
 
 
 OscP5 oscP5;
 OscP5 oscP5B;
+
+
 NetAddress myRemoteLocation;
 NetAddress stripApp;
 
-DeviceRegistry registry;
 
-TestObserver testObserver;
+//import spout.*;
+//Spout spout;
 
-/// SyphonClient client;
 PGraphics canvas;
-
 PImage transition;
 
 boolean artnetEnable = false;
 boolean dmxEnable =false;
 boolean pixEnable = true;
+boolean apaEnable = false;
+boolean hcsr04Enable = false;
+//boolean spoutEnable = true;
+//boolean syphonEnable = false;
 
 boolean showFramerate = false;
 
 boolean ready_to_go = true;
 int lastPosition;
 
-//// global X and Y positions for mouse
-float theX = 0;
-float theY = 0;
 
-//// global X and Y positions for touchgui
-float theOSCX = 0;
-float theOSCY = 0;
+int canvasW = 300;
+int canvasH = 80;
 
 int ledsW = 300;
 int ledsH = 72;
@@ -145,13 +142,10 @@ int thisLedPos;
 int thisartnetPos;
 int thisDmxPos;
 
-int canvasW = 300;
-int canvasH = 80;
-
-//these seetings can be overridden by the data/presets.xml file
+//these settings can be overridden by the data/presets.xml file
 int setcolorMode = 220;
 int vFader2 = 255;
-int vFader3 = 250;
+int vFader3 = 200;
 int vFader4 = 228;
 int vFader5 = 1;
 int vFader6 = 200;
@@ -178,11 +172,21 @@ boolean toggle = false;
 boolean toggleB = false;
 
 
+//// global X and Y positions for mouse
+float theX = 0;
+float theY = 0;
+
+//// global X and Y positions for touchgui
+float theOSCX = 0;
+float theOSCY = 0;
+
+
 float randomTouchState;
 float audioResponseState;
 
 int faderWait = 0;
 int resetPixelsWait = 0;
+
 int transitionOpacity = 0;
 
 OscMessage faderOut;
@@ -191,8 +195,9 @@ float faderOutFloat;
 
 
 Minim minim;
-
 AudioInput in;
+
+ 
 AudioRenderer radar;
 HeatmapRenderer heatmap;
 NoiseParticlesRenderer noiseParticles;
@@ -204,7 +209,8 @@ TuringRenderer turing;
 stainedglassRenderer stainedglass;
 LastCallRenderer lastcall;
 
-AudioRenderer[] visuals; 
+AudioRenderer[] visuals;
+
 
 
 int select =0;
@@ -224,29 +230,32 @@ XML[] presets;
 //////////////////////////////////////////////////
 public void setup() {
   //size(canvasW, canvasH);
-  background(0);
+  //fullScreen();
   
-
+  //textureMode(NORMAL);
+  //background(0);
   frameRate(60);
-  colorMode(HSB, 255,255, 255,100);
+  colorMode(HSB, 255,255, 255,255);
   transition = get();
-  
+  //transition = createImage(0,0, ARGB);
  
   
   //////////// LOAD ALL PRESETS /////////////////////
   xml = loadXML("data/presets.xml");
   loadMasterPresets();
   
-  // setup player
+ 
+  //// setup player
   //minim = new Minim(this);
 
-  // get a line in from Minim, default bit depth is 16
+  //// get a line in from Minim, default bit depth is 16
   //in = minim.getLineIn(Minim.STEREO, 512);
 
 
   //in.addListener(visuals[select]);
-  /// visuals[select].setupSketch();
-   // setup renderers
+  // visuals[select].setupSketch();
+  
+  //// setup renderers
   noiseParticles = new NoiseParticlesRenderer(in);
   perlincolor = new PerlinColorRenderer(in);
   //radar = new RadarRenderer(in);
@@ -261,19 +270,16 @@ public void setup() {
 //////////////////// set renderer array //////////////////////
   visuals = new AudioRenderer[] {
     fluidje, perlincolor, heatmap, noiseParticles, noisefield, fitzhugh, stainedglass, turing, lastcall 
-  };
-  
-  
-  
+  };  
   for(int i=0; i<visuals.length; i++){
     /// println("Loading sketch: " + i);
     visuals[i].setupSketch();
     
   }
-
   // activate first renderer in list
   select = 0;
   preset = 0;
+  
   if (pixEnable == true){
     setupPixelPusher();
   }
@@ -283,33 +289,25 @@ public void setup() {
   if (dmxEnable == true){
     setupDMX();
   }
-    /*
-  if (syphonEnable == true)
-    setupSyphon();
-    */
+  if (apaEnable == true){
+    setupApa();
+  }
+  /*
+    if (hcsr04Enable == true){
+    setupHCSR04();
+  }
 
-  //setup oscp5
+  if (spoutEnable == true)
+    setupSpout();
+  }    
+  */
+    
+ ////setup oscp5/////
   oscP5 = new OscP5(this, 12000);
   oscP5B = new OscP5(this, 9001);
-
-  /* myRemoteLocation is a NetAddress. a NetAddress takes 2 parameters,
-   * an ip address and a port number. myRemoteLocation is used as parameter in
-   * oscP5.send() when sending osc packets to another computer, device, 
-   * application. usage see below. for testing purposes the listening port
-   * and the port of the remote location address are the same, hence you will
-   * send messages back to this sketch.
-   */
   myRemoteLocation = new NetAddress("255.255.255.255", 9000);
   stripApp = new NetAddress("127.0.0.1", 12001);
-
-  /* osc plug service
-   * osc messages with a specific address pattern can be automatically
-   * forwarded to a specific method of an object. in this example 
-   * a message with address pattern /test will be forwarded to a method
-   * test(). below the method test takes 2 arguments - 2 ints. therefore each
-   * message with address pattern /test and typetag ii will be forwarded to
-   * the method test(int theA, int theB)
-   */
+  
   oscP5.plug(this, "oscOnClick", "/luminous/xy");
   oscP5.plug(this, "oscOnClick2", "/luminous/xyB");
 
@@ -407,9 +405,6 @@ public void setup() {
   oscP5.plug(this, "oscSave", "/luminous/save");
 }
 
-
-
-
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
 ///////// ALL OSC FUNCTIONS ///////////////////
@@ -433,7 +428,7 @@ public void oscSketch1(float iA) {
 }
 public void oscSketch2(float iA) {
   if (iA == 1) {
-    
+     transitionReset();
     //in.removeListener(visuals[select]);
     select = 1;
     preset = 0;
@@ -1120,6 +1115,7 @@ public void oscEvent(OscMessage theOscMessage) {
     println("### addrpattern\t"+theOscMessage.addrPattern());
     println("### typetag\t"+theOscMessage.typetag());
   }
+
 }
 
 
@@ -1130,12 +1126,17 @@ public void oscEvent(OscMessage theOscMessage) {
 //////////////////////////////////////////////////
 
 
-public void reLoadSketch(){
-  /*
-   visuals[select].setInitVals();
-  */  
-   visuals[select].loadPresets();
+public void transitionReset  () {
+   // colorMode(HSB, 255, 255, 255, 255);
+  transition = get();
+  transitionOpacity = 255;
   
+}
+
+public void reLoadSketch(){
+  
+   //visuals[select].setInitVals();
+  visuals[select].loadPresets();
    /// visuals[select].switchColorMode();
    visuals[select].setupSketch();
    
@@ -1143,7 +1144,7 @@ public void reLoadSketch(){
 
 public void draw() {    
   
-  /// background(0);
+  //background(0);
   oscFaderSet();
   
   /// println("cur sketch : " + select);
@@ -1161,7 +1162,18 @@ public void draw() {
   if (dmxEnable == true){
     drawDMX();
   }
-
+  if (apaEnable == true){
+    drawApa();
+  }
+  /*
+  if (hrsc04Enable == true){
+    drawHCSR04;
+  }
+  
+  if (spoutEnable == true){
+    drawSpout();
+  }
+  */
   if(showFramerate){
     println(frameRate);
   }
@@ -1172,19 +1184,15 @@ public void transitionDraw() {
     //colorMode(HSB, 255, 255, 255, 255);
     //transition = get();
     transitionOpacity -= 1;
-    tint(255, transitionOpacity);
+    tint(255, 255,255,transitionOpacity);
     //float value = alpha(transition);
     image(transition, 0, 0);
-    tint(255, 255);
+    //tint(255, 255);
+    noTint();
   }
       //colorMode(HSB, 255, 255, 255,255);
 }
 
-public void transitionReset  () {
-  transition = get();
-  transitionOpacity = 255;
-  
-}
 
 
 
@@ -1242,10 +1250,7 @@ public void keyPressed() {
 public void mouseClicked() {
   theX = mouseX;
   theY = mouseY;
-  visuals[select].onClick();
-  
-   
- 
+  visuals[select].onClick(); 
 }
 
 public void mouseDragged() {
@@ -1263,6 +1268,9 @@ public void mouseDragged() {
   
   
 }
+
+
+class stainedglassRenderer extends AudioRenderer {
 /* OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/18093*@* */
 /* !do not delete the line above, required for linking your tweak if you re-upload */
 /**
@@ -1300,9 +1308,6 @@ public void mouseDragged() {
 
 
 
-class stainedglassRenderer extends AudioRenderer {
-
-
   public String skchName = "Stained Glass CA Ornament";
   int rotations;
   int w=canvasW;
@@ -1330,7 +1335,7 @@ class stainedglassRenderer extends AudioRenderer {
     //size(canvasW, canvasH);
     //colorMode(RGB,255);
     //noStroke();
-    colorMode(RGB, 255, 255, 255, 100);
+    colorMode(RGB, 255, 255, 255, 255);
     // the birth rules specify options for when a cell becomes active
     // the numbers refer to the amount of ACTIVE neighbour cells allowed,
     // their order is irrelevant
@@ -1359,7 +1364,7 @@ class stainedglassRenderer extends AudioRenderer {
     ca.setRule(rule);
 
     // create initial seed pattern
-    ca.drawBoxAt(0, height/2, 5, 1);
+    ca.drawBoxAt(width/2, height/2, 5, 1);
 
     // create a gradient for rendering/shading the CA
     grad=new ColorGradient();
@@ -1395,7 +1400,7 @@ class stainedglassRenderer extends AudioRenderer {
   }
 
   public void renderSketch() {
-    colorMode(RGB, 255);
+    //colorMode(RGB, 255, 255, 255, 255);
     loadPixels();
     if (mousePressed) {
       ca.drawBoxAt(mouseX, mouseY, 18, 4);
@@ -1483,8 +1488,8 @@ class FluidRenderer extends AudioRenderer {
   
   public void setupSketch() {
     //size(canvasW, canvasH, P3D);
-    colorMode(HSB, 255, 255, 255, 100);
-    //noStroke();
+    colorMode(HSB, 255, 255, 255, 255);
+    noStroke();
 
     // grid = new GridSolver(integer cellWidth)
     grid = new GridSolver(4);
@@ -1495,7 +1500,7 @@ class FluidRenderer extends AudioRenderer {
   }
 
   public void renderSketch () {
-    colorMode(HSB, 255, 255, 255);
+   // colorMode(HSB, 255, 255, 255, 255);
     /******** Physics ********/
     // time related stuff
     // Calculate amount of time since last frame (Delta means "change in")
@@ -1705,6 +1710,145 @@ class GridSolver {
     return sum;
   }
 }
+/**
+ * HC-SR04 Demo
+ * Demonstration of the HC-SR04 Ultrasonic Sensor
+ * Date: August 3, 2016
+ * 
+ * Description:
+ *  Connect the ultrasonic sensor to the Arduino as per the
+ *  hardware connections below. Run the sketch and open a serial
+ *  monitor. The distance read from the sensor will be displayed
+ *  in centimeters and inches.
+ * 
+ * Hardware Connections:
+ *  Arduino | HC-SR04 
+ *  -------------------
+ *    5V    |   VCC     
+ *    7     |   Trig     
+ *    8     |   Echo     
+ *    GND   |   GND
+ *  
+ * License:
+ *  Public Domain
+ 
+import processing.io.*;
+// Pins
+int TRIG_PIN = 4;
+int ECHO_PIN = 5;
+
+// Anything over 400 cm (23200 us pulse) is "out of range"
+int MAX_DIST = 23200;
+
+public void setupHCSR04() {
+
+  // The Trigger pin will tell the sensor to range find
+  //pinMode(TRIG_PIN, OUTPUT);
+  GPIO.pinMode(TRIG_PIN, GPIO.OUTPUT);
+  //GPIO.pinMode(4, GPIO.INPUT);
+
+  // On the Raspberry Pi, GPIO 4 is pin 7 on the pin header,
+  // located on the fourth row, above one of the ground pins
+
+  //digitalWrite(TRIG_PIN, LOW);
+  GPIO.digitalWrite(TRIG_PIN, GPIO.LOW);
+
+
+ // frameRate(0.5);
+
+  // We'll use the serial monitor to view the sensor output
+  //Serial.begin(9600);
+}
+
+public void drawHCSR04() {
+/*
+   long t1;
+   long t2;
+   long pulse_width;
+  float cm;
+  float inches;
+
+  // Hold the trigger pin high for at least 10 us
+  //digitalWrite(TRIG_PIN, HIGH);
+ GPIO.digitalWrite(4, GPIO.HIGH);
+    
+  //delay,icroseconds(10);
+  //digitalWrite(TRIG_PIN, LOW); 
+   GPIO.digitalWrite(4, GPIO.LOW);  
+
+  // Wait for pulse on echo pin
+  while ( digitalRead(ECHO_PIN) == 0 );
+  //      GPIO.digitalRead(4) == GPIO.HIGH
+  
+  // Measure how long the echo pin was held high (pulse width)
+  // Note: the micros() counter will overflow after ~70 min
+  t1 = micros();
+  while ( digitalRead(ECHO_PIN) == 1);
+  //      GPIO.digitalRead(4) == GPIO.HIGH
+  t2 = micros();
+  pulse_width = t2 - t1;
+
+  // Calculate distance in centimeters and inches. The constants
+  // are found in the datasheet, and calculated from the assumed speed 
+  //of sound in air at sea level (~340 m/s).
+  cm = pulse_width / 58.0;
+  inches = pulse_width / 148.0;
+
+  // Print out results
+  if ( pulse_width > MAX_DIST ) {
+    print("Out of range");
+  } else {
+    //theOSCX = map(mouseX, 0, canvasW, 0, 1);
+    Serial.print(cm);
+    Serial.print(" cm \t");
+    Serial.print(inches);
+    Serial.println(" in");
+  }
+  
+  // Wait at least 60ms before next measurement
+  delay(60);
+
+
+GPIO.releasePin(TRIG_PIN);
+  exit();
+}*/
+/*/////python code
+import RPi.GPIO as GPIO
+import time
+GPIO.setmode(GPIO.BCM)
+
+TRIG = 23 
+ECHO = 24
+
+print "Distance Measurement In Progress"
+
+GPIO.setup(TRIG,GPIO.OUT)
+GPIO.setup(ECHO,GPIO.IN)
+
+GPIO.output(TRIG, False)
+print "Waiting For Sensor To Settle"
+time.sleep(2)
+
+GPIO.output(TRIG, True)
+time.sleep(0.00001)
+GPIO.output(TRIG, False)
+
+while GPIO.input(ECHO)==0:
+  pulse_start = time.time()
+
+while GPIO.input(ECHO)==1:
+  pulse_end = time.time()
+
+pulse_duration = pulse_end - pulse_start
+
+distance = pulse_duration * 17150
+
+distance = round(distance, 2)
+
+print "Distance:",distance,"cm"
+
+GPIO.cleanup()
+*/
 class LastCallRenderer extends AudioRenderer {
 
 
@@ -1763,7 +1907,7 @@ class LastCallRenderer extends AudioRenderer {
 
   public void setupSketch() {
     //noStroke();
-    colorMode(HSB, 255, 255, 255, 100);
+    colorMode(HSB, 255, 255, 255, 255);
     
     if (BoxArray.size() > 0) {
       BoxArray.clear();
@@ -1896,14 +2040,134 @@ class ColorBox {
   
   
 }
+//import com.github.dlopuch.apa102_java_rpi.Apa102Output;
+//import com.pi4j.io.spi.SpiChannel;
+//import com.pi4j.io.spi.SpiDevice;
+Client apaClient;
+float apaRed, apaGreen, apaBlue;
+int num_LED = 50;
+byte[] apaColor = new byte[num_LED*4];
 
+
+
+public void setupApa() {
+  /*
+  
+//python socket  
+  apaClient = new Client(this, "127.0.0.1", 5211)
+//////////////////////////////////////////////////  
+
+  //////////////////////////////////////////////eventual java port
+  //public static final int NUM_LEDS = 32;
+  
+  //static public void main(String args[]) throws Exception {
+//////////////////////////////////////////////////////////////////////////
+Apa102Output.initSpi();
+// Could also init with non-defaults using #initSpi(SpiChannel spiChannel, int spiSpeed, SpiMode spiMode)
+// Default speed is 7.8 Mhz
+
+Apa102Output strip = new Apa102Output(NUM_LEDS);
+
+byte[] ledRGBs = new byte[ NUM_LEDS * 3 ];
+
+while (true) {
+  // <fill in your ledRGBs buffer with your pattern... eg examples/RainbowStrip.java>
+
+  strip.writeStrip(ledRGBs);
+}
+
+    Apa102Output.initSpi();
+    Apa102Output output = new Apa102Output(NUM_LEDS);
+
+    byte[] leds = new byte[ NUM_LEDS * 3 ];
+    final boolean[] loop = new boolean[] { true };
+
+
+    // Make sure we turn everything off when shutting down
+    Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+      @Override
+      public void run() {
+        System.out.println("Shutting down: turning all LEDs off...");
+
+        // Stop output thread loop
+        loop[0] = false;
+
+        // And turn all off
+        byte[] allOff = new byte[ NUM_LEDS * 3 ];
+        Arrays.fill(allOff, (byte) 0x00);
+        try {
+          output.writeStrip(allOff);
+        } catch (IOException e) {
+          throw new RuntimeException("ERROR turning all off", e);
+        }
+      }
+      */
+//}
+    
+    /* example program
+    // Do rainbow loop
+    
+    double phi = 0;
+    double phiIncrement = 16d / ROTATION_DURATION_MS;
+    double pixelPhiIncrement = 1d / RAINBOW_SPREAD_PX;
+    while (loop[0]) {
+
+      double pixelPhi = phi;
+      for (int i=0; i<leds.length; i += 3) {
+        RainbowUtils.fillRgb(leds, i, pixelPhi);
+        pixelPhi += pixelPhiIncrement;
+      }
+
+      output.writeStrip(leds);
+
+      phi += phiIncrement;
+      if (phi >= 1) {
+        System.out.println("Looping back to red");
+        phi = 0;
+      }
+
+      Thread.sleep(16);
+    }
+  }
+  */
+}
+
+
+public void drawApa() {
+  /*
+  byte[] data = { (byte) 0, (byte) 0, (byte) 127, (byte) 0);
+  //printIn(data);
+  
+  for (int i = 10; i<=290; i +=10){
+  color pixColor = get(i,i)
+  apaRed = red(pixColor);
+  apaGreen = green(pixColor);
+  apaBlue = blue(pixColor);
+  apaColor[i-100/10*4-3+0] = (byte) apaRed;
+  apaColor[i-100/10*4-3+1] = (byte) apaGreen;
+  apaColor[i-100/10*4-3+2] = (byte) apaBlue;
+  apaColor[i-100/10*4-3+2] = (byte) 0;
+  } 
+  apaClient.write(apaColor);
+  /*for (int i=0; i<leds.length; i += 3) {
+        RainbowUtils.fillRgb(leds, i, pixelPhi);
+        pixelPhi += pixelPhiIncrement;
+      }
+      int colorsI = 0;
+    for (int i=0; i<outputRgbBuffer.length; ) {
+      outputRgbBuffer[ i++ ] = LXColor.red(   colors[ colorsI ]);
+      outputRgbBuffer[ i++ ] = LXColor.green( colors[ colorsI ]);
+      outputRgbBuffer[ i++ ] = LXColor.blue(  colors[ colorsI ]);
+      colorsI++;
+    }
+      
+      
+ // output.writeStrip(leds);
+ */
+}
 ArtnetP5 artnet;
 PImage artnetimg;
-
-
 /*
-
-
 #controller ip address
 #hint, use unicast address or 239.255.0.0 for multicast 
 #e131.ip=239.255.0.0
@@ -1916,24 +2180,12 @@ PImage artnetimg;
 #define the first universe id
 #e131.first.universe.id=1
 
-
-//universes
-int artnetPixels(int x, int y, int yScale) {
-  return(x+(y*yScale));
-}
-
-int artnetxPixels(int pxN, int yScale) {
-  return(pxN % yScale);
-}
-
-int artnetyPixels(int pxN, int yScale) {
-  return(pxN / yScale);
-}
 */
 public void setupArtnet() {
   
   artnet = new ArtnetP5();
   artnetimg = new PImage(170, 1, PApplet.RGB);
+  colorMode(HSB, 255, 255, 255, 255);
  
      //mapSection(100, 20, 0,12);                                      here??
 }
@@ -1958,27 +2210,21 @@ public void drawArtnet()  {
   
   //address the fixtures
   //mapSection(sketchX, sketchY, startDMX, endDMX);
-  mapSection(300, 40, 0,12);
-  /*mapSection(540, 240, 12,24);
-  mapSection(600, 240, 24,36);
-  mapSection(660, 240, 36,48);
-  mapSection(720, 240, 48,60);
-  mapSection(780, 240, 60,72);
-  mapSection(840, 240, 72,84);
-  mapSection(900, 240, 84,96);
-  mapSection(960, 240, 96,108);
-  mapSection(1020, 240, 108,120);
-  mapSection(1080, 240, 120,132);
+  mapSection(240, 240, 0,1);
+  mapSection(241, 240, 2,3);
+  mapSection(242, 240, 4,5);
+  mapSection(243, 240, 6,7);
+  mapSection(244, 240, 8,9);
+  mapSection(245, 240, 10,11);
+  mapSection(246, 240, 12,13);
+  mapSection(247, 240, 14, 15);
+  mapSection(248, 240, 16,17);
+  mapSection(249, 240, 18,19);
+  mapSection(250, 240, 20,21);
   mapSection(960, 240, 132,144);
   mapSection(1020, 240, 144, 156);
   mapSection(1260, 240, 156, 168);
- 
- */
   
-  
-
-  
-
   //add a dimmer
   artnetimg.loadPixels();
   //colorMode(HSB, 255, 255, 255);
@@ -1997,6 +2243,8 @@ public void drawArtnet()  {
  
 }
 
+//PImage dmximg;
+
 DmxP512 dmxOutput;
 int universeSize=128;
 
@@ -2009,6 +2257,19 @@ String DMXPRO_PORT = "/dev/tty.usbserial-6AWY0JLI";//case matters ! on windows p
 int DMXPRO_BAUDRATE=115000;
 
 public void setupDMX() {
+  
+ /* dmximg = new PImage(170, 1, PApplet.RGB);
+ void mapSection(int sketchX, int sketchY, int startDMX, int endDMX)
+{
+   
+   for(int i = startDMX; i < endDMX; i++){
+     
+     dmximg.set(i % dmximg.width, i / dmximg.width, get(sketchX + (i % width), sketchY + (i / width)));
+     sketchX-= 4;
+  
+  }  
+}
+*/
 
 
   dmxOutput=new DmxP512(this, universeSize, false);
@@ -2038,7 +2299,20 @@ dmxPos = new int[dmxAddr*dmxUniv];
 
 public void drawDMX() {
   loadPixels();
+  //dmximg.loadPixels();
+  
   //    colorMode(HSB, 255);
+  
+  /*
+    int sketchX = 0;
+  int sketchY = 0;
+  int startDMX = 0;
+  int endDMX = 0;
+  
+  //address the fixtures
+  //mapSection(sketchX, sketchY, startDMX, endDMX);
+  mapSection(240, 240, 0,1);
+  */
 
   for (int y = 1; y < dmxAddr+1; y+=3) {     
     for (int x = 1; x < dmxUniv+1; x++) {
@@ -2123,18 +2397,8 @@ class FitzhughRenderer extends AudioRenderer {
   public void setupSketch() {
      //noStroke();
      colorMode(HSB, 255, 255, 255,100);
-  //  if(movieOn) mm = new MovieMaker(this,width,height,"reaction"+day()+hour()+minute()+second()+".mov",30, MovieMaker.H263, MovieMaker.HIGH);
     //int w=canvasW;
     //int h=canvasH;
-    
-    //colorMode(HSB, 255);
-    /*
-    setcolorMode = fitzhughColor;     // <--  New line for color memory 
-    vFader3 = fitzhughBrightness;
-    vFader4 = fitzhughContrast;
-    */
-    //int fader = h;
-    //getSketchPresets("fitzhugh", true);    
     /*
     // random to make it 2D otherwise it will just be 1d gradient like
     for(int i=0;i<w;++i) {
@@ -2151,7 +2415,7 @@ class FitzhughRenderer extends AudioRenderer {
   }
 
   public void renderSketch() {
-    colorMode(HSB, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255, 255);
     diffusionU();
     diffusionV();
     reaction();
@@ -2159,17 +2423,15 @@ class FitzhughRenderer extends AudioRenderer {
     loadPixels();
     for(int i=0;i<w;++i) {
       for(int j=0;j<h;++j) {
+        pixels[j*w+i] = color(((setcolorMode+.01f)*gridU[i][j]+setcolorMode-vFader4-20), vFader2,gridU[i][j]*vFader3);
         //pixels[j*w+i] = color(gridU[i][j]*setcolorMode+oX, vFader2,gridU[i][j]*vFader3+oY);
         //pixels[j*w+i] = color(255*gridU[i][j]-setcolorMode, vFader2,gridU[i][j]*vFader3);
-       //pixels[j*w+i] = color((gridU[i][j]*setcolorMode-20), vFader2,gridU[i][j]*vFader3);
-    pixels[j*w+i] = color(((setcolorMode+.01f)*gridU[i][j]+setcolorMode-vFader4-20), vFader2,gridU[i][j]*vFader3);  
+        //pixels[j*w+i] = color((gridU[i][j]*setcolorMode-20), vFader2,gridU[i][j]*vFader3);
+   
   }
     }
     updatePixels();
-  
-    //if (count%2==0) {
-    //  if(movieOn) mm.addFrame();
-    //}
+ 
     count++;
   }
   
@@ -2177,8 +2439,7 @@ class FitzhughRenderer extends AudioRenderer {
   public void diffusionU() {
     for(int i=0;i<w;++i) {
       for(int j=0;j<h;++j) {
-  
-        //int fader = (int)map(vFader4, 0, 255, 1, 480);
+
         gridNext[i][j] = gridU[i][j]+deltaT/deltaXSq*
           (diffRateUXarr[i][j]*(gridU[(i-1+w)%w][j]
           +gridU[(i+1)%w][j]-2*gridU[i][j])+
@@ -2292,19 +2553,10 @@ class FitzhughRenderer extends AudioRenderer {
         
         for (int i=oX - brush; i < brush + oX; ++i) {
             for (int j=oY - brush; j < brush + oY; ++j) {
-            //  gridU[i][j] = cY-.1;
-            //gridV[i][j] = cX-.1;
-            //pixels[j*w+i] = color((gridU[i][j]*setcolorMode-100), vFader2,gridU[i][j]*vFader3);
-            //for(int i=0;i<w;++i) {
-            //for(int j=0;j<h;++j) {
-            //gridU[i][j] = cY/2-.1;
-            //gridV[i][j] = cX/2-.1;
-            // new varible because we redefine gridU[i][j] but have to use it in the calculation of gridV[i][j]
-            
+
             try{
                 float  uVal = gridU[i][j]; 
-              //gridU[i][j] = gridU[i][j] + deltaT*(2*reactionU(gridU[i][j],gridV[i][j], Farr[i][j], karr[i][j]));
-              //gridV[i][j] = gridV[i][j] + deltaT*(2*reactionV(uVal,gridV[i][j], Farr[i][j], karr[i][j]));
+      
               gridU[i][j] = .5f+random(-.01f,.01f);
               gridV[i][j] = .25f+random(-.01f,.01f);  
             } catch(Exception e){
@@ -2367,16 +2619,15 @@ class Gradient
 }
 class HeatmapRenderer extends AudioRenderer {
   /*
-  A touch heatmap with integration with led pixels.
-  Dan Cote, Dustin Edwards - GPLv2
-  
   OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/46554*@* 
-  !do not delete the line above, required for linking your tweak if you re-upload */
-  
+  */
+
   // Array to store the heat values for each pixel
   float heatmap[][][] = new float[2][canvasW][canvasH];
+  
   // The index of the current heatmap
   int index = 0;
+  
   // A color gradient to see pretty colors
   Gradient g;
 
@@ -2396,51 +2647,9 @@ class HeatmapRenderer extends AudioRenderer {
   
   public void setupSketch() {
     //noStroke();
-    colorMode(RGB, 255, 255, 255, 100);
+    colorMode(RGB, 255, 255, 255, 255);
     g = new Gradient();
-    /*
-    g.addColor(color(0, 0, 0));
-     g.addColor(color(102, 11, 0));
-     g.addColor(color(140, 29, 72));
-     g.addColor(color(204, 50, 0));
-     g.addColor(color(200, 40, 102));
-     g.addColor(color(111, 20, 75));
-     g.addColor(color(191, 0, 50));
-     g.addColor(color(255, 102, 0));
-     g.addColor(color(204, 0, 20));
-     g.addColor(color(153, 0, 0));
-     g.addColor(color(255, 153, 102));
-     g.addColor(color(255, 255, 255));
-     g.addColor(color(0, 0, 0));
-     */
-/*
-    g.addColor(color(102, 11, 0));
-    g.addColor(color(204, 50, 0));
-    g.addColor(color(111, 0, 75));
-    g.addColor(color(10, 0, 50));
-    g.addColor(color(102, 11, 0));
-    g.addColor(color(0, 0, 0));
-    g.addColor(color(151, 10, 0));
-    g.addColor(color(204, 0, 20));
-    g.addColor(color(153, 0, 0));
-    g.addColor(color(250, 153, 0));
 
-    g.addColor(color(255, 200, 200));
-    g.addColor(color(0, 0, 0));
-
-    g.addColor(color(2, 11, 75));
-    g.addColor(color(111, 20, 0));
-    g.addColor(color(111, 0, 10));
-    g.addColor(color(10, 0, 50));
-    //g.addColor(color(102, 11, 0));
-    g.addColor(color(0, 0, 0));
-    g.addColor(color(151, 10, 0));
-    g.addColor(color(204, 0, 20));
-    g.addColor(color(153, 0, 0));
-    g.addColor(color(250, 153, 0));
-    //add gradient color
-    //hsb picker
-*/
     //getSketchPresets("heatmap", true);
     
     if (getSketchPresets("heatmap", false)) {
@@ -2479,7 +2688,7 @@ class HeatmapRenderer extends AudioRenderer {
   }
 
   public void renderSketch(){
-    colorMode(RGB, 255, 255, 255);
+    colorMode(RGB, 255, 255, 255, 255);
     // See if heat (or cold) needs applied
     if (mousePressed && (mouseButton == LEFT))
       apply_heat(mouseX, mouseY, 30, .25f);
@@ -2498,7 +2707,7 @@ class HeatmapRenderer extends AudioRenderer {
         set(i, j, thisColor);
       }
     }
-    colorMode(HSB, 255, 255, 255);
+    //colorMode(HSB, 255, 255, 255, 255);
   }
 
   public void update_heatmap()
@@ -2545,9 +2754,9 @@ class HeatmapRenderer extends AudioRenderer {
     int oX = (int)cX;
     int oY = (int)cY;
     if (toggle == true)
-      apply_heat(oX, oY, 30, .25f);
+      apply_heat(oX, oY, 60, .10f);
     if (toggle == false)
-      apply_heat(oX, oY, 30, -.25f);
+      apply_heat(oX, oY, 60, -.10f);
   }
   /*
   public void heattoggle(float oscToggle) {
@@ -2583,6 +2792,50 @@ class HeatmapRenderer extends AudioRenderer {
     }
   }
 }
+//example gradient colors
+    /*
+    g.addColor(color(0, 0, 0));
+     g.addColor(color(102, 11, 0));
+     g.addColor(color(140, 29, 72));
+     g.addColor(color(204, 50, 0));
+     g.addColor(color(200, 40, 102));
+     g.addColor(color(111, 20, 75));
+     g.addColor(color(191, 0, 50));
+     g.addColor(color(255, 102, 0));
+     g.addColor(color(204, 0, 20));
+     g.addColor(color(153, 0, 0));
+     g.addColor(color(255, 153, 102));
+     g.addColor(color(255, 255, 255));
+     g.addColor(color(0, 0, 0));
+     */
+/*
+    g.addColor(color(102, 11, 0));
+    g.addColor(color(204, 50, 0));
+    g.addColor(color(111, 0, 75));
+    g.addColor(color(10, 0, 50));
+    g.addColor(color(102, 11, 0));
+    g.addColor(color(0, 0, 0));
+    g.addColor(color(151, 10, 0));
+    g.addColor(color(204, 0, 20));
+    g.addColor(color(153, 0, 0));
+    g.addColor(color(250, 153, 0));
+
+    g.addColor(color(255, 200, 200));
+    g.addColor(color(0, 0, 0));
+
+    g.addColor(color(2, 11, 75));
+    g.addColor(color(111, 20, 0));
+    g.addColor(color(111, 0, 10));
+    g.addColor(color(10, 0, 50));
+    //g.addColor(color(102, 11, 0));
+    g.addColor(color(0, 0, 0));
+    g.addColor(color(151, 10, 0));
+    g.addColor(color(204, 0, 20));
+    g.addColor(color(153, 0, 0));
+    g.addColor(color(250, 153, 0));
+    //add gradient color
+    //hsb picker
+*/
 
 /// abstract class for audio visualization
 
@@ -2637,9 +2890,6 @@ abstract class FourierRenderer extends AudioRenderer {
   }
 }
 /* OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/17043*@* */
-/* !do not delete the line above, required for linking your tweak if you re-upload */
-
-
 //// these values get accessed by both classes
 //// should be moved to main class tho
 int type = 0;
@@ -2652,11 +2902,9 @@ int res = 8;
 /////////////////////////////////////////////////
 //                                             //
 class TuringRenderer extends AudioRenderer {
-
   //    The Secret Life of Turing Patterns       //
   //                                             //
   /////////////////////////////////////////////////
-
   // Inspired by the work of Jonathan McCabe
   // (c) Martin Schneider 2010
 
@@ -2702,7 +2950,7 @@ class TuringRenderer extends AudioRenderer {
 
   public void setupSketch() {
 
-    colorMode(HSB, 255,255,255,100);
+    colorMode(HSB, 255,255,255,255);
     noStroke();
     /*
     int setcolorMode = 0;
@@ -3949,11 +4197,6 @@ if(down == true){
 }
 
 
-
-
-
-
-
 public int xyPixels(int x, int y, int yScale) {
   return(x+(y*yScale));
 }
@@ -4028,8 +4271,8 @@ public void drawPixelPusher() {
            c = color(0,0,0);
          */
          
-         float adjustedGreen = green(c) * .5f;
-         float adjustedBlue = blue(c) * .125f;
+         //float adjustedGreen = green(c) * .5;
+         //float adjustedBlue = blue(c) * .125;
          
         // Pixel p = new Pixel((byte)red(c), (byte)adjustedGreen, (byte)adjustedBlue);
         Pixel p = new Pixel((byte)red(c), (byte)green(c), (byte)blue(c));
@@ -4083,7 +4326,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
 
   public void setupSketch() {
     
-    colorMode(HSB, 255, 255, 255, 100);
+    colorMode(HSB, 255, 255, 255, 255);
     //noStroke();
     currFrame = new int[width*height];
     prevFrame = new int[width*height];
@@ -4127,7 +4370,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
 
 
   public void renderSketch() {
-    colorMode(HSB, 255, 255, 255);
+    //colorMode(HSB, 255, 255, 255);
     if (okToDraw) {
       okToDraw = false;
       noiseZ += 2*noiseScale;
@@ -4427,7 +4670,7 @@ class NoiseFieldRenderer extends AudioRenderer {
   public void setupSketch() {
     //smooth(); //used in processing 2
     //size(canvasW, canvasH);
-    colorMode(HSB, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255, 255);
     //noStroke();
     //background(0);
 
@@ -4560,6 +4803,7 @@ class TestObserver implements Observer {
     this.hasStrips = true;
   }
 };
+////first try of moving osc into a seperate tab didn't work
 class PerlinColorRenderer extends AudioRenderer {
 
 
@@ -4589,15 +4833,17 @@ public String skchName = "Perlin color";
 
   public void setupSketch() {
     //background(0);
-    //colorMode(HSB, 255, 255, 255, 100);
-     colorMode(HSB, 1,1,1,100);
+   colorMode(HSB, 255, 255, 255, 255);
+    
     r = width/PI;
     //noStroke();
     //smooth();
     
     noiseDetail(3, .6f);
     //colorMode(HSB, 1); //setupPixelPusher();
-    colorMode(HSB, 1);
+    //colorMode(HSB, 1,1,1, 255);
+
+    //getSketchPresets("perlincolor", true);
     /*
   setcolorMode = 205;
      vFader2 = 255;
@@ -4606,17 +4852,14 @@ public String skchName = "Perlin color";
      vFader5 = 10;
      vFader6 = 200;
      */
-    //getSketchPresets("perlincolor", true);
   }
 
 
   public void renderSketch()
   {
     //background(0);
-    
-    /// HSB 255 makes everything black
-   
-   colorMode(HSB, 1,1,1,100);
+      
+   colorMode(HSB, 1,1,1,255);
     //ox += max(-speed,min(speed,(mouseX-width/2)*speed/r));
     //oy += max(-speed,min(speed,(mouseY-height/2)*speed/r));
     float setSpeedModeF = (float)map(vFader5, 0, 255, .0001f, .08f);
@@ -4636,47 +4879,43 @@ public String skchName = "Perlin color";
         float setSatModeF = (float)map(vFader2, 0, 255, 0, 1);
         float setBrightModeF = (float)map(vFader3, 0, 255, 0, 1);
         float setContrastModeF = (float)map(vFader4, 0, 255, 0.1f, .6f);
-
-        //float setSpeedModeF = (float)map(vFader5, 0, 255, .0001, .0008);
         float setNoiseDetailF = (float)map(vFader6, 0, 255, .000001f, .06f);
 
 
         //float v = noise(ox+x*kNoiseDetail,oy+y*kNoiseDetail,millis()*setSpeedModeF);     
         //float v = noise(ox+x*kNoiseDetail,oy+y*kNoiseDetail,millis()*.0001);     
         //set(x,y,color(setcolorModeF-y*.05/height,(4-v)*setSatModeF,(setContrastModeF+v*v)*setBrightModeF));    
-        float v = noise(ox+x*(kNoiseDetail+setNoiseDetailF), oy+y*(kNoiseDetail+setNoiseDetailF), millis()*.00005f);
+        float v = noise(ox+x*(kNoiseDetail+setNoiseDetailF), oy+y*(kNoiseDetail+setNoiseDetailF), setNoiseDetailF);
         set(x, y, color(setcolorModeF-setContrastModeF*v, setSatModeF, (v+v)*setBrightModeF));
       }
     }
-    colorMode(HSB, 255, 255, 255, 100);
+    //colorMode(HSB, 255, 255, 255, 255);
 
-    //drawPixelPusher();
   }
-  /// set the onClick function using the global X and Y values
-
-
+  
+  
+/// set the onClick function using the global X and Y values
 public void doMouseDrag(){
   
 }
   public void onClick() {
     cX = theX * canvasW;
     cY = theY * canvasH;
-    //int oX = (int)cX;
-    //int oY = (int)cY;
+    //ellipse(cX, cY, 10, 10);
+    //rect(0, 0, 10, 10,7);
+    int oX = (int)cX;
+    int oY = (int)cY;
     //ox += max(-speed,min(speed,(cX-width/2)*speed/r));
     //oy += max(-speed,min(speed,(cY-height/2)*speed/r));
 
-    //move_clouds(oX, oY, 25, .25);
+    brush_clouds(oX, oY, 25, .25f);
   }
 
-  /*  
-   void move_clouds(int i, int j, int r, float delta)
-   {
+    
+   public void brush_clouds(int i, int j, int r, float delta)
+   {/*
    ox += max(-speed,min(speed,(ox-width/2)*speed/r));
    oy += max(-speed,min(speed,(oy-height/2)*speed/r));
-   //ox += max(-speed,min(speed,(ox-width/2)*speed/r));
-   //oy += max(-speed,min(speed,(oy-height/2)*speed/r));
-   
    
    for (int y = 0; y < height; ++y)
    {
@@ -4688,8 +4927,8 @@ public void doMouseDrag(){
    //set(x,y,color(.1-y*.1/height,4-v,.7+v*v)); 
    set(x,y,color(.1-y*.1/height,4-v,.3+v*v));    
    }
-   }
    }*/
+   }
 }
 public void loadMasterPresets() {
   presets = xml.getChildren("master");
@@ -4841,7 +5080,108 @@ public void renderSketch(){
   }
 }
 
-  public void settings() {  size(300,80, P3D); }
+/*
+//
+//            SpoutSender
+//
+//      Send to a Spout receiver
+//
+//           spout.zeal.co
+//
+//       http://spout.zeal.co/download-spout/
+//
+
+PImage spoutImage;
+
+PGraphics spoutGraphics; // Graphics for demo
+
+
+// DECLARE A SPOUT OBJECT
+//Spout spout;
+
+public void setupSpout() {
+
+  // Initial window size
+  //size(640, 360, P3D);
+  textureMode(NORMAL);
+  
+  // Create a graphics object
+  //spoutGraphics = createGraphics(1280, 255, P3D);
+  
+  // Load an image
+  //img = loadImage("SpoutLogoMarble3.bmp");
+  //spoutImage = get();
+  
+  // The dimensions of graphics or image objects
+  // do not have to be the same as the sketch window
+    
+  // CREATE A NEW SPOUT OBJECT
+  spout = new Spout(this);
+  
+  // CREATE A NAMED SENDER
+  // A sender can be created now with any name.
+  // Otherwise a sender is created the first time
+  // "sendTexture" is called and the sketch
+  // folder name is used.  
+  spout.createSender("TouchMagnetP3");
+  
+} 
+
+void drawSpout()  { 
+    //
+    //background(0);
+    //noStroke();
+    /*
+    // Draw the graphics   
+    pushMatrix();
+    translate(width/2.0, height/2.0, -100);
+    rotateX(frameCount * 0.01);
+    rotateY(frameCount * 0.01);      
+    scale(110);
+    TexturedCube(img);
+    popMatrix();
+    
+    // OPTION 1: SEND THE TEXTURE OF THE DRAWING SURFACE
+    // Sends at the size of the window    
+    spout.sendTexture();
+    //image(spoutGraphics, 0, 0, width, height);
+    
+    /*
+    // OPTION 2: SEND THE TEXTURE OF GRAPHICS
+    // Sends at the size of the graphics
+    spoutGraphics.beginDraw();
+    spoutGraphics.fill(255)
+    spoutGraphics.endDraw();
+    spout.sendTexture(spoutGraphics);
+    image(spoutGraphics, 0, 0, width, height);
+    
+    pgr.beginDraw();
+    pgr.lights();
+    pgr.background(0, 90, 100);
+    pgr.fill(255);
+     pushMatrix();
+    pgr.translate(pgr.width/2, pgr.height/2);
+    pgr.rotateX(frameCount/100.0);
+    pgr.rotateY(frameCount/100.0);
+    pgr.fill(192);
+    pgr.box(pgr.width/4); // box is not textured
+    popMatrix();
+    pgr.endDraw();
+    spout.sendTexture(pgr);
+    image(pgr, 0, 0, width, height);
+    
+    
+    
+    
+    // OPTION 3: SEND THE TEXTURE OF AN IMAGE
+    // Sends at the size of the image
+    spout.sendTexture(spoutImage);
+    //image(img, 0, 0, width, height); //render spoutImage
+    
+   
+}
+*/
+  public void settings() {  size(300,80, P2D); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "TouchMagnetP3" };
     if (passedArgs != null) {

@@ -63,18 +63,8 @@ class FitzhughRenderer extends AudioRenderer {
   public void setupSketch() {
      //noStroke();
      colorMode(HSB, 255, 255, 255,100);
-  //  if(movieOn) mm = new MovieMaker(this,width,height,"reaction"+day()+hour()+minute()+second()+".mov",30, MovieMaker.H263, MovieMaker.HIGH);
     //int w=canvasW;
     //int h=canvasH;
-    
-    //colorMode(HSB, 255);
-    /*
-    setcolorMode = fitzhughColor;     // <--  New line for color memory 
-    vFader3 = fitzhughBrightness;
-    vFader4 = fitzhughContrast;
-    */
-    //int fader = h;
-    //getSketchPresets("fitzhugh", true);    
     /*
     // random to make it 2D otherwise it will just be 1d gradient like
     for(int i=0;i<w;++i) {
@@ -91,7 +81,7 @@ class FitzhughRenderer extends AudioRenderer {
   }
 
   void renderSketch() {
-    colorMode(HSB, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255, 255);
     diffusionU();
     diffusionV();
     reaction();
@@ -99,17 +89,15 @@ class FitzhughRenderer extends AudioRenderer {
     loadPixels();
     for(int i=0;i<w;++i) {
       for(int j=0;j<h;++j) {
+        pixels[j*w+i] = color(((setcolorMode+.01)*gridU[i][j]+setcolorMode-vFader4-20), vFader2,gridU[i][j]*vFader3);
         //pixels[j*w+i] = color(gridU[i][j]*setcolorMode+oX, vFader2,gridU[i][j]*vFader3+oY);
         //pixels[j*w+i] = color(255*gridU[i][j]-setcolorMode, vFader2,gridU[i][j]*vFader3);
-       //pixels[j*w+i] = color((gridU[i][j]*setcolorMode-20), vFader2,gridU[i][j]*vFader3);
-    pixels[j*w+i] = color(((setcolorMode+.01)*gridU[i][j]+setcolorMode-vFader4-20), vFader2,gridU[i][j]*vFader3);  
+        //pixels[j*w+i] = color((gridU[i][j]*setcolorMode-20), vFader2,gridU[i][j]*vFader3);
+   
   }
     }
     updatePixels();
-  
-    //if (count%2==0) {
-    //  if(movieOn) mm.addFrame();
-    //}
+ 
     count++;
   }
   
@@ -117,8 +105,7 @@ class FitzhughRenderer extends AudioRenderer {
   void diffusionU() {
     for(int i=0;i<w;++i) {
       for(int j=0;j<h;++j) {
-  
-        //int fader = (int)map(vFader4, 0, 255, 1, 480);
+
         gridNext[i][j] = gridU[i][j]+deltaT/deltaXSq*
           (diffRateUXarr[i][j]*(gridU[(i-1+w)%w][j]
           +gridU[(i+1)%w][j]-2*gridU[i][j])+
@@ -232,19 +219,10 @@ class FitzhughRenderer extends AudioRenderer {
         
         for (int i=oX - brush; i < brush + oX; ++i) {
             for (int j=oY - brush; j < brush + oY; ++j) {
-            //  gridU[i][j] = cY-.1;
-            //gridV[i][j] = cX-.1;
-            //pixels[j*w+i] = color((gridU[i][j]*setcolorMode-100), vFader2,gridU[i][j]*vFader3);
-            //for(int i=0;i<w;++i) {
-            //for(int j=0;j<h;++j) {
-            //gridU[i][j] = cY/2-.1;
-            //gridV[i][j] = cX/2-.1;
-            // new varible because we redefine gridU[i][j] but have to use it in the calculation of gridV[i][j]
-            
+
             try{
                 float  uVal = gridU[i][j]; 
-              //gridU[i][j] = gridU[i][j] + deltaT*(2*reactionU(gridU[i][j],gridV[i][j], Farr[i][j], karr[i][j]));
-              //gridV[i][j] = gridV[i][j] + deltaT*(2*reactionV(uVal,gridV[i][j], Farr[i][j], karr[i][j]));
+      
               gridU[i][j] = .5+random(-.01,.01);
               gridV[i][j] = .25+random(-.01,.01);  
             } catch(Exception e){

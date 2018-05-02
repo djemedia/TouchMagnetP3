@@ -860,11 +860,6 @@ if(down == true){
 }
 
 
-
-
-
-
-
 int xyPixels(int x, int y, int yScale) {
   return(x+(y*yScale));
 }
@@ -939,8 +934,8 @@ void drawPixelPusher() {
            c = color(0,0,0);
          */
          
-         float adjustedGreen = green(c) * .5;
-         float adjustedBlue = blue(c) * .125;
+         //float adjustedGreen = green(c) * .5;
+         //float adjustedBlue = blue(c) * .125;
          
         // Pixel p = new Pixel((byte)red(c), (byte)adjustedGreen, (byte)adjustedBlue);
         Pixel p = new Pixel((byte)red(c), (byte)green(c), (byte)blue(c));

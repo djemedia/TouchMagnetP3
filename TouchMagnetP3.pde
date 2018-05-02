@@ -61,7 +61,7 @@ PImage transition;
 boolean artnetEnable = false;
 boolean dmxEnable =false;
 boolean pixEnable = true;
-boolean apaEnable = false;
+boolean apaEnable = true;
 boolean hcsr04Enable = false;
 //boolean spoutEnable = true;
 //boolean syphonEnable = false;

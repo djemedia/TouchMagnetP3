@@ -27,15 +27,17 @@ public String skchName = "Perlin color";
 
   public void setupSketch() {
     //background(0);
-    //colorMode(HSB, 255, 255, 255, 100);
-     colorMode(HSB, 1,1,1,100);
+   colorMode(HSB, 255, 255, 255, 255);
+    
     r = width/PI;
     //noStroke();
     //smooth();
     
     noiseDetail(3, .6);
     //colorMode(HSB, 1); //setupPixelPusher();
-    colorMode(HSB, 1);
+    //colorMode(HSB, 1,1,1, 255);
+
+    //getSketchPresets("perlincolor", true);
     /*
   setcolorMode = 205;
      vFader2 = 255;
@@ -44,17 +46,14 @@ public String skchName = "Perlin color";
      vFader5 = 10;
      vFader6 = 200;
      */
-    //getSketchPresets("perlincolor", true);
   }
 
 
   public void renderSketch()
   {
     //background(0);
-    
-    /// HSB 255 makes everything black
-   
-   colorMode(HSB, 1,1,1,100);
+      
+   colorMode(HSB, 1,1,1,255);
     //ox += max(-speed,min(speed,(mouseX-width/2)*speed/r));
     //oy += max(-speed,min(speed,(mouseY-height/2)*speed/r));
     float setSpeedModeF = (float)map(vFader5, 0, 255, .0001, .08);
@@ -74,47 +73,43 @@ public String skchName = "Perlin color";
         float setSatModeF = (float)map(vFader2, 0, 255, 0, 1);
         float setBrightModeF = (float)map(vFader3, 0, 255, 0, 1);
         float setContrastModeF = (float)map(vFader4, 0, 255, 0.1, .6);
-
-        //float setSpeedModeF = (float)map(vFader5, 0, 255, .0001, .0008);
         float setNoiseDetailF = (float)map(vFader6, 0, 255, .000001, .06);
 
 
         //float v = noise(ox+x*kNoiseDetail,oy+y*kNoiseDetail,millis()*setSpeedModeF);     
         //float v = noise(ox+x*kNoiseDetail,oy+y*kNoiseDetail,millis()*.0001);     
         //set(x,y,color(setcolorModeF-y*.05/height,(4-v)*setSatModeF,(setContrastModeF+v*v)*setBrightModeF));    
-        float v = noise(ox+x*(kNoiseDetail+setNoiseDetailF), oy+y*(kNoiseDetail+setNoiseDetailF), millis()*.00005);
+        float v = noise(ox+x*(kNoiseDetail+setNoiseDetailF), oy+y*(kNoiseDetail+setNoiseDetailF), setNoiseDetailF);
         set(x, y, color(setcolorModeF-setContrastModeF*v, setSatModeF, (v+v)*setBrightModeF));
       }
     }
-    colorMode(HSB, 255, 255, 255, 100);
+    //colorMode(HSB, 255, 255, 255, 255);
 
-    //drawPixelPusher();
   }
-  /// set the onClick function using the global X and Y values
-
-
+  
+  
+/// set the onClick function using the global X and Y values
 public void doMouseDrag(){
   
 }
   public void onClick() {
     cX = theX * canvasW;
     cY = theY * canvasH;
-    //int oX = (int)cX;
-    //int oY = (int)cY;
+    //ellipse(cX, cY, 10, 10);
+    //rect(0, 0, 10, 10,7);
+    int oX = (int)cX;
+    int oY = (int)cY;
     //ox += max(-speed,min(speed,(cX-width/2)*speed/r));
     //oy += max(-speed,min(speed,(cY-height/2)*speed/r));
 
-    //move_clouds(oX, oY, 25, .25);
+    brush_clouds(oX, oY, 25, .25);
   }
 
-  /*  
-   void move_clouds(int i, int j, int r, float delta)
-   {
+    
+   void brush_clouds(int i, int j, int r, float delta)
+   {/*
    ox += max(-speed,min(speed,(ox-width/2)*speed/r));
    oy += max(-speed,min(speed,(oy-height/2)*speed/r));
-   //ox += max(-speed,min(speed,(ox-width/2)*speed/r));
-   //oy += max(-speed,min(speed,(oy-height/2)*speed/r));
-   
    
    for (int y = 0; y < height; ++y)
    {
@@ -126,6 +121,6 @@ public void doMouseDrag(){
    //set(x,y,color(.1-y*.1/height,4-v,.7+v*v)); 
    set(x,y,color(.1-y*.1/height,4-v,.3+v*v));    
    }
-   }
    }*/
+   }
 }

@@ -1,11 +1,15 @@
-/////////////////////////////
-/* UPDATED FOR PROCESSING 3 11/16/2016 
-///////////////////////////////////////*/
-
-
-/********************************************
-//// P2 to P3 conversion by TenTon Raygun
-*********************************************/
+///////////////////////////
+//////TouchMagnet///////////
+//////////////////////////////
+/* open source - GNU 3+ Public license
+created by dustin edwards with dan cote, 2013. 
+Artnet upgrade with Rich Trapani/Jamie Schwetmann 2015
+P3 upgrade and additional programming with TenTon Raygun 2016
+/////////////////////////////////////////////////////////////
+////use mouse to interact/////space bar = next sketch///////
+/////////////////////////////////////////////////////////////
+//////run TouchMagnet GUI for advanced functionality//
+////////////////////////////////////////////////////////////*/
 
 
 import com.heroicrobot.dropbit.devices.*;
@@ -13,71 +17,63 @@ import com.heroicrobot.dropbit.common.*;
 import com.heroicrobot.dropbit.discovery.*;
 import com.heroicrobot.dropbit.registry.*;
 import com.heroicrobot.dropbit.devices.pixelpusher.*;
+ 
+DeviceRegistry registry;
+TestObserver testObserver;
 
 
-
-///*
 import toxi.sim.automata.*;
 import toxi.math.*;
 import toxi.color.*;
-///*/
 
 
- /*
- import com.heroicrobot.dropbit.devices.pixelpusher.Pixel;
- import com.heroicrobot.dropbit.devices.pixelpusher.Strip;
- */
- 
 import ddf.minim.*;
 
 import artnetP5.*;
 
-// import codeanticode.syphon.*;
-
 import dmxP512.*;
+
+import processing.net.*;
 import processing.serial.*;
 
 import javax.swing.JColorChooser;
 import java.awt.Color; 
 
 // import hypermedia.net.*;
-
 //import processing.core.*;
 import java.util.*;
 
 import oscP5.*;
-import netP5.*;
-
 OscP5 oscP5;
 OscP5 oscP5B;
+
+import netP5.*;
 NetAddress myRemoteLocation;
 NetAddress stripApp;
 
-DeviceRegistry registry;
 
-TestObserver testObserver;
+//import spout.*;
+//Spout spout;
 
-/// SyphonClient client;
 PGraphics canvas;
-
 PImage transition;
 
 boolean artnetEnable = false;
 boolean dmxEnable =false;
 boolean pixEnable = true;
+boolean apaEnable = false;
+boolean hcsr04Enable = false;
+//boolean spoutEnable = true;
+//boolean syphonEnable = false;
 
 boolean showFramerate = false;
 
 boolean ready_to_go = true;
 int lastPosition;
 
-//// global X and Y positions for mouse
-float theX = 0;
-float theY = 0;
 
-//// global X and Y positions for touchgui
-float theOSCX = 0;
-float theOSCY = 0;
+int canvasW = 300;
+int canvasH = 80;
 
 int ledsW = 300;
 int ledsH = 72;
@@ -90,13 +86,10 @@ int thisLedPos;
 int thisartnetPos;
 int thisDmxPos;
 
-int canvasW = 300;
-int canvasH = 80;
-
-//these seetings can be overridden by the data/presets.xml file
+//these settings can be overridden by the data/presets.xml file
 int setcolorMode = 220;
 int vFader2 = 255;
-int vFader3 = 250;
+int vFader3 = 200;
 int vFader4 = 228;
 int vFader5 = 1;
 int vFader6 = 200;
@@ -123,11 +116,21 @@ boolean toggle = false;
 boolean toggleB = false;
 
 
+//// global X and Y positions for mouse
+float theX = 0;
+float theY = 0;
+
+//// global X and Y positions for touchgui
+float theOSCX = 0;
+float theOSCY = 0;
+
+
 float randomTouchState;
 float audioResponseState;
 
 int faderWait = 0;
 int resetPixelsWait = 0;
+
 int transitionOpacity = 0;
 
 OscMessage faderOut;
@@ -136,8 +139,9 @@ float faderOutFloat;
 
 
 Minim minim;
-
 AudioInput in;
+
+ 
 AudioRenderer radar;
 HeatmapRenderer heatmap;
 NoiseParticlesRenderer noiseParticles;
@@ -149,7 +153,8 @@ TuringRenderer turing;
 stainedglassRenderer stainedglass;
 LastCallRenderer lastcall;
 
-AudioRenderer[] visuals; 
+AudioRenderer[] visuals;
+
 
 
 int select =0;
@@ -169,29 +174,32 @@ XML[] presets;
 //////////////////////////////////////////////////
 void setup() {
   //size(canvasW, canvasH);
-  background(0);
-  size(300,80, P3D);
-
+  //fullScreen();
+  size(300,80, P2D);
+  //textureMode(NORMAL);
+  //background(0);
   frameRate(60);
-  colorMode(HSB, 255,255, 255,100);
+  colorMode(HSB, 255,255, 255,255);
   transition = get();
-  
+  //transition = createImage(0,0, ARGB);
  
   
   //////////// LOAD ALL PRESETS /////////////////////
   xml = loadXML("data/presets.xml");
   loadMasterPresets();
   
-  // setup player
+ 
+  //// setup player
   //minim = new Minim(this);
 
-  // get a line in from Minim, default bit depth is 16
+  //// get a line in from Minim, default bit depth is 16
   //in = minim.getLineIn(Minim.STEREO, 512);
 
 
   //in.addListener(visuals[select]);
-  /// visuals[select].setupSketch();
-   // setup renderers
+  // visuals[select].setupSketch();
+  
+  //// setup renderers
   noiseParticles = new NoiseParticlesRenderer(in);
   perlincolor = new PerlinColorRenderer(in);
   //radar = new RadarRenderer(in);
@@ -206,19 +214,16 @@ void setup() {
 //////////////////// set renderer array //////////////////////
   visuals = new AudioRenderer[] {
     fluidje, perlincolor, heatmap, noiseParticles, noisefield, fitzhugh, stainedglass, turing, lastcall 
-  };
-  
-  
-  
+  };  
   for(int i=0; i<visuals.length; i++){
     /// println("Loading sketch: " + i);
     visuals[i].setupSketch();
     
   }
-
   // activate first renderer in list
   select = 0;
   preset = 0;
+  
   if (pixEnable == true){
     setupPixelPusher();
   }
@@ -228,33 +233,25 @@ void setup() {
   if (dmxEnable == true){
     setupDMX();
   }
-    /*
-  if (syphonEnable == true)
-    setupSyphon();
-    */
+  if (apaEnable == true){
+    setupApa();
+  }
+  /*
+    if (hcsr04Enable == true){
+    setupHCSR04();
+  }
 
-  //setup oscp5
+  if (spoutEnable == true)
+    setupSpout();
+  }    
+  */
+    
+ ////setup oscp5/////
   oscP5 = new OscP5(this, 12000);
   oscP5B = new OscP5(this, 9001);
-
-  /* myRemoteLocation is a NetAddress. a NetAddress takes 2 parameters,
-   * an ip address and a port number. myRemoteLocation is used as parameter in
-   * oscP5.send() when sending osc packets to another computer, device, 
-   * application. usage see below. for testing purposes the listening port
-   * and the port of the remote location address are the same, hence you will
-   * send messages back to this sketch.
-   */
   myRemoteLocation = new NetAddress("255.255.255.255", 9000);
   stripApp = new NetAddress("127.0.0.1", 12001);
-
-  /* osc plug service
-   * osc messages with a specific address pattern can be automatically
-   * forwarded to a specific method of an object. in this example 
-   * a message with address pattern /test will be forwarded to a method
-   * test(). below the method test takes 2 arguments - 2 ints. therefore each
-   * message with address pattern /test and typetag ii will be forwarded to
-   * the method test(int theA, int theB)
-   */
+  
   oscP5.plug(this, "oscOnClick", "/luminous/xy");
   oscP5.plug(this, "oscOnClick2", "/luminous/xyB");
 
@@ -352,9 +349,6 @@ void setup() {
   oscP5.plug(this, "oscSave", "/luminous/save");
 }
 
-
-
-
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
 ///////// ALL OSC FUNCTIONS ///////////////////
@@ -378,7 +372,7 @@ void oscSketch1(float iA) {
 }
 void oscSketch2(float iA) {
   if (iA == 1) {
-    
+     transitionReset();
     //in.removeListener(visuals[select]);
     select = 1;
     preset = 0;
@@ -1065,6 +1059,7 @@ void oscEvent(OscMessage theOscMessage) {
     println("### addrpattern\t"+theOscMessage.addrPattern());
     println("### typetag\t"+theOscMessage.typetag());
   }
+
 }
 
 
@@ -1075,12 +1070,17 @@ void oscEvent(OscMessage theOscMessage) {
 //////////////////////////////////////////////////
 
 
-void reLoadSketch(){
-  /*
-   visuals[select].setInitVals();
-  */  
-   visuals[select].loadPresets();
+void transitionReset  () {
+   // colorMode(HSB, 255, 255, 255, 255);
+  transition = get();
+  transitionOpacity = 255;
   
+}
+
+void reLoadSketch(){
+  
+   //visuals[select].setInitVals();
+  visuals[select].loadPresets();
    /// visuals[select].switchColorMode();
    visuals[select].setupSketch();
    
@@ -1088,7 +1088,7 @@ void reLoadSketch(){
 
 void draw() {    
   
-  /// background(0);
+  //background(0);
   oscFaderSet();
   
   /// println("cur sketch : " + select);
@@ -1106,7 +1106,18 @@ void draw() {
   if (dmxEnable == true){
     drawDMX();
   }
-
+  if (apaEnable == true){
+    drawApa();
+  }
+  /*
+  if (hrsc04Enable == true){
+    drawHCSR04;
+  }
+  
+  if (spoutEnable == true){
+    drawSpout();
+  }
+  */
   if(showFramerate){
     println(frameRate);
   }
@@ -1117,19 +1128,15 @@ void transitionDraw() {
     //colorMode(HSB, 255, 255, 255, 255);
     //transition = get();
     transitionOpacity -= 1;
-    tint(255, transitionOpacity);
+    tint(255, 255,255,transitionOpacity);
     //float value = alpha(transition);
     image(transition, 0, 0);
-    tint(255, 255);
+    //tint(255, 255);
+    noTint();
   }
       //colorMode(HSB, 255, 255, 255,255);
 }
 
-void transitionReset  () {
-  transition = get();
-  transitionOpacity = 255;
-  
-}
 
 
 
@@ -1187,10 +1194,7 @@ void keyPressed() {
 void mouseClicked() {
   theX = mouseX;
   theY = mouseY;
-  visuals[select].onClick();
-  
-   
- 
+  visuals[select].onClick(); 
 }
 
 void mouseDragged() {

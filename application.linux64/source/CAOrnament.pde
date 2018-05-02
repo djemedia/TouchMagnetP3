@@ -1,3 +1,6 @@
+
+
+class stainedglassRenderer extends AudioRenderer {
 /* OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/18093*@* */
 /* !do not delete the line above, required for linking your tweak if you re-upload */
 /**
@@ -35,9 +38,6 @@
 
 
 
-class stainedglassRenderer extends AudioRenderer {
-
-
   public String skchName = "Stained Glass CA Ornament";
   int rotations;
   int w=canvasW;
@@ -65,7 +65,7 @@ class stainedglassRenderer extends AudioRenderer {
     //size(canvasW, canvasH);
     //colorMode(RGB,255);
     //noStroke();
-    colorMode(RGB, 255, 255, 255, 100);
+    colorMode(RGB, 255, 255, 255, 255);
     // the birth rules specify options for when a cell becomes active
     // the numbers refer to the amount of ACTIVE neighbour cells allowed,
     // their order is irrelevant
@@ -94,7 +94,7 @@ class stainedglassRenderer extends AudioRenderer {
     ca.setRule(rule);
 
     // create initial seed pattern
-    ca.drawBoxAt(0, height/2, 5, 1);
+    ca.drawBoxAt(width/2, height/2, 5, 1);
 
     // create a gradient for rendering/shading the CA
     grad=new ColorGradient();
@@ -130,7 +130,7 @@ class stainedglassRenderer extends AudioRenderer {
   }
 
   public void renderSketch() {
-    colorMode(RGB, 255);
+    //colorMode(RGB, 255, 255, 255, 255);
     loadPixels();
     if (mousePressed) {
       ca.drawBoxAt(mouseX, mouseY, 18, 4);
