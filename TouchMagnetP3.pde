@@ -72,7 +72,7 @@ boolean ready_to_go = true;
 int lastPosition;
 
 
-int canvasW = 300;
+int canvasW = 320;
 int canvasH = 80;
 
 int ledsW = 300;
@@ -82,9 +82,11 @@ int dmxUniv = 1;
 int[] ledPos;
 int[] artnetPos;
 int[] dmxPos;
+int[] apaPos;
 int thisLedPos;
 int thisartnetPos;
 int thisDmxPos;
+int thisApaPos;
 
 //these settings can be overridden by the data/presets.xml file
 int setcolorMode = 220;
@@ -175,11 +177,12 @@ XML[] presets;
 void setup() {
   //size(canvasW, canvasH);
   //fullScreen();
-  size(300,80, P2D);
+  size(320,80, P2D);
   //textureMode(NORMAL);
   //background(0);
   frameRate(60);
   colorMode(HSB, 255,255, 255,255);
+  
   transition = get();
   //transition = createImage(0,0, ARGB);
  

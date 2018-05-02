@@ -1,19 +1,9 @@
 class FluidRenderer extends AudioRenderer {
 
   /* OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/29833*@* */
-  /* !do not delete the line above, required for linking your tweak if you re-upload */
   /* 
    Circus Fluid
    Made by Jared "BlueThen" C. on June 5th, 2011.
-   Updated June 7th, 2011 (Commenting, refactoring, coloring changes)
-   
-   www.bluethen.com
-   www.twitter.com/BlueThen
-   www.openprocessing.org/portal/?userID=3044
-   www.hawkee.com/profile/37047/
-   
-   Feel free to email me feedback, criticism, advice, job offers at:
-   bluethen (@) gmail.com
    */
 
 
