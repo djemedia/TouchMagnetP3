@@ -205,8 +205,8 @@ class FitzhughRenderer extends AudioRenderer {
 
 //// if data is coming from mouse position, map from mouseX to 0 to 1 and mouseY to 1
    public void onClick() {
-        float cX = theOSCX * canvasW;
-        float cY = theOSCY * canvasH;
+        float cX = theX * canvasW;
+        float cY = theY * canvasH;
         oX = (int)cX;
         oY = (int)cY;
         
@@ -215,18 +215,19 @@ class FitzhughRenderer extends AudioRenderer {
         println("OX : " + oX);
         println("OY: " + oY);
         */
-        int brush = 16;
+        int brush = 8;
         
-        for (int i=oX - brush; i < brush + oX; ++i) {
-            for (int j=oY - brush; j < brush + oY; ++j) {
+        for (int i=oX - brush; i < brush + oX; i++) {
+            for (int j=oY - brush; j < brush + oY; j++) {
 
             try{
                 float  uVal = gridU[i][j]; 
       
-              gridU[i][j] = .5+random(-.01,.01);
+              gridU[i][j] = .25+random(-.01,.01);
               gridV[i][j] = .25+random(-.01,.01);  
             } catch(Exception e){
               println("exception on gridU array: " + e);
+              println(oX);
             }
           
          }

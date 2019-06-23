@@ -23,11 +23,37 @@ import oscP5.*;
 import netP5.*; 
 import ddf.minim.analysis.*; 
 
+import com.github.dlopuch.apa102_java_rpi.*; 
+import com.pi4j.concurrent.*; 
+import com.pi4j.io.gpio.*; 
+import com.pi4j.io.gpio.event.*; 
+import com.pi4j.io.gpio.exception.*; 
+import com.pi4j.io.gpio.impl.*; 
+import com.pi4j.io.gpio.tasks.impl.*; 
+import com.pi4j.io.gpio.trigger.*; 
+import com.pi4j.io.i2c.*; 
+import com.pi4j.io.i2c.impl.*; 
+import com.pi4j.io.serial.*; 
+import com.pi4j.io.serial.impl.*; 
+import com.pi4j.io.serial.tasks.*; 
+import com.pi4j.io.spi.impl.*; 
+import com.pi4j.io.spi.*; 
+import com.pi4j.io.w1.*; 
+import com.pi4j.io.wdt.impl.*; 
+import com.pi4j.io.wdt.*; 
+import com.pi4j.jni.*; 
+import com.pi4j.platform.*; 
+import com.pi4j.system.impl.*; 
+import com.pi4j.system.*; 
+import com.pi4j.temperature.*; 
+import com.pi4j.util.*; 
+import com.pi4j.wiringpi.*; 
 import toxi.sim.automata.*; 
 import toxi.sim.dla.*; 
 import toxi.sim.erosion.*; 
 import toxi.sim.fluids.*; 
 import toxi.sim.grayscott.*; 
+import com.github.dlopuch.apa102_java_rpi.examples.*; 
 import toxi.geom.*; 
 import toxi.geom.mesh.*; 
 import toxi.geom.mesh.subdiv.*; 
@@ -54,7 +80,7 @@ import java.io.IOException;
 
 public class TouchMagnetP3 extends PApplet {
 
-///////////////////////////
+ ///////////////////////////
 //////TouchMagnet///////////
 //////////////////////////////
 /* open source - GNU 3+ Public license
@@ -114,13 +140,6 @@ NetAddress stripApp;
 PGraphics canvas;
 PImage transition;
 
-boolean artnetEnable = false;
-boolean dmxEnable =false;
-boolean pixEnable = true;
-boolean apaEnable = false;
-boolean hcsr04Enable = false;
-//boolean spoutEnable = true;
-//boolean syphonEnable = false;
 
 boolean showFramerate = false;
 
@@ -222,6 +241,13 @@ XML xml;
 XML[] presets;
 
 
+boolean artnetEnable = false;
+boolean dmxEnable =false;
+boolean pixEnable = true;
+boolean apaEnable = true;
+boolean hcsr04Enable = false;
+//boolean spoutEnable = true;
+//boolean syphonEnable = false; 
 
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
@@ -234,7 +260,7 @@ public void setup() {
   
   //textureMode(NORMAL);
   //background(0);
-  frameRate(60);
+  //frameRate(60);
   colorMode(HSB, 255,255, 255,255);
   transition = get();
   //transition = createImage(0,0, ARGB);
@@ -269,7 +295,7 @@ public void setup() {
 
 //////////////////// set renderer array //////////////////////
   visuals = new AudioRenderer[] {
-    fluidje, perlincolor, heatmap, noiseParticles, noisefield, fitzhugh, stainedglass, turing, lastcall 
+    fluidje, stainedglass, heatmap, noiseParticles, turing, fitzhugh, perlincolor, noisefield, lastcall 
   };  
   for(int i=0; i<visuals.length; i++){
     /// println("Loading sketch: " + i);
@@ -305,7 +331,7 @@ public void setup() {
  ////setup oscp5/////
   oscP5 = new OscP5(this, 12000);
   oscP5B = new OscP5(this, 9001);
-  myRemoteLocation = new NetAddress("255.255.255.255", 9000);
+  myRemoteLocation = new NetAddress("192.168.3.1", 9000);
   stripApp = new NetAddress("127.0.0.1", 12001);
   
   oscP5.plug(this, "oscOnClick", "/luminous/xy");
@@ -430,7 +456,7 @@ public void oscSketch2(float iA) {
   if (iA == 1) {
      transitionReset();
     //in.removeListener(visuals[select]);
-    select = 1;
+    select = 6;
     preset = 0;
     //in.addListener(visuals[select]);
     /// visuals[select].setup();
@@ -465,7 +491,7 @@ public void oscSketch5(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 4;
+    select = 7;
     preset = 0;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
@@ -490,7 +516,7 @@ public void oscSketch7(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 6;
+    select = 1;
     preset = 0;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
@@ -502,7 +528,7 @@ public void oscSketch8(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 6;
+    select = 1;
     preset = 1;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
@@ -513,7 +539,7 @@ public void oscSketch9(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 6;
+    select = 1;
     preset = 3;
     //in.addListener(visuals[select]);
     reLoadSketch();
@@ -536,7 +562,7 @@ public void oscSketch11(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 7;
+    select = 4;
     preset = 2;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
@@ -547,7 +573,7 @@ public void oscSketch12(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 7;
+    select = 4;
     preset = 0;
     //in.addListener(visuals[select]);
     ////visuals[select].setup();
@@ -580,7 +606,7 @@ public void oscSketch15(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 4;
+    select = 7;
     preset = 1;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
@@ -605,7 +631,7 @@ public void oscSketch17(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 4;
+    select = 7;
     preset = 2;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
@@ -617,7 +643,7 @@ public void oscSketch18(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 1;
+    select = 6;
     preset = 2;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
@@ -630,7 +656,7 @@ public void oscSketch19(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 1;
+    select = 6;
     preset = 1;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
@@ -1239,7 +1265,7 @@ public void keyPressed() {
     //in.addListener(visuals[select]);
     /// visuals[select].setup();
   } else {
-    if (select == 7)
+    if (select == 4)
     {
       turing.keyPressed();
     }
@@ -1248,8 +1274,14 @@ public void keyPressed() {
 
 
 public void mouseClicked() {
-  theX = mouseX;
-  theY = mouseY;
+  if(select == 5 || select == 3){
+    theOSCX = map(mouseX, 0, canvasW, 0, 1);
+    theOSCY = map(mouseY, 0, canvasH, 0, 1);
+
+  } else {
+      theX = mouseX;
+      theY = mouseY;
+  }
   visuals[select].onClick(); 
 }
 
@@ -1444,19 +1476,9 @@ class stainedglassRenderer extends AudioRenderer {
 class FluidRenderer extends AudioRenderer {
 
   /* OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/29833*@* */
-  /* !do not delete the line above, required for linking your tweak if you re-upload */
   /* 
    Circus Fluid
    Made by Jared "BlueThen" C. on June 5th, 2011.
-   Updated June 7th, 2011 (Commenting, refactoring, coloring changes)
-   
-   www.bluethen.com
-   www.twitter.com/BlueThen
-   www.openprocessing.org/portal/?userID=3044
-   www.hawkee.com/profile/37047/
-   
-   Feel free to email me feedback, criticism, advice, job offers at:
-   bluethen (@) gmail.com
    */
 
 
@@ -1587,7 +1609,7 @@ class FluidRenderer extends AudioRenderer {
     float cY = theY * canvasH;
     int oX = (int)cX;
     int oY = (int)cY;
-    float force = 50000;
+    float force = 30000;
     if (((int)(cX / grid.cellSize) < grid.density.length) && ((int)(cY / grid.cellSize) < grid.density[0].length) &&
       ((int)(cX / grid.cellSize) > 0) && ((int)(cY / grid.cellSize) > 0)) {
       grid.velocity[(int)(cX / grid.cellSize)][(int)(cY / grid.cellSize)] += force;
@@ -1862,28 +1884,28 @@ class LastCallRenderer extends AudioRenderer {
   int theAlpha = 255;
   
   /// width, height, x and y for all boxes
-  float boxW0 = 1280;
-  float boxH0 = 255;
+  float boxW0 = 320;
+  float boxH0 = 80;
   float boxX0 = 0;
   float boxY0 = 0;
 
   //behind bar
-  float boxW1 = 600;
+  float boxW1 = 300;
   float boxH1 = 20;
-  float boxX1 = 260;
-  float boxY1 = 0;
+  float boxX1 = 0;
+  float boxY1 = 20;
   
   //soffits
-  float boxW2 = 800;
-  float boxH2 = 180;
-  float boxX2 = 420;
+  float boxW2 = 600;
+  float boxH2 = 20;
+  float boxX2 = 0;
   float boxY2 = 40;
   
   //long wall
-  float boxW3 = 800;
+  float boxW3 = 300;
   float boxH3 = 20;
-  float boxX3 = 420;
-  float boxY3 = 230;
+  float boxX3 = 0;
+  float boxY3 = 60;
   
   ColorBox theBox;
   
@@ -1913,7 +1935,6 @@ class LastCallRenderer extends AudioRenderer {
       BoxArray.clear();
     }
     println("SETTING UPr" + skchName );
-    //getSketchPresets("lastCall", true);
     
     /// initialize our box array
     for(int i=0; i<=numBoxes; i++){
@@ -2023,12 +2044,7 @@ class ColorBox {
     boxX = tx;
     boxY = ty;
   }
-  
-  /// dont really need this
-  public void initBox(){
     
-  }
-  
   public void drawBox(){
     noStroke();
     fill(theHue, 255,255);
@@ -2043,42 +2059,26 @@ class ColorBox {
 //import com.github.dlopuch.apa102_java_rpi.Apa102Output;
 //import com.pi4j.io.spi.SpiChannel;
 //import com.pi4j.io.spi.SpiDevice;
-Client apaClient;
+//Client apaClient;
 float apaRed, apaGreen, apaBlue;
-int num_LED = 50;
-byte[] apaColor = new byte[num_LED*4];
-
-
+int num_LEDS = 60;
+byte[] apaColor;
+Apa102Output strip;
+//PImage APAimg;
 
 public void setupApa() {
-  /*
   
-//python socket  
-  apaClient = new Client(this, "127.0.0.1", 5211)
-//////////////////////////////////////////////////  
-
-  //////////////////////////////////////////////eventual java port
-  //public static final int NUM_LEDS = 32;
-  
-  //static public void main(String args[]) throws Exception {
-//////////////////////////////////////////////////////////////////////////
-Apa102Output.initSpi();
-// Could also init with non-defaults using #initSpi(SpiChannel spiChannel, int spiSpeed, SpiMode spiMode)
-// Default speed is 7.8 Mhz
-
-Apa102Output strip = new Apa102Output(NUM_LEDS);
-
-byte[] ledRGBs = new byte[ NUM_LEDS * 3 ];
-
-while (true) {
-  // <fill in your ledRGBs buffer with your pattern... eg examples/RainbowStrip.java>
-
-  strip.writeStrip(ledRGBs);
-}
-
-    Apa102Output.initSpi();
-    Apa102Output output = new Apa102Output(NUM_LEDS);
-
+ // APAimg = new PImage(num_LEDS, 1, PApplet.RGB);
+  try {
+          Apa102Output.initSpi();
+        } catch (IOException e) {
+          throw new RuntimeException("failure to init", e);
+        }
+    
+    
+    strip = new Apa102Output(num_LEDS);
+    apaColor = new byte[num_LEDS*3];
+ /*
     byte[] leds = new byte[ NUM_LEDS * 3 ];
     final boolean[] loop = new boolean[] { true };
 
@@ -2134,36 +2134,29 @@ while (true) {
 
 
 public void drawApa() {
-  /*
-  byte[] data = { (byte) 0, (byte) 0, (byte) 127, (byte) 0);
-  //printIn(data);
+  int sketchX = 0;
+  int sketchY = 0;
   
-  for (int i = 10; i<=290; i +=10){
-  color pixColor = get(i,i)
+  for (int i = 0; i<= num_LEDS-1; i++){
+   //APAimg.set(i % APAimg.width, i / APAimg.width, get(sketchX + (i % width), sketchY + (i / width)));
+    //sketchX++;
+  int pixColor = get(i*5,canvasH/2);
   apaRed = red(pixColor);
   apaGreen = green(pixColor);
   apaBlue = blue(pixColor);
-  apaColor[i-100/10*4-3+0] = (byte) apaRed;
-  apaColor[i-100/10*4-3+1] = (byte) apaGreen;
-  apaColor[i-100/10*4-3+2] = (byte) apaBlue;
-  apaColor[i-100/10*4-3+2] = (byte) 0;
-  } 
-  apaClient.write(apaColor);
-  /*for (int i=0; i<leds.length; i += 3) {
-        RainbowUtils.fillRgb(leds, i, pixelPhi);
-        pixelPhi += pixelPhiIncrement;
-      }
-      int colorsI = 0;
-    for (int i=0; i<outputRgbBuffer.length; ) {
-      outputRgbBuffer[ i++ ] = LXColor.red(   colors[ colorsI ]);
-      outputRgbBuffer[ i++ ] = LXColor.green( colors[ colorsI ]);
-      outputRgbBuffer[ i++ ] = LXColor.blue(  colors[ colorsI ]);
-      colorsI++;
-    }
-      
-      
- // output.writeStrip(leds);
- */
+  apaColor[i*3+0] = (byte) apaRed;
+  apaColor[i*3+1] = (byte) apaGreen;
+  apaColor[i*3+2] = (byte) apaBlue;
+  //apaColor[i-100/10*4-3+2] = (byte) 0;
+  //} 
+   try {
+          strip.writeStrip(apaColor);
+          //strip.writeStrip(APAimg.pixels); //needs to be converted to (int[]) to work
+       
+      } catch (IOException e) {
+          throw new RuntimeException("ERROR writing strip", e);
+        }
+  }
 }
 ArtnetP5 artnet;
 PImage artnetimg;
@@ -2539,8 +2532,8 @@ class FitzhughRenderer extends AudioRenderer {
 
 //// if data is coming from mouse position, map from mouseX to 0 to 1 and mouseY to 1
    public void onClick() {
-        float cX = theOSCX * canvasW;
-        float cY = theOSCY * canvasH;
+        float cX = theX * canvasW;
+        float cY = theY * canvasH;
         oX = (int)cX;
         oY = (int)cY;
         
@@ -2549,18 +2542,19 @@ class FitzhughRenderer extends AudioRenderer {
         println("OX : " + oX);
         println("OY: " + oY);
         */
-        int brush = 16;
+        int brush = 8;
         
-        for (int i=oX - brush; i < brush + oX; ++i) {
-            for (int j=oY - brush; j < brush + oY; ++j) {
+        for (int i=oX - brush; i < brush + oX; i++) {
+            for (int j=oY - brush; j < brush + oY; j++) {
 
             try{
                 float  uVal = gridU[i][j]; 
       
-              gridU[i][j] = .5f+random(-.01f,.01f);
+              gridU[i][j] = .25f+random(-.01f,.01f);
               gridV[i][j] = .25f+random(-.01f,.01f);  
             } catch(Exception e){
               println("exception on gridU array: " + e);
+              println(oX);
             }
           
          }
@@ -2702,7 +2696,7 @@ class HeatmapRenderer extends AudioRenderer {
     for (int i = 0; i < canvasW; ++i) {
       for (int j = 0; j < canvasH; ++j) {
         int thisColor = g.getGradient(heatmap[index][i][j]);
-        //thisColor = color(red(thisColor) - 50, green(thisColor) - 50, blue(thisColor) - 50 ); //master fade
+        //thisColor = color(red(thisColor) - vfader3, green(thisColor) - dimmer1, blue(thisColor) - dimmer1 ); //master fade
 
         set(i, j, thisColor);
       }
@@ -2754,9 +2748,9 @@ class HeatmapRenderer extends AudioRenderer {
     int oX = (int)cX;
     int oY = (int)cY;
     if (toggle == true)
-      apply_heat(oX, oY, 60, .10f);
+      apply_heat(oX, oY, 30, .05f);
     if (toggle == false)
-      apply_heat(oX, oY, 60, -.10f);
+      apply_heat(oX, oY, 30, -.05f);
   }
   /*
   public void heattoggle(float oscToggle) {
@@ -3342,18 +3336,112 @@ public void mapper() {
 
   int internalX = 0;
   int internalY = 0;
-  //canvasW = 300;
-  //canvasH = 64;
-  //ledsW = 240;
-  //ledsH = 2; 
+  int s=1;
 
-  //  int s;
-  //  boolean up;
- boolean up = false;
- boolean down = false;
- boolean left = false;
- boolean right = false;
-/*
+  boolean up = false;
+  boolean down = false;
+  boolean left = false;
+  boolean right = false;
+//
+
+//current mapper
+   internalX = 300;
+   internalY = 8;//starting point on canvas
+   
+   for (int x = 0; x < 300; x++) {//start and number of pixels on strip
+   //v strip #
+   ledPos[xyPixels(x, 0, ledsW)] = xyPixels(internalX, internalY, canvasW);
+   internalX--;//direction
+   }
+ 
+
+   internalX = 300;
+   internalY = 16;//starting point on canvas
+   
+   for (int x = 0; x < 300; x++) {//start and number of pixels on strip
+   //v strip #
+   ledPos[xyPixels(x, 1, ledsW)] = xyPixels(internalX, internalY, canvasW);
+   internalX--;//direction
+   }
+   
+  
+   internalX = 10;
+   internalY = 24;//starting point on canvas
+   
+   for (int x = 0; x < 300; x++) {//start and number of pixels on strip
+   //v strip #
+   ledPos[xyPixels(x, 2, ledsW)] = xyPixels(internalX, internalY, canvasW);
+   internalX++;
+   }
+   
+   internalX = 300;
+   internalY = 32;//starting point on canvas
+   
+   for (int x = 0; x < 300; x++) {//start and number of pixels on strip
+   //v strip #
+   ledPos[xyPixels(x, 3, ledsW)] = xyPixels(internalX, internalY, canvasW);
+   //internalX++;//direction
+   internalX--;
+   }
+
+    internalX = 10;
+   internalY = 48;//starting point on canvas
+   
+   for (int x = 0; x < 300; x++) {//start and number of pixels on strip
+   //v strip #
+   ledPos[xyPixels(x, 4, ledsW)] = xyPixels(internalX, internalY, canvasW);
+   //internalX++;//direction
+   internalX++;
+   }
+   
+   internalX = 10;
+   internalY = 50;//starting point on canvas
+   
+   for (int x = 0; x < 300; x++) {//start and number of pixels on strip
+   //v strip #
+   ledPos[xyPixels(x, 5, ledsW)] = xyPixels(internalX, internalY, canvasW);
+   //internalX++;//direction
+   internalX++;
+   }
+
+   internalX = 10;
+   internalY = 8;//starting point on canvas
+   
+  //grid mapper
+  for (int x = 0; x < 300; x++) {//start and number of pixels on strip
+
+    //v strip #
+    ledPos[xyPixels(x, 6, ledsW)] = xyPixels(internalX, internalY, canvasW);
+    println(internalX + " " + internalY + " " + s);
+    //make grid
+    s++;//going up or down
+    if (s > 8) {//height in pixels
+      s = 1;
+      internalX += 8;//distance for x
+      up = !up;
+      println("flipY" + up);
+    } else {
+      if (up == true) {
+        internalY -= 8;//distance for y
+      } else {
+        internalY += 8;
+      }
+    }
+  }
+  
+
+   internalX = 0;
+   internalY = 64;//starting point on canvas
+   
+   for (int x = 0; x < 300; x++) {//start and number of pixels on strip
+   //v strip #
+   ledPos[xyPixels(x,7, ledsW)] = xyPixels(internalX, internalY, canvasW);
+   //internalX++;//direction
+   internalX++;
+   }
+
+/*future mapper
+//
 // mapPixels(internalX, internalY, startPixel, endPixel, stripno, direction);
 
 for (int x = startPixel; x < endPixel; x++) {//start and number of pixels on strip
@@ -3373,827 +3461,11 @@ if(down == true){
   if(right == true){
     internalX++;
   }
-  */
-
-   internalX = 280;
-   internalY = 40;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 0, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX--;//direction
-   }
- 
-
-   internalX = 280;
-   internalY = 40;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 1, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX--;//direction
-   }
-//chamged for testing  
-   internalX = 440;
-   internalY = 250;//starting point on canvas
-   
-   for (int x = 0; x < 119; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 2, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalY-= 2;
-   }
-   internalX = 640;
-   internalY = 40;//starting point on canvas
-   
-   for (int x = 120; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 2, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX-= 4;
-   }
-
-    internalX = 10;
-   internalY = 40;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 2, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX++;
-   }
-   
-   internalX = 500;
-   internalY = 40;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 3, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX++;
-   }
-
-   internalX = 290;
-   internalY = 19;//starting point on canvas
-   
-   for (int x = 0; x < 288; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 4, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
 
 
-   internalX = 290;
-   internalY = 11;//starting point on canvas
-   
-   for (int x = 0; x < 288; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 5, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-
-  
+*/
 
 
-   internalX = 240;
-   internalY = 4;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 6, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-   
-   internalX = 240;
-   internalY = 4;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 7, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-
-/*
-
-//group2
-//controller1
-//soffit by door
-   internalX = 1160;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 0; x < 80; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 16, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX++;//direction
-   }
-   
-   internalX = 1260;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 81; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 16, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalY--;//direction
-   }
-//soffit 2 by bar
-   internalX = 1100;
-   internalY = 100;//starting point on canvas
-   
-   for (int x = 0; x < 60; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 17, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalY--;//direction
-   }
-   
-    internalX = 1100;
-   internalY = 40;//starting point on canvas
-   
-   for (int x = 61; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 17, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX--;//direction
-   }
-   
-//soffit 2 short
-  
-    internalX = 1000;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 0; x < 100; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 18, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX++;
-   }
-    internalX = 1100;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 101; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 18, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalY--;
-   }
-   
-//soffit 2 far side
-   internalX = 1020;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 0; x < 80; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 19, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-   
-    internalX = 940;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 81; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 19, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalY--;
-   }
-//soffit 1 far side
-   internalX = 1100;
-   internalY = 210;//starting point on canvas
-   
-   for (int x = 0; x < 150; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 20, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalY--;
-   }
-
- internalX = 1100;
-   internalY = 100;//starting point on canvas
-   
-   for (int x = 150; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 20, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX++;
-   }
-//none
-   internalX = 240;
-   internalY = 11;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 21, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-  
-//blank
-
-   internalX = 240;
-   internalY = 4;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 22, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-   
-   internalX = 240;
-   internalY = 4;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 23, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-
-//controller 2
-//blank
-   internalX = 240;
-   internalY = 18;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 24, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX--;//direction
-   }
-   
-//soffit 3 long strip by door
-   internalX = 840;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 0; x < 80; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 25, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX++;//direction
-   }
-   
-   internalX = 920;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 81; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 25, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalY--;//direction
-   }
-//soffit 3 short
-   internalX = 760;
-   internalY = 120;//starting point on canvas
-   
-   for (int x = 0; x < 100; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 26, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalY++;
-   }
-   internalX = 760;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 101; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 26, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX++;
-   }
-//soffit 4 long by bar
-   internalX = 740;
-   internalY = 100;//starting point on canvas
-   
-   for (int x = 0; x < 60; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 27, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalY--;
-   }
-   internalX = 740;
-   internalY = 40;//starting point on canvas
-   
-   for (int x = 61; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 27, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//soffit 4 short
-   internalX = 740;
-   internalY = 100;//starting point on canvas
-   
-   for (int x = 0; x < 80; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 28, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalY++;
-   }
-   internalX = 740;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 81; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 28, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//soffit 3 long by bar
-   internalX = 760;
-   internalY = 120;//starting point on canvas
-   
-   for (int x = 0; x < 80; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 29, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalY--;
-   }
-  internalX = 760;
-   internalY = 40;//starting point on canvas
-   
-   for (int x = 81; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 29, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX++;
-   }
-  
-
-//soffit 4 long outside
-   internalX = 660;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 0; x < 80; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 30, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX++;
-   }
-   internalX = 580;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 81; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 30, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalY--;
-   }
-//blank
-   internalX = 240;
-   internalY = 4;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 31, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-   
-//group2 controller3   
-//soffit 5 short
-   internalX = 560;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 0; x < 60; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 32, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX--;//direction
-   }
-   internalX = 500;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 61; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 32, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalY--;//direction
-   }
-//blank
-   internalX = 240;
-   internalY = 11;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 33, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX--;//direction
-   }
-//soffit 5 long towards bar
-   internalX = 420;
-   internalY = 120;//starting point on canvas
-  
-   for (int x = 0; x < 80; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 34, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalY--;
-   }
-   internalX = 420;
-   internalY = 40;//starting point on canvas
-  
-   for (int x = 81; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 34, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX++;
-   }
-//soffit 5 long inside
-   internalX = 560;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 0; x < 60; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 35, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX++;
-   }
-   internalX = 580;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 61; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 35, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalY--;
-   }
-//blank
-   internalX = 240;
-   internalY = 19;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 36, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//blank
-
-   internalX = 240;
-   internalY = 11;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 37, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-
-//blank
-   internalX = 240;
-   internalY = 4;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 38, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//
-   internalX = 240;
-   internalY = 4;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 39, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-   
-//group 2 controller4
-//
-   internalX = 240;
-   internalY = 18;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 40, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX--;//direction
-   }
-//
-   internalX = 240;
-   internalY = 11;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 41, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX--;//direction
-   }
-//
-   internalX = 240;
-   internalY = 11;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 42, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//
-   internalX = 240;
-   internalY = 15;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 43, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//far banquette short
-   internalX = 240;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 44, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-
-//far banquette long
-   internalX = 210;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 0; x < 100; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 45, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-   internalX = 50;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 101; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 45, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalY--;
-   }
-//
-  
-//banquette close
-   internalX = 360;
-   internalY = 220;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 46, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX++;
-   }
-//  banquette mid
-   internalX = 360;
-   internalY = 200;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 47, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-
-//group2 controller5
-//blank
-   internalX = 240;
-   internalY = 18;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 48, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX--;//direction
-   }
-//bubble lounge bar
-   internalX = 410;
-   internalY = 30;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 49, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX--;//direction
-   }
-//front bar
-   internalX = 560;
-   internalY = 30;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 50, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX++;
-   }
-//front bar short
-   internalX = 460;
-   internalY = 30;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 51, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX++;
-   }
-//blank
-   internalX = 240;
-   internalY = 19;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 52, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//
-   internalX = 240;
-   internalY = 11;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 53, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//blank
-   internalX = 240;
-   internalY = 4;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 54, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-
-//blank
-   internalX = 240;
-   internalY = 4;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 55, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-   
-//controller 6  
-//back long banquette
-   internalX = 240;
-   internalY = 10;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 56, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX--;//direction
-   }
-//bubble lounge bar back
-   internalX = 300;
-   internalY = 10;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 57, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX++;//direction
-   }
-//blank
-   internalX = 240;
-   internalY = 11;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 58, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//blank
-   internalX = 240;
-   internalY = 15;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 59, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//blank
-   internalX = 240;
-   internalY = 19;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 60, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//blank
-
-   internalX = 240;
-   internalY = 11;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 61, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//
-  
-
-
-   internalX = 240;
-   internalY = 4;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 62, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//   blank
-   internalX = 240;
-   internalY = 4;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 63, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-   
-//bar back left
-   internalX = 540;
-   internalY = 12;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 64, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX--;//direction
-   }
-//bar back right
-   internalX = 780;
-   internalY = 12;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 65, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   internalX++;//direction
-   }
-//bar back mid left
-   internalX = 640;
-   internalY = 12;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 66, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//bar back mid right
-   internalX = 640;
-   internalY = 12;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 67, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX++;
-   }
-//bar cove long right
-   internalX = 560;
-   internalY = 6;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 68, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX++;
-   }
-//bar cove short left
-
-   internalX = 560;
-   internalY = 6;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 69, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//blank
-   internalX = 240;
-   internalY = 4;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 70, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-//blank   
-   internalX = 240;
-   internalY = 4;//starting point on canvas
-   
-   for (int x = 0; x < 240; x++) {//start and number of pixels on strip
-   //v strip #
-   ledPos[xyPixels(x, 71, ledsW)] = xyPixels(internalX, internalY, canvasW);
-   //internalX++;//direction
-   internalX--;
-   }
-   */
 }
 
 
@@ -4246,32 +3518,17 @@ public void drawPixelPusher() {
 
         thisLedPos = ledPos[xyPixels(x, y, ledsW)];
 
-        //  int lX = xPixels(thisLedPos, ledsW);
-        //  int lY = yPixels(thisLedPos, ledsW);
-        //   pixels[xyPixels(x,y,canvasW)] = color(r, g, b);
         int c = pixels[thisLedPos];
-
-
-         
+        
          c = color(hue(c), saturation(c), brightness(c) - dimmer1); 
          
        //  if (y >= 16 && y <= 71) //upstairs
         // c = color(hue(c), saturation(c), brightness(c) - dimmer2); 
-         
-         //if (y >= 40 && y <= 47) //downstairs
-         //c = color(hue(c), saturation(c), brightness(c) - dimmer3); 
-         
-         //if (y >= 16 && y <=39 ) //soffits
-         //c = color(hue(c), saturation(c), brightness(c) - dimmer4);
-/*
-         if (y >= 8 && y <= 9) //kitchen seats
-         c = color(hue(c), saturation(c), brightness(c) - dimmer5);
 
-         if (y >= 2 && y <= 4 && x >= 235) // black out unused ends of strips
-           c = color(0,0,0);
-         */
-         
-         //float adjustedGreen = green(c) * .5;
+       //  if (y <= 5 && x >= 240){ // black out unused ends of strips
+        //  c = color(0,0,0);
+         //}
+          //float adjustedGreen = green(c) * .5;
          //float adjustedBlue = blue(c) * .125;
          
         // Pixel p = new Pixel((byte)red(c), (byte)adjustedGreen, (byte)adjustedBlue);
@@ -4301,7 +3558,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
   public String skchName = "Noise Particles";
   float noiseScale = 0.005f;
   float noiseZ = .8f;
-  int particlesDensity = 4;
+  int particlesDensity = 8;
   int particleMargin = 8;  
   Particle[] particles;
   int[] currFrame;
@@ -4440,7 +3697,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
   public void onClick() {
     
      //println("NOISE PARTICLES: mouse" + theX + " " + theY + " osx: " + theOSCX + " " + theOSCY);
-    int brush = 4;
+    int brush = 6;
     int setContrastModeF = (int)map(vFader4, 0, 255, 0, 60);
 
     float cX = theOSCX * canvasW;
@@ -4510,7 +3767,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
     public void drawParticles() {
       if ((x >= 0) && (x < width-1) && (y >= 0) && (y < height-1)) {
         int currC = currFrame[(int)x + ((int)y)*width];
-        currFrame[(int)x + ((int)y)*width] = blendColor(c, currC, OVERLAY);
+        currFrame[(int)x + ((int)y)*width] = blendColor(c, currC, SOFT_LIGHT);
       }
     }
   }
@@ -4889,7 +4146,7 @@ public String skchName = "Perlin color";
         set(x, y, color(setcolorModeF-setContrastModeF*v, setSatModeF, (v+v)*setBrightModeF));
       }
     }
-    //colorMode(HSB, 255, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255, 255);
 
   }
   

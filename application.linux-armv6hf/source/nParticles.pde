@@ -8,7 +8,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
   public String skchName = "Noise Particles";
   float noiseScale = 0.005;
   float noiseZ = .8;
-  int particlesDensity = 4;
+  int particlesDensity = 8;
   int particleMargin = 8;  
   Particle[] particles;
   int[] currFrame;
@@ -147,7 +147,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
   public void onClick() {
     
      //println("NOISE PARTICLES: mouse" + theX + " " + theY + " osx: " + theOSCX + " " + theOSCY);
-    int brush = 4;
+    int brush = 6;
     int setContrastModeF = (int)map(vFader4, 0, 255, 0, 60);
 
     float cX = theOSCX * canvasW;
@@ -217,7 +217,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
     public void drawParticles() {
       if ((x >= 0) && (x < width-1) && (y >= 0) && (y < height-1)) {
         int currC = currFrame[(int)x + ((int)y)*width];
-        currFrame[(int)x + ((int)y)*width] = blendColor(c, currC, OVERLAY);
+        currFrame[(int)x + ((int)y)*width] = blendColor(c, currC, SOFT_LIGHT);
       }
     }
   }

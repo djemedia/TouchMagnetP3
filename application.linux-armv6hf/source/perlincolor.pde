@@ -83,7 +83,7 @@ public String skchName = "Perlin color";
         set(x, y, color(setcolorModeF-setContrastModeF*v, setSatModeF, (v+v)*setBrightModeF));
       }
     }
-    //colorMode(HSB, 255, 255, 255, 255);
+    colorMode(HSB, 255, 255, 255, 255);
 
   }
   

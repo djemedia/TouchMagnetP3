@@ -3,7 +3,7 @@
 //import com.pi4j.io.spi.SpiDevice;
 //Client apaClient;
 float apaRed, apaGreen, apaBlue;
-int num_LEDS = 70;
+int num_LEDS = 60;
 byte[] apaColor;
 Apa102Output strip;
 //PImage APAimg;
@@ -82,7 +82,7 @@ public void drawApa() {
   for (int i = 0; i<= num_LEDS-1; i++){
    //APAimg.set(i % APAimg.width, i / APAimg.width, get(sketchX + (i % width), sketchY + (i / width)));
     //sketchX++;
-  color pixColor = get(i,i);
+  color pixColor = get(i*5,canvasH/2);
   apaRed = red(pixColor);
   apaGreen = green(pixColor);
   apaBlue = blue(pixColor);

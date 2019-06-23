@@ -58,13 +58,6 @@ NetAddress stripApp;
 PGraphics canvas;
 PImage transition;
 
-boolean artnetEnable = false;
-boolean dmxEnable =false;
-boolean pixEnable = true;
-boolean apaEnable = true;
-boolean hcsr04Enable = false;
-//boolean spoutEnable = true;
-//boolean syphonEnable = false;
 
 boolean showFramerate = false;
 
@@ -73,10 +66,10 @@ int lastPosition;
 
 
 int canvasW = 300;
-int canvasH = 80;
+int canvasH = 60;
 
 int ledsW = 300;
-int ledsH = 72;
+int ledsH = 60;
 int dmxAddr = 100;
 int dmxUniv = 1;
 int[] ledPos;
@@ -166,6 +159,13 @@ XML xml;
 XML[] presets;
 
 
+boolean artnetEnable = false;
+boolean dmxEnable =false;
+boolean pixEnable = false;
+boolean apaEnable = true;
+boolean hcsr04Enable = false;
+//boolean spoutEnable = true;
+//boolean syphonEnable = false; 
 
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
@@ -175,10 +175,10 @@ XML[] presets;
 void setup() {
   //size(canvasW, canvasH);
   //fullScreen();
-  size(300,80, P2D);
+  size(300,60, P2D);
   //textureMode(NORMAL);
   //background(0);
-  frameRate(60);
+  //frameRate(30);
   colorMode(HSB, 255,255, 255,255);
   transition = get();
   //transition = createImage(0,0, ARGB);
@@ -213,7 +213,7 @@ void setup() {
 
 //////////////////// set renderer array //////////////////////
   visuals = new AudioRenderer[] {
-    fluidje, perlincolor, heatmap, noiseParticles, noisefield, fitzhugh, stainedglass, turing, lastcall 
+    fluidje, stainedglass, heatmap, noiseParticles, turing, fitzhugh, perlincolor, noisefield, lastcall 
   };  
   for(int i=0; i<visuals.length; i++){
     /// println("Loading sketch: " + i);
@@ -249,7 +249,7 @@ void setup() {
  ////setup oscp5/////
   oscP5 = new OscP5(this, 12000);
   oscP5B = new OscP5(this, 9001);
-  myRemoteLocation = new NetAddress("255.255.255.255", 9000);
+  myRemoteLocation = new NetAddress("192.168.3.1", 9000);
   stripApp = new NetAddress("127.0.0.1", 12001);
   
   oscP5.plug(this, "oscOnClick", "/luminous/xy");
@@ -374,7 +374,7 @@ void oscSketch2(float iA) {
   if (iA == 1) {
      transitionReset();
     //in.removeListener(visuals[select]);
-    select = 1;
+    select = 6;
     preset = 0;
     //in.addListener(visuals[select]);
     /// visuals[select].setup();
@@ -409,7 +409,7 @@ void oscSketch5(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 4;
+    select = 7;
     preset = 0;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
@@ -434,7 +434,7 @@ void oscSketch7(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 6;
+    select = 1;
     preset = 0;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
@@ -446,7 +446,7 @@ void oscSketch8(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 6;
+    select = 1;
     preset = 1;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
@@ -457,7 +457,7 @@ void oscSketch9(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 6;
+    select = 1;
     preset = 3;
     //in.addListener(visuals[select]);
     reLoadSketch();
@@ -480,7 +480,7 @@ void oscSketch11(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 7;
+    select = 4;
     preset = 2;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
@@ -491,7 +491,7 @@ void oscSketch12(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 7;
+    select = 4;
     preset = 0;
     //in.addListener(visuals[select]);
     ////visuals[select].setup();
@@ -524,7 +524,7 @@ void oscSketch15(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 4;
+    select = 7;
     preset = 1;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
@@ -549,7 +549,7 @@ void oscSketch17(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 4;
+    select = 7;
     preset = 2;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
@@ -561,7 +561,7 @@ void oscSketch18(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 1;
+    select = 6;
     preset = 2;
     //in.addListener(visuals[select]);
     ///visuals[select].setup();
@@ -574,7 +574,7 @@ void oscSketch19(float iA) {
   if (iA == 1) {
     transitionReset();
     //in.removeListener(visuals[select]);
-    select = 1;
+    select = 6;
     preset = 1;
     //in.addListener(visuals[select]);
     //visuals[select].setup();
@@ -1183,7 +1183,7 @@ void keyPressed() {
     //in.addListener(visuals[select]);
     /// visuals[select].setup();
   } else {
-    if (select == 7)
+    if (select == 4)
     {
       turing.keyPressed();
     }
@@ -1192,8 +1192,14 @@ void keyPressed() {
 
 
 void mouseClicked() {
-  theX = mouseX;
-  theY = mouseY;
+  if(select == 5 || select == 3){
+    theOSCX = map(mouseX, 0, canvasW, 0, 1);
+    theOSCY = map(mouseY, 0, canvasH, 0, 1);
+
+  } else {
+      theX = mouseX;
+      theY = mouseY;
+  }
   visuals[select].onClick(); 
 }
 

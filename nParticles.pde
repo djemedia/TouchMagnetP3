@@ -8,7 +8,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
   public String skchName = "Noise Particles";
   float noiseScale = 0.005;
   float noiseZ = .8;
-  int particlesDensity = 4;
+  int particlesDensity = 8;
   int particleMargin = 8;  
   Particle[] particles;
   int[] currFrame;
@@ -83,7 +83,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
       noiseZ += 2*noiseScale;
 
       imgProc.blur(prevFrame, tempFrame, width, height);
-      imgProc.scaleBrightness(tempFrame, tempFrame, width, height, 0.2);  
+      imgProc.scaleBrightness(tempFrame, tempFrame, width, height, .5);  
       arraycopy(tempFrame, currFrame);
       for (int i=0; i<particles.length; i++) {
         try{
@@ -92,7 +92,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
             particles[i].drawParticles();
           }
         } catch(Exception e){
-          println("error drawing noise field particles: " + e);
+          println("error drawing noise particles: " + e);
         }
         /*
         try {
@@ -147,7 +147,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
   public void onClick() {
     
      //println("NOISE PARTICLES: mouse" + theX + " " + theY + " osx: " + theOSCX + " " + theOSCY);
-    int brush = 4;
+    int brush = 6;
     int setContrastModeF = (int)map(vFader4, 0, 255, 0, 60);
 
     float cX = theOSCX * canvasW;
@@ -172,7 +172,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
         //static color
         //int c = color(setcolorMode+20*sin(PI*x/width), 255*sin(PI*(200)/width), 255);
         //int c = color(setcolorMode, vFader2, vFader3);
-        int c = color((setcolorMode+20)-setContrastModeF*sin(PI*x/width), vFader2, vFader3);
+        int c = color((setcolorMode+20)*sin(PI*x/width), vFader2, vFader3*sin(PI*y/height));
         //add variability
         particles[i++] = new Particle(x, y, c);
         //particles[i++] = new Particle(x, y, cP);
@@ -217,7 +217,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
     public void drawParticles() {
       if ((x >= 0) && (x < width-1) && (y >= 0) && (y < height-1)) {
         int currC = currFrame[(int)x + ((int)y)*width];
-        currFrame[(int)x + ((int)y)*width] = blendColor(c, currC, OVERLAY);
+        currFrame[(int)x + ((int)y)*width] = blendColor(c, currC, DODGE);
       }
     }
   }
@@ -255,7 +255,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
         //int c = color(200*sin(PI*x/width), 225, 255*sin(PI*y/width));
         //int c = color(360*sin(PI*x/width), 127, 255*sin(PI*y/width));
         //variable color
-        int c = color((setcolorMode-50)+40*sin(PI*x/width)*2, 225, 255*sin(PI*y/canvasH));
+        int c = color((setcolorMode-50)+40*sin(PI*x/width)*2, 225, 255-vFader3);
         particles[i++] = new Particle(x, y, c);
       }
     }
@@ -319,6 +319,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
 
     //you must be in RGB colorModel
     void scaleBrightness(int[] src, int[] dst, int w, int h, float s) {
+  //colorMode(RGB, 255,255,255,255);
       int r;
       int g;
       int b;

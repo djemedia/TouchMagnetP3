@@ -136,25 +136,25 @@
     <vFader7>0</vFader7>
     <vFader8>0</vFader8>
     <vFader9>0</vFader9>
-    <gradient b="0" g="11" r="102"/>
-    <gradient b="0" g="50" r="204"/>
-    <gradient b="75" g="0" r="111"/>
-    <gradient b="50" g="0" r="10"/>
-    <gradient b="0" g="11" r="102"/>
     <gradient b="0" g="0" r="0"/>
-    <gradient b="0" g="10" r="151"/>
-    <gradient b="20" g="0" r="204"/>
-    <gradient b="0" g="0" r="153"/>
-    <gradient b="0" g="153" r="250"/>
+    <gradient b="0" g="0" r="204"/>
+    <gradient b="111" g="0" r="111"/>
+    <gradient b="111" g="0" r="10"/>
+    <gradient b="10" g="0" r="0"/>
     <gradient b="0" g="0" r="0"/>
-    <gradient b="75" g="11" r="2"/>
-    <gradient b="0" g="20" r="111"/>
-    <gradient b="10" g="0" r="111"/>
-    <gradient b="50" g="0" r="10"/>
+    <gradient b="0" g="0" r="204"/>
+    <gradient b="200" g="100" r="204"/>
+    <gradient b="200" g="0" r="0"/>
     <gradient b="0" g="0" r="0"/>
-    <gradient b="0" g="10" r="151"/>
-    <gradient b="20" g="0" r="204"/>
-    <gradient b="0" g="0" r="153"/>
+    <gradient b="0" g="50" r="255"/>
+    <gradient b="0" g="111" r="255"/>
+    <gradient b="200" g="000" r="200"/>
+    <gradient b="100" g="0" r="0"/>
+    <gradient b="0" g="0" r="0"/>
+    <gradient b="0" g="10" r="100"/>
+    <gradient b="100" g="50" r="151"/>
+    <gradient b="100" g="0" r="0"/>
+    <gradient b="5" g="0" r="0"/>
     <gradient b="255" g="153" r="250"/>
   </heatmap>
   <noisefield>
@@ -226,7 +226,7 @@
   <livingPixelism>
     <vFader1>0</vFader1>
     <vFader2>255</vFader2>
-    <vFader3>131</vFader3>
+    <vFader3>20</vFader3>
     <vFader4>198</vFader4>
     <vFader5>20</vFader5>
     <vFader6>20</vFader6>
@@ -285,7 +285,7 @@
     <gradient at="40">MAROON</gradient>
     <gradient at="110">BLACK</gradient>
     <gradient at="128">BLACK</gradient>
-    <gradient at="164">DARKORANGE</gradient>
+    <gradient at="164">MAROON</gradient>
     <gradient at="192">BLACK</gradient>
     <gradient at="255">ORANGERED</gradient>
   </stainedGlass>
@@ -317,7 +317,7 @@
     <vFader8>0</vFader8>
     <vFader9>0</vFader9>
     <gradient at="0">MAROON</gradient>
-    <gradient at="50">DARKORANGE</gradient>
+    <gradient at="50">ORANGERED</gradient>
     <gradient at="140">BLACK</gradient>
     <gradient at="208">BLACK</gradient>
     <gradient at="0">MAROON</gradient>

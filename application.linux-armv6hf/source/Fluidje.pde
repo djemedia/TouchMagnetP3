@@ -1,19 +1,9 @@
 class FluidRenderer extends AudioRenderer {
 
   /* OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/29833*@* */
-  /* !do not delete the line above, required for linking your tweak if you re-upload */
   /* 
    Circus Fluid
    Made by Jared "BlueThen" C. on June 5th, 2011.
-   Updated June 7th, 2011 (Commenting, refactoring, coloring changes)
-   
-   www.bluethen.com
-   www.twitter.com/BlueThen
-   www.openprocessing.org/portal/?userID=3044
-   www.hawkee.com/profile/37047/
-   
-   Feel free to email me feedback, criticism, advice, job offers at:
-   bluethen (@) gmail.com
    */
 
 
@@ -144,7 +134,7 @@ class FluidRenderer extends AudioRenderer {
     float cY = theY * canvasH;
     int oX = (int)cX;
     int oY = (int)cY;
-    float force = 50000;
+    float force = 30000;
     if (((int)(cX / grid.cellSize) < grid.density.length) && ((int)(cY / grid.cellSize) < grid.density[0].length) &&
       ((int)(cX / grid.cellSize) > 0) && ((int)(cY / grid.cellSize) > 0)) {
       grid.velocity[(int)(cX / grid.cellSize)][(int)(cY / grid.cellSize)] += force;

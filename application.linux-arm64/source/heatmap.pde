@@ -83,7 +83,7 @@ class HeatmapRenderer extends AudioRenderer {
     for (int i = 0; i < canvasW; ++i) {
       for (int j = 0; j < canvasH; ++j) {
         color thisColor = g.getGradient(heatmap[index][i][j]);
-        //thisColor = color(red(thisColor) - 50, green(thisColor) - 50, blue(thisColor) - 50 ); //master fade
+        //thisColor = color(red(thisColor) - vfader3, green(thisColor) - dimmer1, blue(thisColor) - dimmer1 ); //master fade
 
         set(i, j, thisColor);
       }
@@ -135,9 +135,9 @@ class HeatmapRenderer extends AudioRenderer {
     int oX = (int)cX;
     int oY = (int)cY;
     if (toggle == true)
-      apply_heat(oX, oY, 60, .10);
+      apply_heat(oX, oY, 30, .05);
     if (toggle == false)
-      apply_heat(oX, oY, 60, -.10);
+      apply_heat(oX, oY, 30, -.05);
   }
   /*
   public void heattoggle(float oscToggle) {

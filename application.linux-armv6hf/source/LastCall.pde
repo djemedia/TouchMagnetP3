@@ -11,28 +11,28 @@ class LastCallRenderer extends AudioRenderer {
   color theAlpha = 255;
   
   /// width, height, x and y for all boxes
-  float boxW0 = 1280;
-  float boxH0 = 255;
+  float boxW0 = 320;
+  float boxH0 = 80;
   float boxX0 = 0;
   float boxY0 = 0;
 
   //behind bar
-  float boxW1 = 600;
+  float boxW1 = 300;
   float boxH1 = 20;
-  float boxX1 = 260;
-  float boxY1 = 0;
+  float boxX1 = 0;
+  float boxY1 = 20;
   
   //soffits
-  float boxW2 = 800;
-  float boxH2 = 180;
-  float boxX2 = 420;
+  float boxW2 = 600;
+  float boxH2 = 20;
+  float boxX2 = 0;
   float boxY2 = 40;
   
   //long wall
-  float boxW3 = 800;
+  float boxW3 = 300;
   float boxH3 = 20;
-  float boxX3 = 420;
-  float boxY3 = 230;
+  float boxX3 = 0;
+  float boxY3 = 60;
   
   ColorBox theBox;
   
@@ -62,7 +62,6 @@ class LastCallRenderer extends AudioRenderer {
       BoxArray.clear();
     }
     println("SETTING UPr" + skchName );
-    //getSketchPresets("lastCall", true);
     
     /// initialize our box array
     for(int i=0; i<=numBoxes; i++){
@@ -172,12 +171,7 @@ class ColorBox {
     boxX = tx;
     boxY = ty;
   }
-  
-  /// dont really need this
-  void initBox(){
     
-  }
-  
   void drawBox(){
     noStroke();
     fill(theHue, 255,255);
