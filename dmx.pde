@@ -73,7 +73,7 @@ void drawDMX() {
   for (int y = 1; y < dmxAddr+1; y+=3) {     
     for (int x = 1; x < dmxUniv+1; x++) {
       thisDmxPos = dmxPos[xyPixels(x, y, dmxUniv)];
-      //thisDmxPos = ledPos[xyPixels(x, y, dmxUniv)];
+  
       color c = pixels[thisDmxPos];          
       dmxOutput.set(y, (int)red(c));
       dmxOutput.set(y+1, (int)green(c));

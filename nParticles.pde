@@ -217,7 +217,7 @@ class NoiseParticlesRenderer extends AudioRenderer {
     public void drawParticles() {
       if ((x >= 0) && (x < width-1) && (y >= 0) && (y < height-1)) {
         int currC = currFrame[(int)x + ((int)y)*width];
-        currFrame[(int)x + ((int)y)*width] = blendColor(c, currC, OVERLAY);
+        currFrame[(int)x + ((int)y)*width] = blendColor(c, currC, SOFT_LIGHT);
       }
     }
   }

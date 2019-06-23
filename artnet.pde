@@ -1,7 +1,8 @@
-
-ArtnetP5 artnet;
+ArtNetClient artnet;
+byte[] dmxData = new byte[512];
+//ArtnetP5 artnet;
 PImage artnetimg;
-
+float artnetRed, artnetGreen, artnetBlue;
 
 /*
 
@@ -34,9 +35,10 @@ int artnetyPixels(int pxN, int yScale) {
 */
 public void setupArtnet() {
   
-  artnet = new ArtnetP5();
+  artnet = new ArtNetClient(null);
+  artnet.start();
   artnetimg = new PImage(170, 1, PApplet.RGB);
-  colorMode(HSB, 255, 255, 255, 255);
+  //colorMode(RGB, 255, 255, 255, 255);
  
      //mapSection(100, 20, 0,12);                                      here??
 }
@@ -47,22 +49,22 @@ void mapSection(int sketchX, int sketchY, int startDMX, int endDMX)
    for(int i = startDMX; i < endDMX; i++){
      
      artnetimg.set(i % artnetimg.width, i / artnetimg.width, get(sketchX + (i % width), sketchY + (i / width)));
-     sketchX-= 4;
+     sketchX+= 2;
   
   }  
 }
 
 void drawArtnet()  {
   
-  int sketchX = 0;
-  int sketchY = 0;
-  int startDMX = 0;
-  int endDMX = 0;
+  //int sketchX = 0;
+  //int sketchY = 0;
+  //int startDMX = 0;
+  //int endDMX = 0;
   
   //address the fixtures
   //mapSection(sketchX, sketchY, startDMX, endDMX);
-  mapSection(240, 240, 0,1);
-  mapSection(241, 240, 2,3);
+  mapSection(10,200, 0,169);
+  /*mapSection(241, 240, 2,3);
   mapSection(242, 240, 4,5);
   mapSection(243, 240, 6,7);
   mapSection(244, 240, 8,9);
@@ -76,7 +78,7 @@ void drawArtnet()  {
   mapSection(1020, 240, 144, 156);
   mapSection(1260, 240, 156, 168);
  
- 
+ */
   
   
 
@@ -84,18 +86,34 @@ void drawArtnet()  {
 
   //add a dimmer
   artnetimg.loadPixels();
-  //colorMode(HSB, 255, 255, 255);
+  //colorMode(RGB, 255, 255, 255);
   
   for(int i = 0; i < 170; i++){    
-    color c = color(artnetimg.pixels[i]);
-         
-   artnetimg.pixels[i] = color(hue(c), saturation(c), brightness(c) - dimmer4 - dimmer1);
-   //artnetimg.pixels[i] = color(hue(c), saturation(c), brightness(c) - dimmer1);
-  
-   artnetimg.updatePixels();   
-     
+    color artnetColor = color(artnetimg.pixels[i]);
+   artnetimg.pixels[i] = color(hue(artnetColor), saturation(artnetColor), brightness(artnetColor) - dimmer1);
+         //color pixColor = get(i,i);
+    artnetRed = red(artnetColor);
+    artnetGreen = green(artnetColor);
+    artnetBlue = blue(artnetColor);
+    dmxData[i*3+0] = (byte) artnetRed;
+    dmxData[i*3+1] = (byte) artnetGreen;
+    dmxData[i*3+2] = (byte) artnetBlue;
+   
+      
+       //print("R: " + (int)red(artnetColor) + " Green: " + (int)green(artnetColor) + " Blue: " + (int)blue(artnetColor), width / 2, height / 2);
+      //}
+    //  artnetimg.updatePixels();   
+      
+    
   }
- 
-  artnet.send(artnetimg.pixels, "192.168.1.111");
+   //artnet.broadcastDmx(0, 0, artnetimg.pixels[i]);
+      artnet.broadcastDmx(0,0, dmxData);
+      
+     // byte[] motionData = artnet.readDmxData(0, 1);
+      
+  //int c = color(data[0] & 0xFF, data[1] & 0xFF, data[2] & 0xFF);
+  //artnet.universe(0)
+   // artnet.broadcastDmx(0, 0, artnetimg.pixels[i]);
+  //artnet.send(artnetimg.pixels, "192.168.1.159");
  
 }

@@ -31,6 +31,7 @@ import toxi.color.*;
 import ddf.minim.*;
 
 import artnetP5.*;
+import ch.bildspur.artnet.*;
 
 
 
@@ -64,13 +65,13 @@ Spout spout;
 
 PImage transition;
 
-boolean artnetEnable = false;
+boolean artnetEnable = true;
 boolean dmxEnable =false;
 boolean pixEnable = true;
 boolean spoutEnable = true;
 //boolean syphonEnable = false;
 
-boolean showFramerate = true;
+boolean showFramerate = false;
 
 boolean ready_to_go = true;
 int lastPosition;
@@ -86,12 +87,12 @@ float theOSCY = 0;
 int ledsW = 300;
 int ledsH = 72;
 int dmxAddr = 100;
-int dmxUniv = 1;
+int dmxUniv = 0;
 int[] ledPos;
 int[] artnetPos;
 int[] dmxPos;
 int thisLedPos;
-int thisartnetPos;
+int thisArtnetPos;
 int thisDmxPos;
 
 int canvasW = 1280;
@@ -1097,10 +1098,8 @@ void reLoadSketch(){
 void draw() {    
   
   //background(0);
-  oscFaderSet();
-  
+  oscFaderSet();  
   /// println("cur sketch : " + select);
-  
   visuals[select].renderSketch();
   transitionDraw();
   
@@ -1213,6 +1212,8 @@ void mouseDragged() {
   if(select == 5 || select == 3){
     theOSCX = map(mouseX, 0, canvasW, 0, 1);
     theOSCY = map(mouseY, 0, canvasH, 0, 1);
+    theX = mouseX;
+    theY = mouseY;
 
   } else {
       theX = mouseX;
