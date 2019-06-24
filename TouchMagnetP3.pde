@@ -31,6 +31,10 @@ import toxi.color.*;
 import ddf.minim.*;
 
 import artnetP5.*;
+import ch.bildspur.artnet.*;
+import ch.bildspur.artnet.packets.*;
+import ch.bildspur.artnet.events.*;
+
 
 import dmxP512.*;
 
@@ -160,9 +164,9 @@ XML xml;
 XML[] presets;
 
 
-boolean artnetEnable = false;
+boolean artnetEnable = true;
 boolean dmxEnable =false;
-boolean pixEnable = false;
+boolean pixEnable = true;
 boolean apaEnable = true;
 boolean hcsr04Enable = false;
 //boolean spoutEnable = true;
@@ -176,7 +180,7 @@ boolean hcsr04Enable = false;
 void setup() {
   //size(canvasW, canvasH);
   //fullScreen();
-  size(300,60, P2D);
+  size(300,100, P2D);
   //textureMode(NORMAL);
   //background(0);
   //frameRate(60);
@@ -1147,6 +1151,7 @@ void stop()
   // always close Minim audio classes when you are done with them
   //in.close();
   minim.stop();
+  artnet.stop();
   super.stop();
 }
 
