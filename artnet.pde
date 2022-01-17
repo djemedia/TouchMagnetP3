@@ -33,22 +33,28 @@ int artnetyPixels(int pxN, int yScale) {
   return(pxN / yScale);
 }
 */
+
+ String[] ips = {
+    "192.168.1.8",
+    "192.168.1.25"
+  };
+  
 public void setupArtnet() {
   
-  artnet = new ArtNetClient(null);
+  artnet = new ArtNetClient();
   artnet.start();
-  artnetimg = new PImage(170, 1, PApplet.RGB);
+  artnetimg = new PImage(170, ips.length, PApplet.RGB);
   //colorMode(RGB, 255, 255, 255, 255);
  
      //mapSection(100, 20, 0,12);                                      here??
 }
 
-void mapSection(int sketchX, int sketchY, int startDMX, int endDMX)
+void mapSection(int index, int sketchX, int sketchY, int startDMX, int endDMX)
 {
    
    for(int i = startDMX; i < endDMX; i++){
      
-     artnetimg.set(i % artnetimg.width, i / artnetimg.width, get(sketchX + (i % width), sketchY + (i / width)));
+     artnetimg.set(i % artnetimg.width, index/artnetimg.height, get(sketchX + (i % width), sketchY + (i / width)));
      sketchX+= 2;
   
   }  
@@ -63,7 +69,8 @@ void drawArtnet()  {
   
   //address the fixtures
   //mapSection(sketchX, sketchY, startDMX, endDMX);
-  mapSection(10,200, 0,169);
+  mapSection(0,10,10, 0,169);
+  mapSection(1,100, 200,0,169);
   /*mapSection(241, 240, 2,3);
   mapSection(242, 240, 4,5);
   mapSection(243, 240, 6,7);
@@ -87,27 +94,33 @@ void drawArtnet()  {
   //add a dimmer
   artnetimg.loadPixels();
   //colorMode(RGB, 255, 255, 255);
-  
-  for(int i = 0; i < 170; i++){    
-    color artnetColor = color(artnetimg.pixels[i]);
-   artnetimg.pixels[i] = color(hue(artnetColor), saturation(artnetColor), brightness(artnetColor) - dimmer1);
-         //color pixColor = get(i,i);
-    artnetRed = red(artnetColor);
-    artnetGreen = green(artnetColor);
-    artnetBlue = blue(artnetColor);
-    dmxData[i*3+0] = (byte) artnetRed;
-    dmxData[i*3+1] = (byte) artnetGreen;
-    dmxData[i*3+2] = (byte) artnetBlue;
-   
-      
-       //print("R: " + (int)red(artnetColor) + " Green: " + (int)green(artnetColor) + " Blue: " + (int)blue(artnetColor), width / 2, height / 2);
-      //}
-    //  artnetimg.updatePixels();   
-      
-    
-  }
+  for(int j = 0; j < ips.length; j++) {
+      for(int i = 0; i < 170; i++){    
+        color artnetColor = color(artnetimg.pixels[i]);
+       artnetimg.pixels[i] = color(hue(artnetColor), saturation(artnetColor), brightness(artnetColor) - dimmer1);
+             //color pixColor = get(i,i);
+        artnetRed = red(artnetColor);
+        artnetGreen = green(artnetColor);
+        artnetBlue = blue(artnetColor);
+        dmxData[i*3+0] = (byte) artnetRed;
+        dmxData[i*3+1] = (byte) artnetGreen;
+        dmxData[i*3+2] = (byte) artnetBlue;
+       
+          
+           //print("R: " + (int)red(artnetColor) + " Green: " + (int)green(artnetColor) + " Blue: " + (int)blue(artnetColor), width / 2, height / 2);
+          //}
+        //  artnetimg.updatePixels();   
+          
+        
+      }
    //artnet.broadcastDmx(0, 0, artnetimg.pixels[i]);
-      artnet.broadcastDmx(0,0, dmxData);
+      //artnet.broadcastDmx(0,2, dmxData);
+      
+      
+        artnet.unicastDmx(ips[j], 0, 0, dmxData);
+    }
+     //artnet.unicastDmx("192.168.1.247", 0, 0, dmxData);
+     // artnet.unicastDmx("192.168.1.65", 0, 0, dmxData);
       
      // byte[] motionData = artnet.readDmxData(0, 1);
       
@@ -115,5 +128,6 @@ void drawArtnet()  {
   //artnet.universe(0)
    // artnet.broadcastDmx(0, 0, artnetimg.pixels[i]);
   //artnet.send(artnetimg.pixels, "192.168.1.159");
+}  
+
  
-}
